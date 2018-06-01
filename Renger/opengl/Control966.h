@@ -47,4 +47,6 @@ private:
 	bool bMouseLeftDown;
 	bool bMouseRightDown;
 	bool bIsMouseAvail;
+public:
+	void SetAvialMode(int key, int mouse);
 };
