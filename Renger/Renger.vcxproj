@@ -119,6 +119,7 @@
     <ClInclude Include="opengl\Modal966.h" />
     <ClInclude Include="opengl\OpenGL.h" />
     <ClInclude Include="opengl\Quaternion966.h" />
+    <ClInclude Include="opengl\Scene.h" />
     <ClInclude Include="opengl\Vector966.h" />
     <ClInclude Include="Renger.h" />
     <ClInclude Include="RengerDoc.h" />
@@ -137,6 +138,7 @@
     <ClCompile Include="opengl\Modal966.cpp" />
     <ClCompile Include="opengl\OpenGL.cpp" />
     <ClCompile Include="opengl\Quaternion966.cpp" />
+    <ClCompile Include="opengl\Scene.cpp" />
     <ClCompile Include="opengl\Vector966.cpp" />
     <ClCompile Include="Renger.cpp" />
     <ClCompile Include="RengerDoc.cpp" />

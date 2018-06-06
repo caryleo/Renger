@@ -1,8 +1,6 @@
 #pragma once
 #include "stdafx.h"
 #include "opengl/OpenGL.h"
-#include <gl/GLAux.h>
-#pragma comment(lib, "GLAUX.lib")
 #define POINTNUM 200
 #define CIRCLENUM 20
 

@@ -629,7 +629,7 @@ void CMyOpenGL::Normalize(GLfloat *v)
 
 bool CMyOpenGL::GetTexture()
 {
-	AUX_RGBImageRec *img1 = auxDIBImageLoad("dumb1.bmp");
+	AUX_RGBImageRec *img1 = auxDIBImageLoad("lib/dumb1.bmp");
 	glGenTextures(1, &texture1[0]);
 	glBindTexture(GL_TEXTURE_2D, texture1[0]);
 	glTexImage2D(GL_TEXTURE_2D, 0, 3, img1->sizeX, img1->sizeY, 0, GL_RGB, GL_UNSIGNED_BYTE, img1->data);
@@ -637,7 +637,7 @@ bool CMyOpenGL::GetTexture()
 	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);	// Linear Filtering
 	free(img1->data);
 	free(img1);
-	AUX_RGBImageRec *img2 = auxDIBImageLoad("plane1.bmp");
+	AUX_RGBImageRec *img2 = auxDIBImageLoad("lib/plane1.bmp");
 	glGenTextures(1, &texture2[0]);
 	glBindTexture(GL_TEXTURE_2D, texture2[0]);
 	glTexImage2D(GL_TEXTURE_2D, 0, 3, img2->sizeX, img2->sizeY, 0, GL_RGB, GL_UNSIGNED_BYTE, img2->data);
