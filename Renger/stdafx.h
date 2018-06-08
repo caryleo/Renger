@@ -37,23 +37,10 @@
 
 #include <afxcontrolbars.h>     // 功能区和控件条的 MFC 支持
 
-/** 包含常用的头文件 */
-#include <Windows.h>
-#include <stdio.h>
-#include <math.h>                            
-#include <time.h>
-
-/** 包含gl头文件 */
-#include "lib\INCLUDE\glew.h"
-#include "lib\INCLUDE\gl.h"				 
-#include "lib\INCLUDE\glu.h"
-#include "lib\INCLUDE\glaux.h"
-#include "lib\INCLUDE\glext.h"
 
 
-/** 定义地面网格 */
-const unsigned int MAP_WIDTH = 1024;
-const unsigned int CELL_WIDTH = 16;
+
+
 
 
 
@@ -76,10 +63,3 @@ const unsigned int CELL_WIDTH = 16;
 #include "opengl/Control966.h"
 #include "opengl/Modal966.h"
 #include "opengl/OpenGL.h"
-#include "opengl/Scene.h"
-
-/** 包含OpenGL链接库文件 */
-#pragma comment(lib, "lib/LIB/opengl32.lib")		
-#pragma comment(lib, "lib/LIB/glut32.lib")							
-#pragma comment(lib, "lib/LIB/glaux.lib")
-#pragma comment(lib, "lib/LIB/glew32.lib")
