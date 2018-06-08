@@ -51,7 +51,9 @@
 #include "lib\INCLUDE\glext.h"
 
 
-
+/** 定义地面网格 */
+const unsigned int MAP_WIDTH = 1024;
+const unsigned int CELL_WIDTH = 16;
 
 
 
@@ -74,8 +76,10 @@
 #include "opengl/Control966.h"
 #include "opengl/Modal966.h"
 #include "opengl/OpenGL.h"
+#include "opengl/Scene.h"
 
 /** 包含OpenGL链接库文件 */
 #pragma comment(lib, "lib/LIB/opengl32.lib")		
 #pragma comment(lib, "lib/LIB/glut32.lib")							
 #pragma comment(lib, "lib/LIB/glaux.lib")
+#pragma comment(lib, "lib/LIB/glew32.lib")
