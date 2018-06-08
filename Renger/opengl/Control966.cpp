@@ -516,4 +516,29 @@ bool CControl966::SetKeyStatus(unsigned nInput, bool bState)
 	return true;
 }
 
+/**
+ * \brief 更改键盘和鼠标的可用状态
+ * \param key 键盘可用状态，0不变，1置true，2置false
+ * \param mouse 鼠标可用状态，0不变，1置true，2置false
+ */
+void CControl966::SetAvialMode(int key, int mouse)
+{
+	if (key == 1)
+	{
+		bIsKeyAvail = true;
+	}
+	else if (key == 2)
+	{
+		bIsKeyAvail = false;
+	}
+	if (mouse == 1)
+	{
+		bIsMouseAvail = true;
+	}
+	else if (mouse == 2)
+	{
+		bIsMouseAvail = false;
+	}
+}
+
 

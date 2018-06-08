@@ -110,7 +110,9 @@
     <None Include="UserImages.bmp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CLoad3DS.h" />
     <ClInclude Include="MainFrm.h" />
+    <ClInclude Include="ModelLoader.h" />
     <ClInclude Include="MyOpenGL.h" />
     <ClInclude Include="opengl\Camera966.h" />
     <ClInclude Include="opengl\Control966.h" />
@@ -119,7 +121,6 @@
     <ClInclude Include="opengl\Modal966.h" />
     <ClInclude Include="opengl\OpenGL.h" />
     <ClInclude Include="opengl\Quaternion966.h" />
-    <ClInclude Include="opengl\Scene.h" />
     <ClInclude Include="opengl\Vector966.h" />
     <ClInclude Include="Renger.h" />
     <ClInclude Include="RengerDoc.h" />
@@ -129,7 +130,9 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CLoad3DS.cpp" />
     <ClCompile Include="MainFrm.cpp" />
+    <ClCompile Include="ModelLoader.cpp" />
     <ClCompile Include="MyOpenGL.cpp" />
     <ClCompile Include="opengl\Camera966.cpp" />
     <ClCompile Include="opengl\Control966.cpp" />
@@ -138,7 +141,6 @@
     <ClCompile Include="opengl\Modal966.cpp" />
     <ClCompile Include="opengl\OpenGL.cpp" />
     <ClCompile Include="opengl\Quaternion966.cpp" />
-    <ClCompile Include="opengl\Scene.cpp" />
     <ClCompile Include="opengl\Vector966.cpp" />
     <ClCompile Include="Renger.cpp" />
     <ClCompile Include="RengerDoc.cpp" />
