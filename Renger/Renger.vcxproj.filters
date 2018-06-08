@@ -96,6 +96,12 @@
     <ClInclude Include="opengl\Vector966.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="CLoad3DS.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelLoader.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Renger.cpp">
@@ -138,6 +144,12 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="opengl\Vector966.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CLoad3DS.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ModelLoader.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

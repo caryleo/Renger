@@ -2,6 +2,7 @@
 #include "MyOpenGL.h"
 #include <cmath>
 #include <iostream>
+#include "ModelLoader.h"
 #define POINTNUM 200
 #define CIRCLENUM 20
 #define PI 3.1415926
@@ -14,6 +15,7 @@ GLfloat (*vert)[3] = 0, (*norm)[3] = 0;
 int nVert=0;
 GLuint texture1[1]={0};
 GLuint texture2[1]={0};
+CModelLoader m_loader;
 
 CMyOpenGL::CMyOpenGL(void)
 {
@@ -238,6 +240,7 @@ void CMyOpenGL::PostInit(void)
 	GetTexture();
 	pCamera->cvMovVec.z = 25;
 	pCamera->ShowView();
+	m_loader.Init(1);
 }
 
 
@@ -694,7 +697,7 @@ void CMyOpenGL::DrawBox(float size)
 */
 void CMyOpenGL::DrawRobot()
 {
-	glPushAttrib(GL_ENABLE_BIT | GL_POLYGON_BIT);
+	/*glPushAttrib(GL_ENABLE_BIT | GL_POLYGON_BIT);
 	glFrontFace(GL_CCW);
 	static int type = 0, curFrame = 0;
 	curFrame++;
@@ -888,7 +891,13 @@ void CMyOpenGL::DrawRobot()
 	glutSolidCube(size);
 	glPopMatrix();
 	glPopMatrix();
-	glPopAttrib();
+	glPopAttrib();*/
+	float gothicTrans[10] = {   
+    0, 0 , 0 ,     //表示在世界矩阵的位置  
+    1 , 1 , 1 ,      //表示xyz放大倍数  
+    180 , 0 , 1 , 0  //表示旋转  
+	};
+	m_loader.DrawModel(gothicTrans);
 }
 
 /**
