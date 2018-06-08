@@ -110,7 +110,9 @@
     <None Include="UserImages.bmp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CLoad3DS.h" />
     <ClInclude Include="MainFrm.h" />
+    <ClInclude Include="ModelLoader.h" />
     <ClInclude Include="MyOpenGL.h" />
     <ClInclude Include="opengl\Camera966.h" />
     <ClInclude Include="opengl\Control966.h" />
@@ -124,11 +126,14 @@
     <ClInclude Include="RengerDoc.h" />
     <ClInclude Include="RengerView.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="Scene.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CLoad3DS.cpp" />
     <ClCompile Include="MainFrm.cpp" />
+    <ClCompile Include="ModelLoader.cpp" />
     <ClCompile Include="MyOpenGL.cpp" />
     <ClCompile Include="opengl\Camera966.cpp" />
     <ClCompile Include="opengl\Control966.cpp" />
@@ -141,6 +146,7 @@
     <ClCompile Include="Renger.cpp" />
     <ClCompile Include="RengerDoc.cpp" />
     <ClCompile Include="RengerView.cpp" />
+    <ClCompile Include="Scene.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
