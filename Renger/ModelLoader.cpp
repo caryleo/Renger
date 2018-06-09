@@ -2,8 +2,10 @@
 #include "ModelLoader.h"
 #include <gl/gl.h>
 #include "CLoad3DS.h"
+#include <gl/GLAux.h>
 
 CLoad3DS *gothicLoader=new(CLoad3DS);
+GLuint texture[1]={0};
 
 CModelLoader::CModelLoader(void)
 {
@@ -17,6 +19,16 @@ CModelLoader::~CModelLoader(void)
 
 void CModelLoader::Init(int type)
 {
+	
+	
+	AUX_RGBImageRec *img1 = auxDIBImageLoad("dumb1.bmp");
+	glGenTextures(1, &texture[0]);
+	glBindTexture(GL_TEXTURE_2D, texture[0]);
+	glTexImage2D(GL_TEXTURE_2D, 0, 3, img1->sizeX, img1->sizeY, 0, GL_RGB, GL_UNSIGNED_BYTE, img1->data);
+	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);	// Linear Filtering
+	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);	// Linear Filtering
+	free(img1->data);
+	free(img1);
 	switch (type)
 	{
 	case 1:

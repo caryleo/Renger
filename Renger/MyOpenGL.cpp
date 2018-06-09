@@ -237,7 +237,7 @@ void CMyOpenGL::PostInit(void)
 	glMultMatrixf(pCamera->cmEyeMat);
 	glGetFloatv(GL_MODELVIEW_MATRIX, pCamera->cmEyeMat);
 	glPopMatrix();
-	GetTexture();
+	//GetTexture();
 	pCamera->cvMovVec.z = 25;
 	pCamera->ShowView();
 	m_loader.Init(1);
