@@ -1,5 +1,6 @@
 #pragma once
 #include "stdafx.h"
+#include "ModelLoader.h"
 #define  BITMAP_ID 0x4D42 /**< 位图文件的标志 */
 
 
@@ -209,4 +210,5 @@ public:
 	CTerrain m_Terrain;
 	CSnow m_Snow;
 	bool IsInit;
+
 };

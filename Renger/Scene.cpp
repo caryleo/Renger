@@ -2,7 +2,7 @@
 #include "Scene.h"
 #include <afxver_.h>
 
-
+CModelLoader m_loader;
 //////////////////////////////////////////////////////////////////////////
 //
 // CBMPLoader
@@ -832,15 +832,24 @@ void CScene::Render()
 	/** 渲染地形 */
 	m_Terrain.render();
 
-	glTranslatef(504.0f,222.0f,400.0f);
+	glTranslatef(504.0f,220.0f,400.0f);
 	/** 渲染雪花 */
 	m_Snow.Render();
+
+	float gothicTrans[10] = {   
+		30,-8 , 30 , //表示在世界矩阵的位置  
+		10, 10, 10 ,      //表示xyz放大倍数  
+		180 , 0 , 1 , 0  //表示旋转  
+	};
+	m_loader.DrawModel(gothicTrans);
 
 	glFlush();
 }
 
 void CScene::init()
 {
+
+
 	glClearColor(0.0f,0.0f,0.0f,0.0f);
 	glClearDepth(1.0f);
 	glEnable(GL_DEPTH_TEST);
@@ -850,11 +859,11 @@ void CScene::init()
 	glShadeModel(GL_SMOOTH);									
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 
-	//glEnable(GL_TEXTURE_2D);             /**< 开启纹理映射 */   
+	glEnable(GL_TEXTURE_2D);             /**< 开启纹理映射 */   
 
 	/** 设置混合因子获得半透明效果 */
-/*	glBlendFunc(GL_SRC_ALPHA,GL_ONE);    
-	glEnable(GL_BLEND);	*/			     /**< 启用混和 */
+	glBlendFunc(GL_SRC_ALPHA,GL_ONE);    
+	glEnable(GL_BLEND);				     /**< 启用混和 */
 
 	/** 初始化雪花实例 */	
 	if(!m_Snow.Init(5000))
@@ -876,6 +885,8 @@ void CScene::init()
 		MessageBox(NULL,"初始化地形失败!","错误",MB_OK);
 		exit(0);
 	}
+
+	m_loader.Init(1);
 	IsInit=true;
 }
 
