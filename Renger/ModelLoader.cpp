@@ -19,8 +19,6 @@ CModelLoader::~CModelLoader(void)
 
 void CModelLoader::Init(int type)
 {
-	
-	
 	AUX_RGBImageRec *img1 = auxDIBImageLoad("dumb1.bmp");
 	glGenTextures(1, &texture[0]);
 	glBindTexture(GL_TEXTURE_2D, texture[0]);
