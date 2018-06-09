@@ -1,5 +1,6 @@
 #include "StdAfx.h"
 #include "MyOpenGL.h"
+#include "aabb.h"
 #include <cmath>
 #include <iostream>
 #define POINTNUM 200
@@ -23,6 +24,60 @@ CMyOpenGL::CMyOpenGL(void)
 CMyOpenGL::~CMyOpenGL(void)
 {
 }
+
+
+// 绘制立方体  
+  
+void DrawCube(void)  
+{  
+
+
+	  
+	// 将立方体的八个顶点保存到一个数组里面   
+  
+	float vertex_list[][3] =   
+	{   
+		-0.5f, -0.5f, -0.5f,   
+		0.5f, -0.5f, -0.5f,   
+		-0.5f, 0.5f, -0.5f,   
+		0.5f, 0.5f, -0.5f,   
+		-0.5f, -0.5f, 0.5f,   
+		0.5f, -0.5f, 0.5f,   
+		-0.5f, 0.5f, 0.5f,   
+		0.5f, 0.5f, 0.5f,   
+	};   
+  
+	// 将要使用的顶点的序号保存到一个数组里面   
+  
+	GLint index_list[][2] =   
+	{   
+		{0, 1},      
+		{2, 3},      
+		{4, 5},      
+		{6, 7},      
+		{0, 2},      
+		{1, 3},      
+		{4, 6},      
+		{5, 7},  
+		{0, 4},  
+		{1, 5},  
+		{7, 3},  
+		{2, 6}  
+	};   
+    int i,j;  
+      
+    glBegin(GL_LINES);   
+    for(i=0; i<12; ++i) // 12 条线段  
+  
+    {  
+        for(j=0; j<2; ++j) // 每条线段 2个顶点  
+  
+        {  
+            glVertex3fv(vertex_list[index_list[i][j]]);       
+        }  
+    }  
+    glEnd();  
+}  
 
 
 /**
@@ -246,7 +301,31 @@ void CMyOpenGL::PostInit(void)
 */
 void CMyOpenGL::InDraw(void)
 {
+
+	AABB a(My3DPoint(-5,-5,-5),My3DPoint(5,5,5));
+	AABB b(My3DPoint(0,0,0),My3DPoint(10,10,10));
+	glPushMatrix();
+	a.DrawAABBBoundingBox();
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslatef(10,0,0);
+	b.DrawAABBBoundingBox();
+	b.Translatef(10,0,0);
 	
+	glPopMatrix();
+	b.DrawAABBBoundingBox();
+	if(a.IsOrNotInterection(b))
+	{
+		glutSolidSphere(1,10,10);
+	}
+	/*
+	glPushMatrix();
+	a.DrawAABBBoundingBox();
+	b.DrawAABBBoundingBox();
+	glPopMatrix();
+	*/
+	/*
 	glPushAttrib(GL_ENABLE_BIT);
 	glFrontFace(GL_CCW);
 	glLightModeli(GL_LIGHT_MODEL_TWO_SIDE,GL_TRUE);
@@ -364,6 +443,7 @@ void CMyOpenGL::InDraw(void)
 		glEnd();
 	}
 	//glPopAttrib();
+	*/
 }
 
 

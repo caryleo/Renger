@@ -16,6 +16,8 @@
 #endif
 
 
+
+
 // CRengerApp
 
 BEGIN_MESSAGE_MAP(CRengerApp, CWinAppEx)
