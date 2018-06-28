@@ -15,7 +15,9 @@
 #include "Vector966.h"
 #include "Matrix966.h"
 #include "Euler966.h"
+#include "car.h"
 #include "Quaternion966.h"
+
 
 #include <afxver_.h>
 
@@ -47,6 +49,7 @@ protected:
 	CRect m_rect,m_windowrect;	//窗口大小
 	CCamera966 *pCamera;
 	CModal966 *pModal;
+	CAR *car;//汽车
 	float fps;
 };
 

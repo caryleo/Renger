@@ -3,9 +3,12 @@
 #include <afxver_.h>
 #include <atltypes.h>
 
+
+
 class COpenGL;
 class CCamera966;
 class CModal966;
+class CAR;
 
 class AFX_CLASS_EXPORT CControl966
 {
@@ -31,6 +34,7 @@ private:
 		KS_P, KS_SHIFT,\
 		KS_M_STEP_N, KS_M_STEP_P, KS_R_STEP_N, KS_R_STEP_P,\
 		KS_F_LEFT, KS_F_RIGHT, KS_F_UP, KS_F_DOWN,\
+		KS_LEFT,KS_RIGHT,KS_UP,KS_DOWN,\
 		KS_ALL
 		}KeyVal;
 	//¼üÅÌ×´Ì¬Êý×é
