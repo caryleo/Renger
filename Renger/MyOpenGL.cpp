@@ -12,7 +12,8 @@ CModelLoader m_loader_car;
 CModelLoader m_loader_lupai;
 CModelLoader m_loader_yuaubao;
 CModelLoader m_loader_hulan;
-
+CModelLoader m_loader_fangwu;
+CModelLoader m_loader_fangwu2;
 struct Hulan
 {
 	double x,z,rotate;
@@ -48,6 +49,8 @@ void CMyOpenGL::PostInit(void)
 	m_loader_car.Init(2);//汽车
 	m_loader_yuaubao.Init(11);//元宝
 	m_loader_hulan.Init(10);//护栏
+	m_loader_fangwu.Init(9);//房屋
+	m_loader_fangwu2.Init(8);//房屋2
 	car->init(Point_AABB(0,0,500,4,4,8,0,0,-1),0);//初始化汽车类
 	car->setGothicTrans_car(
 		0, 0 , 400,   
@@ -205,12 +208,40 @@ void CMyOpenGL::InDraw(void)
 
 
 	glPushMatrix();
-	float gothicTrans[10] = { 
-		50,0 , -50 , //表示在世界矩阵的位置  
-		0.1, 0.1, 0.1 ,      //表示xyz放大倍数  
+	float gothicTrans_fangwu[10] = { 
+		100,-10, 200 , //表示在世界矩阵的位置  
+		0.2, 0.2, 0.2 ,      //表示xyz放大倍数  
 		180 , 0 , 1 , 0  //表示旋转  
 	};
-	m_loader_lupai.DrawModel(gothicTrans);
+	m_loader_fangwu.DrawModel(gothicTrans_fangwu);
+	changeGothicTrans(gothicTrans_fangwu,
+		150,-10, 400 , //表示在世界矩阵的位置  
+		0.2, 0.2, 0.2 ,      //表示xyz放大倍数  
+		90 , 0 , 1 , 0  //表示旋转  
+		);
+	m_loader_fangwu2.DrawModel(gothicTrans_fangwu);
+	changeGothicTrans(gothicTrans_fangwu,
+		-300,-10, 250 , //表示在世界矩阵的位置  
+		0.2, 0.2, 0.2 ,      //表示xyz放大倍数  
+		-90 , 0 , 1 , 0  //表示旋转  
+		);
+	m_loader_fangwu.DrawModel(gothicTrans_fangwu);
+	changeGothicTrans(gothicTrans_fangwu,
+		-150,-10, -250 , //表示在世界矩阵的位置  
+		0.2, 0.2, 0.2 ,      //表示xyz放大倍数  
+		0 , 0 , 1 , 0  //表示旋转  
+		);
+	m_loader_fangwu.DrawModel(gothicTrans_fangwu);
+	changeGothicTrans(gothicTrans_fangwu,
+		100,-10, -250 , //表示在世界矩阵的位置  
+		0.2, 0.2, 0.2 ,      //表示xyz放大倍数  
+		90 , 0 , 1 , 0  //表示旋转  
+		);
+	m_loader_fangwu2.DrawModel(gothicTrans_fangwu);
+
+
+
+
     glPopMatrix();
 
 	glPushMatrix();
