@@ -4,7 +4,9 @@
 #include "Camera966.h"
 #include "Modal966.h"
 #include "OpenGL.h"
-
+#include "windows.h"
+#include "mmsystem.h"
+#pragma comment(lib,"winmm.lib")
 #include <iostream>
 
 CControl966::CControl966(COpenGL* pGL)
@@ -164,14 +166,7 @@ bool CControl966::PreTranslateMessage(unsigned message, unsigned wParam, unsigne
 void CControl966::KeyControl()
 {
 	
-	if (bKeyState[KS_LEFT])
-	{
-		pOpenGL->car->turnLeft(5);
-	}
-	if (bKeyState[KS_RIGHT])
-	{
-		pOpenGL->car->turnRight(5);
-	}
+	
 
 	//显示视角：上帝视角、跟踪视角和同步视角
 	if (bKeyState[KS_T_GOD])
@@ -319,17 +314,32 @@ void CControl966::SetSpeed(float mov_speed, float rot_speed)
 bool CControl966::KeyProcess()
 {
 	bool bIsAnyDown = false;
+
+	if (bKeyState[KS_LEFT])
+	{
+		pOpenGL->car->turnLeft(5);
+		bIsAnyDown = true;
+	}
+	if (bKeyState[KS_RIGHT])
+	{
+		pOpenGL->car->turnRight(5);
+		bIsAnyDown = true;
+	}
 	if (bKeyState[KS_UP])
 	{
 		pOpenGL->car->speedUp();
+		bIsAnyDown = true;
 	}
 	else if (bKeyState[KS_DOWN])
 	{
 		pOpenGL->car->speedDown();
+		bIsAnyDown = true;
+		PlaySound(NULL, NULL, 0);
 	}
 	else 
 	{
 		pOpenGL->car->speedDownNatural();
+		PlaySound(NULL, NULL, 0);
 	}
 	//平移
 	if (bKeyState[KS_M_FRONT])

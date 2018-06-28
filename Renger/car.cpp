@@ -2,10 +2,12 @@
 #include <math.h>
 #include "car.h"
 #include "aabb.h"
+#include "windows.h"
+#include "mmsystem.h"
+#pragma comment(lib,"winmm.lib")
 #define PI 3.1415926
 const double eps=1e-6;
-
-void CAR::turnRight(double deg)//左转,角度
+void CAR::turn(double deg)
 {
 	deg=deg/180*PI;//转弧度
 	double tmpx=car_point.dirx*cos(deg)-car_point.dirz*sin(deg);
@@ -29,9 +31,18 @@ void CAR::turnRight(double deg)//左转,角度
 		gothicTrans_car[9]=0;
 	}
 }
+
+void CAR::turnRight(double deg)//左转,角度
+{
+	if(speed<0)
+		turn(-deg);
+	else turn(deg);
+}
 void CAR::turnLeft(double deg)//右转
 {
-	turnRight(-deg);
+	if(speed<0)
+		turn(deg);
+	else turn(-deg);
 }
 void CAR::update()//更新汽车运动状态
 {
@@ -142,6 +153,7 @@ void CAR::addWall(double m_Xmin,double m_Ymin,double m_Zmin,double m_Xmax,double
 }
 void CAR::speedUp()//加速，这里为匀速加减速度
 {
+	PlaySound(TEXT("Data/car.wav"), NULL, SND_FILENAME | SND_ASYNC|SND_LOOP|SND_NOSTOP );
 	if(fabs(speed-5)>eps)
 	{
 		speed+=0.5;

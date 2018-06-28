@@ -29,6 +29,7 @@ public:
 
 	void init(Point_AABB tmp,double _speed);//初始化
 	void update();//更新汽车运动状态
+	void turn(double deg);//左转右转的共同部分
 	void turnLeft(double deg);//左转
 	void turnRight(double deg);//右转
 	void speedUp();//加速
