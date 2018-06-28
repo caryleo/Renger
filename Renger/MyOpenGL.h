@@ -12,7 +12,10 @@ class CMyOpenGL : public COpenGL
 public:
 	CMyOpenGL(void);
 	~CMyOpenGL(void);
-	void DrawAxes();
+	void DrawAxes(int size);
+	void changeGothicTrans(float trans[],double x,double y,double z,double a,double b,double c,double r,double _x,double _y,double _z);
+	void drawHulan();
+	void hulanInit();
 	virtual void PostInit(void);
 	virtual void InDraw(void);
 	virtual bool OnKey(unsigned char nChar, bool bDown);

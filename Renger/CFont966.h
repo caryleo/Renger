@@ -25,7 +25,7 @@ public:
 	void Font2D(CString lpszText, CVector966 pos, int size = 24, int color = RGB(255, 255, 255),
 	            int format = DT_LEFT | DT_BOTTOM, int type = 1);
 	void Font2DBmp(CString str, double x, double y, int type = 1, int color = RGB(255, 255, 255));
-	void Font3DEnglish(CString str);					//英文3d字，快
+	void Font3DEnglish(CString str);
 	void Font3DEnglish(CString str, CVector966 pos, double size, int format, CVector966 *normal = 0);	//带格式，大小(以A字符的米为大小)
 	void Font3DChinese(CString str, BOOL bStatic = false);	//中文3d字,是否是静态文字。如果是静态文字则不需要每次重新构造字体，速度更快。
 	void Font3DChinese(CString str, CVector966 pos,double size,int format,BOOL bStatic=false);

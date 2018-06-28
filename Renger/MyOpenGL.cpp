@@ -99,13 +99,13 @@ void CMyOpenGL::PostInit(void)
 /**
 * \brief 绘制主控
 */
-void changeGothicTrans(float trans[],double x,double y,double z,double a,double b,double c,double r,double _x,double _y,double _z)
+void CMyOpenGL::changeGothicTrans(float trans[],double x,double y,double z,double a,double b,double c,double r,double _x,double _y,double _z)
 {
 	trans[0]=x;trans[1]=y;trans[2]=z;
 	trans[3]=a;trans[4]=b;trans[5]=c;
 	trans[6]=r;trans[7]=_x;trans[8]=_y;trans[9]=_z;
 }
-void hulanInit()
+void CMyOpenGL::hulanInit()
 {
 	hulanCnt=0;
 	hulan[hulanCnt].rotate=90;hulan[hulanCnt].x=50;hulan[hulanCnt++].z=400;
@@ -195,7 +195,7 @@ void hulanInit()
 	hulan[hulanCnt].rotate=0;hulan[hulanCnt].x=-100;hulan[hulanCnt++].z=350;
 	
 }
-void drawHulan()
+void CMyOpenGL::drawHulan()
 {
 	hulanInit();
 	float gothicTrans_hulan[10];
@@ -215,7 +215,7 @@ void CMyOpenGL::InDraw(void)
 	glPushMatrix();
 	scene.Render();
 	glPopMatrix();
-
+	DrawAxes(1000);
 	glPushMatrix();
 	float gothicTrans_fangwu[10] = { 
 		100,-10, 200 , //表示在世界矩阵的位置  
@@ -247,7 +247,6 @@ void CMyOpenGL::InDraw(void)
 		90 , 0 , 1 , 0  //表示旋转  
 		);
 
-
 	m_loader_fangwu2.DrawModel(gothicTrans_fangwu);
 
 	float gothicTransLupai4[10] = { 
@@ -264,10 +263,7 @@ void CMyOpenGL::InDraw(void)
 	};
 	m_loader_luren.DrawModel(gothicTransLuren);
 
-
-
     glPopMatrix();
-
 	glPushMatrix();
 	car->car_box.DrawAABBBoundingBox();//画出车的包围盒
 	m_loader_car.DrawModel(car->gothicTrans_car);
@@ -319,22 +315,22 @@ void CMyOpenGL::Update()
 /**
  * \brief 绘制坐标轴
  */
-void CMyOpenGL::DrawAxes()
+void CMyOpenGL::DrawAxes(int size)
 {
 	glPushAttrib(GL_ENABLE_BIT);
 	glDisable(GL_LIGHTING);
 	glDisable(GL_TEXTURE_2D);
 	glPushMatrix();
 	glBegin(GL_LINES);
-	glColor3f(1,0,0);
-	glVertex3f(0,0,0);
-	glVertex3f(30,0,0);
-	glColor3f(0,1,0);
-	glVertex3f(0,0,0);
-	glVertex3f(0,30,0);
-	glColor3f(0,0,1);
-	glVertex3f(0,0,0);
-	glVertex3f(0,0,30);
+	glColor3f(1, 0, 0);
+	glVertex3f(0, 0, 0);
+	glVertex3f(size, 0, 0);
+	glColor3f(0, 1, 0);
+	glVertex3f(0, 0, 0);
+	glVertex3f(0, size, 0);
+	glColor3f(0, 0, 1);
+	glVertex3f(0, 0, 0);
+	glVertex3f(0, 0, size);
 	glEnd();
 	glPopMatrix();
 	glPopAttrib();

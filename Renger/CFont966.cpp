@@ -63,7 +63,56 @@ void CFont966::PopOrthoRange()
 }
 
 /**
- * \brief 光栅位图2D字体
+ * \brief 全2D字体
+ * \param lpszText 字符串内容
+ * \param pos 起始显示位置，三位坐标
+ * \param size 大小
+ * \param color 颜色，最好灰度
+ * \param format 对齐方式，默认LEFT | BOTTOM
+ * \param type 类型，0为投影空间，1为世界空间，2为模型空间
+ */
+void CFont966::Font2D(CString lpszText, CVector966 pos, int size, int color, int format, int type)
+{
+	glPushAttrib(GL_ENABLE_BIT | GL_POLYGON_BIT);
+	glDisable(GL_LIGHTING);
+	glDisable(GL_TEXTURE_2D);
+
+	if (type == 0)
+	{
+		pos[2] = -100;
+	}
+	else
+	{
+		CMatrix966 tmpProj;
+		glGetFloatv(GL_PROJECTION_MATRIX, tmpProj);
+		if (type == 1)
+		{
+			CMatrix966 tmpView = pCamera->cmEyeMat;
+			CMatrix966 tmp = tmpProj * tmpView;
+			CVector966 ans = tmp.MulPosition(pos);
+		}
+		else
+		{
+			CMatrix966 tmpMV;
+			glGetFloatv(GL_MODELVIEW_MATRIX, tmpMV);
+			CMatrix966 tmp = tmpProj * tmpMV;
+			CVector966 ans = tmp.MulPosition(pos);
+		}
+	}
+	int tag = 0;
+	while ((tag = lpszText.Find("\n", 0)) >= 0)
+	{
+		double height = Create2DFont(lpszText.Left(tag).GetBuffer(0), pos[0], pos[1], pos[2], size, color, format);
+		lpszText = lpszText.Right(lpszText.GetLength() - tag - 1);
+		pos[1] -= 1.5 * height;
+	}
+	Create2DFont(lpszText.GetBuffer(0), pos[0], pos[1], pos[2], size, color, format);
+
+	glPopAttrib();
+}
+
+/**
+ * \brief 光栅位图2D字体（只支持单行显示）
  * \param str 字符串内容
  * \param x 列位置（-1~1）
  * \param y 行位置（-1~1）
@@ -113,6 +162,213 @@ void CFont966::Font2DBmp(CString str, double x, double y, int type, int color)
 		default:break;
 		}
 	}
+
+	glPopAttrib();
+}
+
+/**
+ * \brief 快速英文字体，只能在中心设置字体（左底对齐）
+ * \param str 输出字串
+ */
+void CFont966::Font3DEnglish(CString str)
+{
+	glPushAttrib(GL_ENABLE_BIT | GL_POLYGON_BIT);
+	glDisable(GL_LIGHTING);
+	glDisable(GL_TEXTURE_2D);
+
+	int front;
+	glGetIntegerv(GL_FRONT_FACE, &front);
+	glPushMatrix();
+	glListBase(iFont3DListbase);
+	glCallLists(str.GetLength(), GL_UNSIGNED_BYTE, static_cast<LPCTSTR>(str) ) ;	
+	glPopMatrix();
+	glFrontFace(front);
+
+	glPopAttrib();
+}
+
+/**
+ * \brief 英文字体
+ * \param str 输出字串
+ * \param pos 位置
+ * \param size 大小
+ * \param format 对齐格式
+ * \param normal 朝向，未指定就是+z
+ */
+void CFont966::Font3DEnglish(CString str, CVector966 pos, double size, int format, CVector966* normal)
+{
+	glPushAttrib(GL_ENABLE_BIT | GL_POLYGON_BIT);
+	glDisable(GL_LIGHTING);
+	glDisable(GL_TEXTURE_2D);
+
+	int front;
+	glGetIntegerv(GL_FRONT_FACE, &front);
+	float len = 0;
+	if(format & DT_CENTER || format & DT_RIGHT)		//需要知道写入的字符串有多宽。
+	{
+		glPushMatrix();
+		glLoadIdentity();
+		glListBase(iFont3DListbase) ;
+		glCallLists(str.GetLength(), GL_UNSIGNED_BYTE, static_cast<LPCTSTR>(str) ) ;	//先写一遍。写到眼前看不到。
+		CMatrix966 mat;
+		glGetFloatv(GL_MODELVIEW_MATRIX, mat);
+		glPopMatrix();
+		len = mat[12];
+	}
+	double fs = size*1.674;
+	double my = 1.674*0.640625;
+	double mx = 1.674*len;
+
+	glPushMatrix();
+	glTranslated(pos.x, pos.y, pos.z);
+	glScaled(fs, fs, fs);
+	if(normal)
+	{
+		CVector966 dir = *normal;
+		CEuler966 hpr;
+		hpr = dir.ToEuler();
+		glRotated(hpr.h, 0, 1, 0);
+		glRotated(hpr.p, 1, 0, 0);
+	}
+	if(format & DT_BOTTOM)//垂直底部对齐
+	{
+		glTranslated(0, 0, 0);
+	}	
+	else if(format & DT_VCENTER)//垂直中心对齐
+	{
+		glTranslated(0, -my / 2, 0);
+	}	
+	else if (format & DT_TOP)//垂直顶部对齐
+	{
+		glTranslated(0, -my, 0);
+	}
+	if(format & DT_CENTER)//水平中心对齐
+	{
+		glTranslated(-mx / 2, 0, 0);
+	}
+	else if(format & DT_RIGHT)//水平右对齐
+	{
+		glTranslated(-mx, 0, 0);
+	}
+	else if (format & DT_LEFT)
+	{
+		glTranslated(0, 0, 0);
+	}
+	glListBase(iFont3DListbase) ;
+	glCallLists(str.GetLength(), GL_UNSIGNED_BYTE, static_cast<LPCTSTR>(str) ) ;	
+	glPopMatrix();
+	glFrontFace(front);
+	
+	glPopAttrib();
+}
+
+/**
+ * \brief 快速中文字体，只能在中心设置字体（左底对齐）
+ * \param str 输出字串
+ * \param bStatic 是否为静态字体（可直接调用，不必重绘）
+ */
+void CFont966::Font3DChinese(CString str, BOOL bStatic)
+{
+	glPushAttrib(GL_ENABLE_BIT | GL_POLYGON_BIT);
+	glDisable(GL_LIGHTING);
+	glDisable(GL_TEXTURE_2D);
+
+	int front;
+	glGetIntegerv(GL_FRONT_FACE, &front);
+	if(bStatic)//是静态文本
+	{
+		int n=caFont3D.GetSize();
+		int tag = n + 5;
+		for(int i = 1; i < n; i++)//查找是否已经存在了这个字符串
+		{
+			if(str.Compare(caFont3D[i].string)==0)
+			{
+				tag = i;
+				break;
+			}		
+		}
+		if(tag < n)//找到了
+		{
+
+			for(int i = 0; i < caFont3D[tag].listLen; i++)
+			{
+				glCallList(caFont3D[tag].listStart + i);
+			}
+			glFrontFace(front);
+			return;
+		}
+	}
+	//没找到或者是变动的字符串
+	HDC hDC = wglGetCurrentDC();
+	//设置当前字体
+	SelectObject(wglGetCurrentDC(), hFont3DChn);
+	DWORD dwChar;
+	CArray<DWORD,DWORD> dwCharArray;
+	int n = str.GetLength();
+	for(int i = 0; i < n; i++)
+	{
+		unsigned char a = static_cast<unsigned char>(str[i]);
+		unsigned char b = 0;
+		if(i < n - 1)
+		{
+			b = static_cast<unsigned char>(str[i + 1]);
+		}
+		if(IsDBCSLeadByte(a))
+		{
+			dwChar=static_cast<DWORD>(a << 8 | b);
+			i++;
+		}
+		else
+		{
+			dwChar=a;
+		}
+		dwCharArray.Add(dwChar);
+	}
+	int ListBase = glGenLists(dwCharArray.GetSize());
+	GLYPHMETRICSFLOAT pgmf[1];
+	for(int i = 0; i < dwCharArray.GetSize(); i++)
+	{
+		wglUseFontOutlines(hDC, dwCharArray[i], 1, ListBase + i, 0.0, 0.1f, WGL_FONT_POLYGONS, pgmf);
+	}
+	//立即调用，调用结束后销毁。
+	int len = dwCharArray.GetSize();
+	for(int i = 0; i < len; i++)
+	{
+		glCallList(ListBase + i);
+	}
+	if(bStatic)//是静态文本
+	{
+		//保存下来
+		FontList3D Font3D;
+		Font3D.listLen = dwCharArray.GetSize();
+		Font3D.listStart = ListBase;
+		Font3D.string = str;
+		caFont3D.Add(Font3D);
+	}
+	else//直接删除
+	{
+		glDeleteLists(ListBase,len);
+	}
+	glFrontFace(front);
+
+	glPopAttrib();
+}
+
+void CFont966::Font3DChinese(CString str, CVector966 pos, double size, int format, BOOL bStatic)
+{
+	glPushAttrib(GL_ENABLE_BIT | GL_POLYGON_BIT);
+	glDisable(GL_LIGHTING);
+	glDisable(GL_TEXTURE_2D);
+
+	glPushMatrix();
+	glTranslated(pos.x, pos.y, pos.z);
+	glScalef(size, size, size);
+	glScalef(2, 2, 2);
+	float xoff = -(format & 3) * str.GetLength() * 0.25;
+	float yoff = -(2 - (format >> 2 & 3)) * 0.455297 + 0.102;				//	 DT_TOP 0  DT_VCENTER 100 DT_BOTTOM 1000
+	glTranslated(xoff,yoff,0);
+	Font3DChinese(str,bStatic);
+	glPopMatrix();
 
 	glPopAttrib();
 }
