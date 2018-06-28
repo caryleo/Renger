@@ -8,8 +8,8 @@
 #define POINTNUM 200
 #define CIRCLENUM 20
 #define PI 3.1415926
-CModelLoader m_loader;
-CModelLoader m_loader1;
+CModelLoader m_loader_car;
+CModelLoader m_loader_lupai;
 CVector966 tracePointPos[POINTNUM];//姓名轨迹点
 CVector966 refCircle[CIRCLENUM];//参考圆轨迹点
 CVector966 allPointPos[POINTNUM*CIRCLENUM];//计算轨迹点位置结果
@@ -34,8 +34,8 @@ CMyOpenGL::~CMyOpenGL(void)
 */
 void CMyOpenGL::PostInit(void)
 {
-	m_loader1.Init(3);
-	m_loader.Init(2);
+	m_loader_lupai.Init(3);
+	m_loader_car.Init(2);
 	car->init(Point_AABB(0,0,-50,15,5,25,0,0,-1),0);//初始化汽车类
 	car->setGothicTrans_car(
 		0, 0 , -50 ,   
@@ -62,11 +62,11 @@ void CMyOpenGL::InDraw(void)
 		0.1, 0.1, 0.1 ,      //表示xyz放大倍数  
 		180 , 0 , 1 , 0  //表示旋转  
 	};
-	m_loader1.DrawModel(gothicTrans);
+	m_loader_lupai.DrawModel(gothicTrans);
     glPopMatrix();
 	glPushMatrix();
 	car->car_box.DrawAABBBoundingBox();
-	m_loader.DrawModel(car->gothicTrans_car);
+	m_loader_car.DrawModel(car->gothicTrans_car);
 	for (int i=0;i<car->wall.size();i++)
 	{
 		car->wall[i].DrawAABBBoundingBox();
