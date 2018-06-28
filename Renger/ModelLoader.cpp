@@ -41,7 +41,7 @@ void CModelLoader::Init(int type)
 		gothicLoader->Import3DS(&gothicModel, "Data/3ds/lupai4.3DS");
 		break;
 	case 5:
-		gothicLoader->Import3DS(&gothicModel, "Data/3ds/model.3DS");
+		gothicLoader->Import3DS(&gothicModel, "Data/3ds/CWom0001.3DS");
 		break;
 	case 6:
 		gothicLoader->Import3DS(&gothicModel, "Data/3ds/lupai3.3DS");

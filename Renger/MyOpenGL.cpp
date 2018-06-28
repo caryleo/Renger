@@ -14,6 +14,8 @@ CModelLoader m_loader_yuaubao;
 CModelLoader m_loader_hulan;
 CModelLoader m_loader_fangwu;
 CModelLoader m_loader_fangwu2;
+CModelLoader m_loader_luren;
+CModelLoader m_loader_lupai4;
 struct Hulan
 {
 	double x,z,rotate;
@@ -47,6 +49,8 @@ void CMyOpenGL::PostInit(void)
 	
 	m_loader_lupai.Init(3);//路牌
 	m_loader_car.Init(2);//汽车
+	m_loader_lupai4.Init(4);//路牌4
+	m_loader_luren.Init(5);//路人
 	m_loader_yuaubao.Init(11);//元宝
 	m_loader_hulan.Init(10);//护栏
 	m_loader_fangwu.Init(9);//房屋
@@ -83,6 +87,12 @@ void CMyOpenGL::PostInit(void)
 
 	car->addYuanbao(0,300);
 	car->addYuanbao(150,300);
+	car->addYuanbao(400,300);
+	car->addYuanbao(400,50);
+	car->addYuanbao(300,-150);
+	car->addYuanbao(-300,-250);
+	car->addYuanbao(-200,50);
+	car->addYuanbao(-200,400);
 }
 
 
@@ -237,8 +247,23 @@ void CMyOpenGL::InDraw(void)
 		0.2, 0.2, 0.2 ,      //表示xyz放大倍数  
 		90 , 0 , 1 , 0  //表示旋转  
 		);
+
+
 	m_loader_fangwu2.DrawModel(gothicTrans_fangwu);
 
+	float gothicTransLupai4[10] = { 
+		450,0 , -50, //表示在世界矩阵的位置  
+		0.2, 0.1, 0.1 ,      //表示xyz放大倍数  
+		0 , 0 , 1 , 0  //表示旋转  
+	};
+	m_loader_lupai4.DrawModel(gothicTransLupai4);
+
+	float gothicTransLuren[10] = { 
+		-100,0 , 200, //表示在世界矩阵的位置  
+		0.2, 0.2, 0.2 ,      //表示xyz放大倍数  
+		0 , 0 , 1 , 0  //表示旋转  
+	};
+	m_loader_luren.DrawModel(gothicTransLuren);
 
 
 
