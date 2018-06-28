@@ -3,11 +3,11 @@
 #include <gl/gl.h>
 #include "CLoad3DS.h"
 
-CLoad3DS *gothicLoader=new(CLoad3DS);
+
 GLuint texture[1]={0};
 CModelLoader::CModelLoader(void)
 {
-	
+	gothicLoader=new(CLoad3DS);
 }
 
 
