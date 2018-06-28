@@ -14,6 +14,7 @@ CControl966::CControl966(COpenGL* pGL)
 	pOpenGL = pGL;
 	pCamera = pGL->pCamera;
 	pModal = pGL->pModal;
+	pCar = pGL->car;
 	//所有按键初始状态下都没有被按下
 	for (int i = 0; i < KS_ALL; i++)
 	{
@@ -50,7 +51,7 @@ bool CControl966::PreTranslateMessage(unsigned message, unsigned wParam, unsigne
 	point.y = HIWORD(lParam);
 	if (point.x != 0 && point.y != 0)
 	{
-		std::cout << point.x << " " << point.y << std::endl;
+		//std::cout << point.x << " " << point.y << std::endl;
 	}
 	if (message == WM_LBUTTONDOWN)
 	{
@@ -101,7 +102,7 @@ bool CControl966::PreTranslateMessage(unsigned message, unsigned wParam, unsigne
 	}
 	if (message == WM_MOUSEMOVE)
 	{
-		std::cout << "HA!" << std::endl;
+		//std::cout << "HA!" << std::endl;
 		if (!bIsMouseAvail)
 		{
 			return true;
@@ -113,7 +114,7 @@ bool CControl966::PreTranslateMessage(unsigned message, unsigned wParam, unsigne
 	}
 	if (message == WM_MOUSEWHEEL)
 	{
-		std::cout << "NA!" << std::endl;
+		//std::cout << "NA!" << std::endl;
 		if (!bIsMouseAvail)
 		{
 			return true;
@@ -286,7 +287,7 @@ void CControl966::MouseControl(unsigned message, CPoint point, int delta)
 	else if (message == WM_MOUSEWHEEL)
 	{
 		isRet = true;
-		std::cout << delta << std::endl;
+		//std::cout << delta << std::endl;
 		pCamera->Move(2, -delta * 0.01);
 	}
 	if (isRet)
@@ -317,28 +318,28 @@ bool CControl966::KeyProcess()
 
 	if (bKeyState[KS_LEFT])
 	{
-		pOpenGL->car->turnLeft(5);
+		pCar->turnLeft(5);
 		bIsAnyDown = true;
 	}
 	if (bKeyState[KS_RIGHT])
 	{
-		pOpenGL->car->turnRight(5);
+		pCar->turnRight(5);
 		bIsAnyDown = true;
 	}
 	if (bKeyState[KS_UP])
 	{
-		pOpenGL->car->speedUp();
+		pCar->speedUp();
 		bIsAnyDown = true;
 	}
 	else if (bKeyState[KS_DOWN])
 	{
-		pOpenGL->car->speedDown();
+		pCar->speedDown();
 		bIsAnyDown = true;
 		PlaySound(NULL, NULL, 0);
 	}
 	else 
 	{
-		pOpenGL->car->speedDownNatural();
+		pCar->speedDownNatural();
 		PlaySound(NULL, NULL, 0);
 	}
 	//平移

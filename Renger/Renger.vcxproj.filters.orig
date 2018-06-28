@@ -102,6 +102,8 @@
     <ClInclude Include="ModelLoader.h">
       <Filter>头文件</Filter>
     </ClInclude>
+<<<<<<< HEAD
+=======
     <ClInclude Include="Scene.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -111,9 +113,7 @@
     <ClInclude Include="car.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="CFont966.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
+>>>>>>> 20493ba0d226ddcc625a539c249fd81aa0e3c86f
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Renger.cpp">
@@ -164,6 +164,8 @@
     <ClCompile Include="ModelLoader.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+<<<<<<< HEAD
+=======
     <ClCompile Include="Scene.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -173,9 +175,7 @@
     <ClCompile Include="car.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="CFont966.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
+>>>>>>> 20493ba0d226ddcc625a539c249fd81aa0e3c86f
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Renger.rc">

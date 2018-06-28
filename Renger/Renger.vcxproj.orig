@@ -110,9 +110,11 @@
     <None Include="UserImages.bmp" />
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
+=======
     <ClInclude Include="aabb.h" />
     <ClInclude Include="car.h" />
-    <ClInclude Include="CFont966.h" />
+>>>>>>> 20493ba0d226ddcc625a539c249fd81aa0e3c86f
     <ClInclude Include="CLoad3DS.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="ModelLoader.h" />
@@ -134,9 +136,11 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
+=======
     <ClCompile Include="aabb.cpp" />
     <ClCompile Include="car.cpp" />
-    <ClCompile Include="CFont966.cpp" />
+>>>>>>> 20493ba0d226ddcc625a539c249fd81aa0e3c86f
     <ClCompile Include="CLoad3DS.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="ModelLoader.cpp" />

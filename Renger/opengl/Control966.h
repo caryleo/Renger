@@ -47,6 +47,7 @@ private:
 	COpenGL *pOpenGL;	
 	CCamera966 *pCamera;
 	CModal966 *pModal;
+	CAR *pCar;
 	//Êó±ê×´Ì¬
 	bool bMouseLeftDown;
 	bool bMouseRightDown;

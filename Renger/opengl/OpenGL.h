@@ -20,6 +20,7 @@
 
 
 #include <afxver_.h>
+#include "../CFont966.h"
 
 
 class AFX_CLASS_EXPORT COpenGL  
@@ -39,6 +40,7 @@ public:
 	virtual bool OnMouse(int message,CPoint pt);
 	friend class CControl966;
 	friend class CCamera966;
+	friend class CFont966;
 protected:
 	HDC hDC;
 	HWND m_hmyWnd;			//绘制窗口句柄,一般是View的句柄
@@ -49,6 +51,7 @@ protected:
 	CRect m_rect,m_windowrect;	//窗口大小
 	CCamera966 *pCamera;
 	CModal966 *pModal;
+	CFont966 *pFont;
 	CAR *car;//汽车
 	float fps;
 };

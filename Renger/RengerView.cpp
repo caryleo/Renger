@@ -172,7 +172,7 @@ void CRengerView::OnInitialUpdate()
 	CRect rect;
 	GetClientRect(rect);
 	m_gl.OnSize(rect.Width(), rect.Height());
-	SetTimer(1, 30, nullptr);
+	SetTimer(1, 10, nullptr);
 	// TODO: 在此添加专用代码和/或调用基类
 }
 

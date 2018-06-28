@@ -56,7 +56,7 @@ void CAR::update()//更新汽车运动状态
 	}
 
 	int tmpIndex=-1;
-	for(int i=0;i<wall.size();i++)//扫描一遍所有墙
+	for(int i = 0; i < wall.size();i++)//扫描一遍所有墙
 	{
 		if(wall[i].IsOrNotInterection(car_box))
 		{

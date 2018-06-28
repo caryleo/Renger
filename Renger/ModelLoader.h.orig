@@ -1,0 +1,19 @@
+#pragma once
+#include "CLoad3DS.h"
+
+class CModelLoader
+{
+public:
+	CModelLoader(void);
+	~CModelLoader(void);
+	t3DModel gothicModel;
+<<<<<<< HEAD
+=======
+	CLoad3DS *gothicLoader;
+>>>>>>> 20493ba0d226ddcc625a539c249fd81aa0e3c86f
+
+	void Init(int type);
+	void DrawModel(float gothicTrans[10]);
+	
+};
+

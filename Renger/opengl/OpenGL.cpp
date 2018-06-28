@@ -85,9 +85,10 @@ bool COpenGL::Init(HWND hWnd)	//初始化OpenGL环境
 	PerspectiveParam[3]=10000;
 
 	pModal = new CModal966;
+	car=new CAR();
 	pCamera = new CCamera966(this);
 	pControl = new CControl966(this);
-	car=new CAR();
+	
 	pControl->cpMousePos.x = m_rect.right / 2;
 	pControl->cpMousePos.y = m_rect.bottom / 2;
 	PostInit();
