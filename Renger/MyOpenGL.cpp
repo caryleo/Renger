@@ -216,7 +216,6 @@ void CMyOpenGL::InDraw(void)
 	scene.Render();
 	glPopMatrix();
 
-
 	glPushMatrix();
 	float gothicTrans_fangwu[10] = { 
 		100,-10, 200 , //表示在世界矩阵的位置  
@@ -322,63 +321,22 @@ void CMyOpenGL::Update()
  */
 void CMyOpenGL::DrawAxes()
 {
-
+	glPushAttrib(GL_ENABLE_BIT);
+	glDisable(GL_LIGHTING);
+	glDisable(GL_TEXTURE_2D);
+	glPushMatrix();
+	glBegin(GL_LINES);
+	glColor3f(1,0,0);
+	glVertex3f(0,0,0);
+	glVertex3f(30,0,0);
+	glColor3f(0,1,0);
+	glVertex3f(0,0,0);
+	glVertex3f(0,30,0);
+	glColor3f(0,0,1);
+	glVertex3f(0,0,0);
+	glVertex3f(0,0,30);
+	glEnd();
+	glPopMatrix();
+	glPopAttrib();
 }
 
-/**
- * \brief 画一个球
- * \param radius 半径
- * \param lon 经向分割
- * \param lat 纬向分割
- */
-void CMyOpenGL::DrawBall(GLfloat radius,int lon,int lat)
-{
-
-}
-
-/**
- * \brief 计算法向量
- * \param v1 第一个点
- * \param v2 第二个点
- * \param v3 第三个点
- * \param normal 法向量
- */
-void CMyOpenGL::CalculateNormal(GLfloat v1[],GLfloat v2[],GLfloat v3[],GLfloat normal[])
-{
-
-}
-
-/**
- * \brief 法向量规范化
- * \param v 法向量
- */
-void CMyOpenGL::Normalize(GLfloat *v)
-{
-
-}
-
-bool CMyOpenGL::GetTexture()
-{
-	return true;
-}
-
-void CMyOpenGL::DrawBox(float size)
-{
-
-}
-
-/**
-* \brief 绘制小机器人
-*/
-void CMyOpenGL::DrawRobot()
-{
-
-}
-
-/**
-* \brief 绘制小飞船
-*/
-void CMyOpenGL::DrawUfo()
-{
-
-}

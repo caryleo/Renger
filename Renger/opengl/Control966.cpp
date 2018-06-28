@@ -276,6 +276,7 @@ void CControl966::MouseControl(unsigned message, CPoint point, int delta)
 			return;
 		}
 		//std::cout << dis.x << " " << dis.y << std::endl;
+		//std::cout << point.x << " " << point.y << std::endl;
 		int lenx = pOpenGL->m_windowrect.right;
 		int leny = pOpenGL->m_windowrect.bottom;
 		double movx = dis.x * 1.0 / (lenx * 1.0 / 180);

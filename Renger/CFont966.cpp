@@ -62,10 +62,58 @@ void CFont966::PopOrthoRange()
 	}
 }
 
-void CFont966::Font2DBmp(CString str, double x, double y, int size, int color, int format)
+/**
+ * \brief 光栅位图2D字体
+ * \param str 字符串内容
+ * \param x 列位置（-1~1）
+ * \param y 行位置（-1~1）
+ * \param type 字体类型，1为8号点阵，2为9号点阵，3为10号Times Roman，4为24号Times Roman，5为10号Helvetica，6为12号Helvetica，7为18号Helvetica
+ * \param color 颜色，最好灰度
+ */
+void CFont966::Font2DBmp(CString str, double x, double y, int type, int color)
 {
 	glPushAttrib(GL_ENABLE_BIT | GL_POLYGON_BIT);
 	glDisable(GL_LIGHTING);
+	glDisable(GL_TEXTURE_2D);
+
+	glMatrixMode(GL_PROJECTION);
+	glPushMatrix();
+	glLoadIdentity();
+	glOrtho(minCor, maxCor, minCor, maxCor, -1.0f, 1.0f);
+	glMatrixMode(GL_MODELVIEW);
+	glPushMatrix();
+	glLoadIdentity();
+	glColor3ub(GetRValue(color),GetGValue(color),GetBValue(color));
+	glRasterPos2f(x, y);
+	for(int i = 0; i < str.GetLength(); i++)
+	{
+		switch (type)
+		{
+		case 1:
+			glutBitmapCharacter(GLUT_BITMAP_8_BY_13, str.GetAt(i));
+			break;
+		case 2:
+			glutBitmapCharacter(GLUT_BITMAP_9_BY_15, str.GetAt(i));
+			break;
+		case 3:
+			glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_10, str.GetAt(i));
+			break;
+		case 4:
+			glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, str.GetAt(i));
+			break;
+		case 5:
+			glutBitmapCharacter(GLUT_BITMAP_HELVETICA_10, str.GetAt(i));
+			break;
+		case 6:
+			glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, str.GetAt(i));
+			break;
+		case 7:
+			glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, str.GetAt(i));
+			break;
+		default:break;
+		}
+	}
+
 	glPopAttrib();
 }
 
@@ -136,15 +184,83 @@ BOOL CFont966::Create3DFont()
 		0.1f,					// Extrusion
 		WGL_FONT_POLYGONS,		// Format or WGL_FONT_LINES
 		agmf) ;					// Information pointer
-	if (hOldFont) pdc->SelectObject(hOldFont) ;
+	if (hOldFont)
+	{
+		pdc->SelectObject(hOldFont) ;
+	}
+	
 	caFont3D.Add(Font3D);
-	hFont3DChn=MakeFont("等线", 1);	//构造一个中文字体。
+	hFont3DChn = MakeFont("等线", 1);	//构造一个中文字体。
 	return TRUE;
 }
 
-double CFont966::Create2DFont(char* lpszText, double x, double y, double z, int isize, int color, int format)
+double CFont966::Create2DFont(char* lpszText, float x, float y, float z, int isize, int color, int format)
 {
-	return 0;
+	if(isize == 0)
+	{
+		return 0.0;
+	}
+	glPushAttrib(GL_ENABLE_BIT);
+	glDisable(GL_LIGHTING);
+	glDisable(GL_TEXTURE_2D);
+
+	glMatrixMode(GL_PROJECTION);
+	glPushMatrix();
+	glLoadIdentity();
+	glOrtho(minCor, maxCor, minCor, maxCor, -100, 100);
+	// 保存原模型变换矩阵，平移至( x, y )
+	glMatrixMode(GL_MODELVIEW);
+	glPushMatrix();
+	glLoadIdentity();
+
+	int n = caFont2D.GetSize();
+	HFONT font = 0;
+	for(int i = 0; i < n; i++)
+	{
+		if(isize == caFont2D[i].size)
+		{
+			font = caFont2D[i].font;
+			break;
+		}
+	}
+	if(!font)//没找到
+	{
+		font = MakeFont("等线", isize);
+		FontList2D font2D;
+		font2D.font = font;
+		font2D.size = isize;
+		caFont2D.Add(font2D);
+	}
+	HDC hdc = wglGetCurrentDC();
+	HFONT hOldFont = static_cast<HFONT>(SelectObject(hdc, font));
+	SIZE sizeStr, sizeImage;
+	::GetTextExtentPoint32(hdc, lpszText, strlen(lpszText), &sizeStr);
+	//由于只能把一块内存的内容贴到当前hdc中，所以要构造内存数据给hdc
+	UCHAR* pBmpBits=CreateTextBmp(hdc, font, lpszText, sizeStr, sizeImage);
+	RECT rect;
+    GetClientRect(hWnd,&rect);
+	float xoff = -(format & 3) * sizeStr.cx / float(rect.right) / 2;		
+	float yoff = -(2 - (format >> 2 & 3)) * sizeStr.cy / float(rect.bottom) / 2;
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+	int a = LOBYTE((color)>>24);
+	if(a == 0 || a == 255)
+	{
+		glColor3ub(GetRValue(color), GetGValue(color), GetBValue(color));
+	}
+	else
+	{
+		glColor4ub(GetRValue(color), GetGValue(color), GetBValue(color), a);
+	}	
+	glRasterPos3d(x + xoff, y + yoff, -z);
+    glBitmap(sizeImage.cx, sizeImage.cy, 0, 2.0, sizeImage.cx + 2.0f, 0.0, pBmpBits);
+	delete []pBmpBits;
+	SelectObject(hdc, hOldFont);
+	glPopMatrix();
+	glMatrixMode(GL_PROJECTION);
+	glPopMatrix();
+	glMatrixMode(GL_MODELVIEW);
+	glPopAttrib();
+	return double(sizeStr.cy) / rect.bottom;
 }
 
 HFONT CFont966::MakeFont(char* faceName, int height)
