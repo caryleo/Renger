@@ -1,12 +1,15 @@
 #include "StdAfx.h"
 #include "MyOpenGL.h"
+#include "aabb.h"
+#include "car.h"
+#include "CLoad3DS.h"
 #include <cmath>
 #include <iostream>
-#include "ModelLoader.h"
 #define POINTNUM 200
 #define CIRCLENUM 20
 #define PI 3.1415926
-
+CModelLoader m_loader;
+CModelLoader m_loader1;
 CVector966 tracePointPos[POINTNUM];//姓名轨迹点
 CVector966 refCircle[CIRCLENUM];//参考圆轨迹点
 CVector966 allPointPos[POINTNUM*CIRCLENUM];//计算轨迹点位置结果
@@ -31,6 +34,14 @@ CMyOpenGL::~CMyOpenGL(void)
 */
 void CMyOpenGL::PostInit(void)
 {
+	m_loader1.Init(3);
+	m_loader.Init(2);
+	car->init(Point_AABB(0,0,-50,15,5,25,0,0,-1),0);//初始化汽车类
+	car->setGothicTrans_car(
+		0, 0 , -50 ,   
+		0.0001 , 0.0001 , 0.0001 ,      
+		0 , 0 , 0 , 0);
+	car->addWall(0,-20,400,0,380,100);
 
 }
 
@@ -40,9 +51,27 @@ void CMyOpenGL::PostInit(void)
 */
 void CMyOpenGL::InDraw(void)
 {
+	glPushMatrix();
 	scene.Render();
 
 
+	glPopMatrix();
+	glPushMatrix();
+	float gothicTrans[10] = { 
+		50,0 , -50 , //表示在世界矩阵的位置  
+		0.1, 0.1, 0.1 ,      //表示xyz放大倍数  
+		180 , 0 , 1 , 0  //表示旋转  
+	};
+	m_loader1.DrawModel(gothicTrans);
+    glPopMatrix();
+	glPushMatrix();
+	car->car_box.DrawAABBBoundingBox();
+	m_loader.DrawModel(car->gothicTrans_car);
+	for (int i=0;i<car->wall.size();i++)
+	{
+		car->wall[i].DrawAABBBoundingBox();
+	}
+	glPopMatrix();
 }
 
 
@@ -56,7 +85,7 @@ bool CMyOpenGL::OnKey(unsigned char nChar, bool bDown)
 */
 void CMyOpenGL::Update()
 {
-	
+	car->update();
 }
 
 /**
@@ -64,7 +93,7 @@ void CMyOpenGL::Update()
  */
 void CMyOpenGL::DrawAxes()
 {
-	
+
 }
 
 /**
@@ -75,7 +104,7 @@ void CMyOpenGL::DrawAxes()
  */
 void CMyOpenGL::DrawBall(GLfloat radius,int lon,int lat)
 {
-	
+
 }
 
 /**

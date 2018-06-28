@@ -110,6 +110,8 @@
     <None Include="UserImages.bmp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="aabb.h" />
+    <ClInclude Include="car.h" />
     <ClInclude Include="CLoad3DS.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="ModelLoader.h" />
@@ -131,6 +133,8 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="aabb.cpp" />
+    <ClCompile Include="car.cpp" />
     <ClCompile Include="CLoad3DS.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="ModelLoader.cpp" />

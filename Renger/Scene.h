@@ -37,7 +37,7 @@ public:
 //
 //////////////////////////////////////////////////////////////////////////
 /** 天空盒类 */
-class CSkyBox
+class CSkyBox : public COpenGL
 {
 public:
 	CSkyBox(void);
@@ -55,6 +55,7 @@ private:
 	float       width;          /**< 宽度 */
 	float       height;         /**< 高度 */
 	float       yRot;           /**< 绕Y轴旋转 */
+	CVector966 m_Position;
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -210,5 +211,4 @@ public:
 	CTerrain m_Terrain;
 	CSnow m_Snow;
 	bool IsInit;
-
 };

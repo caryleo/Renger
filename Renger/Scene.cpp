@@ -1,8 +1,9 @@
 #include "stdafx.h"
 #include "Scene.h"
+#include "opengl\OpenGL.h"
 #include <afxver_.h>
 
-CModelLoader m_loader;
+
 //////////////////////////////////////////////////////////////////////////
 //
 // CBMPLoader
@@ -191,8 +192,9 @@ void CSkyBox::render()
 
 	/** 开始绘制 */
 	glPushMatrix();
-	glTranslatef(500,35,400);
-
+	
+	glTranslatef(500,50,400);
+	//glTranslatef(pControl->pCamera->cvMovVec.x,pControl->pCamera->cvMovVec.y,pControl->pCamera->cvMovVec.z);
 	glRotatef(yRot,0.0f,1.0f,0.0f);
 
 	/** 绘制背面 */
@@ -268,7 +270,7 @@ void CSkyBox::render()
 
 	glDisable(GL_TEXTURE_2D);
 
-	yRot += 0.01f;
+	yRot += 0.05f;
 	if(yRot > 360.0f)
 		yRot = 0.0f;
 }
@@ -675,17 +677,21 @@ bool CSnow::Init(int num)
 		{
 			/** 初始化位置 */
 			float x,y,z,vx,vy,vz;
-			x = 0.1f * (rand()%50) - 2.5f;
-			y = 2 + 0.1f * (rand()%2);
+			y = 0.1f * (rand()%100);
+		    x = 0.1f * (rand()%5000) - 60.0f;
 
-			if((int)x%2 == 0)
-				z = rand()%6;
-			else 
-				z = -rand()%3;
+			if ((int)x%2==0)
+			{
+				z = rand()%60;
+			}else
+			{
+				z = -rand()%40;
+			}
+
 			m_pList[i].position = CVector966(x,y,z);
 
 			/** 初始化速度 */
-			vx = 0.00001 * (rand()%100);
+			vx =-(float)(0.00001 * (rand()%1000));
 			vy = 0.0000002 * (rand()%28000);
 			vz = 0.0;
 			m_pList[i].velocity = CVector966(vx,vy,vz);
@@ -694,13 +700,13 @@ bool CSnow::Init(int num)
 			m_pList[i].acceleration = CVector966(0.0,0.000005f,0.0);
 
 			/** 初始化粒子生命时间 */
-			m_pList[i].lifetime = 100;
+			m_pList[i].lifetime = 200;
 
 			/** 初始化粒子的尺寸 */
 			m_pList[i].size = 0.01f;
 
 			/** 初始化粒子的消失速度 */
-			m_pList[i].dec = 0.005 * (rand()%50);
+			m_pList[i].dec = 0.005 * (rand()%10);
 
 			/** 初始化粒子的颜色 */
 			m_pList[i].color[0] = 255;
@@ -779,17 +785,22 @@ void CSnow::Update()
 		{
 			/** 初始化位置 */
 			float x,y,z,vx,vy,vz;
-			x = 0.1f * (rand()%50) - 2.5f;
-			y = 2 + 0.1f * (rand()%2);
+			y = 0.1f * (rand()%100);
+			x = 0.1f * (rand()%5000) - 60.0f;
+			if ((int)x%2==0)
+			{
+				z = rand()%60;
+			}else
+			{
+			  z = -rand()%40;
+			}
 
-			if((int)x%2 == 0)
-				z = rand()%6;
-			else 
-				z = -rand()%3;
+
 			m_pList[i].position = CVector966(x,y,z);
 
 			/** 初始化速度 */
-			vx = (float)(0.00001 * (rand()%100));
+			vx = -(float)(0.00001 * (rand()%1000));
+
 			vy = (float)(0.0000002 * (rand()%28000));
 			vz = 0.0;
 			m_pList[i].velocity = CVector966(vx,vy,vz);
@@ -798,10 +809,10 @@ void CSnow::Update()
 			m_pList[i].acceleration = CVector966(0.0,0.000005f,0.0);
 
 			/** 初始化生命时间 */
-			m_pList[i].lifetime = 100;
+			m_pList[i].lifetime = 200;
 
 			/** 初始化消失速度 */
-			m_pList[i].dec = 0.005*(rand()%50);
+			m_pList[i].dec = 0.005*(rand()%10);
 		}
 
 	}
@@ -821,27 +832,41 @@ void CScene::Render()
 	{
 		CScene::init();
 	}
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);			
-	glLoadIdentity();
-	gluLookAt(500,220,400,501.99493,219.93904, 400.07977,  0, 1, 0);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	
 
-
+	gluLookAt(500,220,400,502,220, 400,  0, 1, 0);
 	/** 绘制天空 */
 	m_SkyBox.render();
 
 	/** 渲染地形 */
 	m_Terrain.render();
 
-	glTranslatef(504.0f,220.0f,400.0f);
+	//glTranslatef(500.0f,213.0f,400.0f);
 	/** 渲染雪花 */
-	m_Snow.Render();
+	//m_Snow.Render();
 
-	float gothicTrans[10] = {   
-		30,-8 , 30 , //表示在世界矩阵的位置  
-		10, 10, 10 ,      //表示xyz放大倍数  
-		180 , 0 , 1 , 0  //表示旋转  
-	};
-	m_loader.DrawModel(gothicTrans);
+
+
+	//float gothicTrans3[10] = {   
+	//	30,-8 , 0 , //表示在世界矩阵的位置  
+	//	12, 12, 12 ,      //表示xyz放大倍数  
+	//	270 , 0 , 1 , 0  //表示旋转  
+	//};
+	//m_loader.DrawModel(gothicTrans3);
+
+	//float gothicTrans1[10] = {   
+	//	50,-8 , -30 , //表示在世界矩阵的位置  
+	//	2, 2, 2 ,      //表示xyz放大倍数  
+	//	180 , 0 , 1 , 0  //表示旋转  
+	//};
+	//m_loader.DrawModel(gothicTrans1);
+
+	//float gothicTrans2[10] = {   
+	//	20,-8 , -10 , //表示在世界矩阵的位置  
+	//	5, 5, 10 ,      //表示xyz放大倍数  
+	//	90 , 0 , 1 , 0  //表示旋转  
+	//};
+	//m_loader.DrawModel(gothicTrans2);
 
 	glFlush();
 }
@@ -849,14 +874,13 @@ void CScene::Render()
 void CScene::init()
 {
 
-
 	glClearColor(0.0f,0.0f,0.0f,0.0f);
 	glClearDepth(1.0f);
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);
-	glDepthFunc(GL_LEQUAL);										
-	glEnable(GL_CULL_FACE);	
-	glShadeModel(GL_SMOOTH);									
+	glDepthFunc(GL_LEQUAL);
+	glEnable(GL_CULL_FACE);
+	glShadeModel(GL_SMOOTH);							
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 
 	glEnable(GL_TEXTURE_2D);             /**< 开启纹理映射 */   
@@ -866,7 +890,7 @@ void CScene::init()
 	glEnable(GL_BLEND);				     /**< 启用混和 */
 
 	/** 初始化雪花实例 */	
-	if(!m_Snow.Init(5000))
+	if(!m_Snow.Init(30000))
 	{
 		MessageBox(NULL,"雪花系统初始化失败!","错误",MB_OK);
 		exit(-1);
@@ -886,7 +910,6 @@ void CScene::init()
 		exit(0);
 	}
 
-	m_loader.Init(1);
 	IsInit=true;
 }
 

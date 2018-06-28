@@ -4,6 +4,7 @@
 #include "Camera966.h"
 #include "Modal966.h"
 #include "OpenGL.h"
+
 #include <iostream>
 
 CControl966::CControl966(COpenGL* pGL)
@@ -162,6 +163,16 @@ bool CControl966::PreTranslateMessage(unsigned message, unsigned wParam, unsigne
 
 void CControl966::KeyControl()
 {
+	
+	if (bKeyState[KS_LEFT])
+	{
+		pOpenGL->car->turnLeft(5);
+	}
+	if (bKeyState[KS_RIGHT])
+	{
+		pOpenGL->car->turnRight(5);
+	}
+
 	//显示视角：上帝视角、跟踪视角和同步视角
 	if (bKeyState[KS_T_GOD])
 	{
@@ -308,7 +319,18 @@ void CControl966::SetSpeed(float mov_speed, float rot_speed)
 bool CControl966::KeyProcess()
 {
 	bool bIsAnyDown = false;
-
+	if (bKeyState[KS_UP])
+	{
+		pOpenGL->car->speedUp();
+	}
+	else if (bKeyState[KS_DOWN])
+	{
+		pOpenGL->car->speedDown();
+	}
+	else 
+	{
+		pOpenGL->car->speedDownNatural();
+	}
 	//平移
 	if (bKeyState[KS_M_FRONT])
 	{
@@ -466,6 +488,18 @@ bool CControl966::SetKeyStatus(unsigned nInput, bool bState)
 	case 'K':
 		bKeyState[KS_R_DOWN] = bState;
 		break;
+	case 'C':
+		bKeyState[KS_LEFT] = bState;
+		break;
+	case 'B':
+		bKeyState[KS_RIGHT] = bState;
+		break;
+	case 'G':
+		bKeyState[KS_UP] = bState;
+		break;
+	case 'V':
+		bKeyState[KS_DOWN] = bState;
+		break;
 	case '-':
 	case '_':
 	case 189:
@@ -514,31 +548,6 @@ bool CControl966::SetKeyStatus(unsigned nInput, bool bState)
 	}
 	KeyProcess();
 	return true;
-}
-
-/**
- * \brief 更改键盘和鼠标的可用状态
- * \param key 键盘可用状态，0不变，1置true，2置false
- * \param mouse 鼠标可用状态，0不变，1置true，2置false
- */
-void CControl966::SetAvialMode(int key, int mouse)
-{
-	if (key == 1)
-	{
-		bIsKeyAvail = true;
-	}
-	else if (key == 2)
-	{
-		bIsKeyAvail = false;
-	}
-	if (mouse == 1)
-	{
-		bIsMouseAvail = true;
-	}
-	else if (mouse == 2)
-	{
-		bIsMouseAvail = false;
-	}
 }
 
 
