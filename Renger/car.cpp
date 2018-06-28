@@ -35,6 +35,15 @@ void CAR::turnLeft(double deg)//右转
 }
 void CAR::update()//更新汽车运动状态
 {
+	//元宝碰撞检测
+	for(int i=0;i<yuanbao.size();i++)
+	{
+		if(car_box.IsOrNotInterection(yuanbao[i]))
+		{
+			yuanbaoFlag[i]=1;
+		}
+	}
+
 	int tmpIndex=-1;
 	for(int i=0;i<wall.size();i++)//扫描一遍所有墙
 	{
@@ -46,7 +55,7 @@ void CAR::update()//更新汽车运动状态
 	}
 	if(tmpIndex!=-1)
 	{
-		//这里可能有bug
+		
 		double a=wall[tmpIndex].dirx*car_point.dirx+wall[tmpIndex].dirz*car_point.dirz;
 		double b=wall[tmpIndex].dirx*wall[tmpIndex].dirx+wall[tmpIndex].dirz*wall[tmpIndex].dirz+car_point.dirx*car_point.dirx+car_point.dirz*car_point.dirz;
 		double seta=acos(a/sqrt(b));
@@ -55,9 +64,9 @@ void CAR::update()//更新汽车运动状态
 		if(flagSeta<60)//按照垂直碰撞计算,此时并没有更改方向
 		{
 			//还原一步位置
-			gothicTrans_car[0]-=car_point.dirx*10*speed;
-			gothicTrans_car[1]-=car_point.diry*10*speed;
-			gothicTrans_car[2]-=car_point.dirz*10*speed;
+			gothicTrans_car[0]-=car_point.dirx*2*speed;
+			gothicTrans_car[1]-=car_point.diry*2*speed;
+			gothicTrans_car[2]-=car_point.dirz*2*speed;
 
 			car_point.x=gothicTrans_car[0];
 			car_point.y=gothicTrans_car[1];
@@ -69,9 +78,9 @@ void CAR::update()//更新汽车运动状态
 		else 
 		{
 			//首先还原一步位置
-			gothicTrans_car[0]-=car_point.dirx*10*speed;
-			gothicTrans_car[1]-=car_point.diry*10*speed;
-			gothicTrans_car[2]-=car_point.dirz*10*speed;
+			gothicTrans_car[0]-=car_point.dirx*2*speed;
+			gothicTrans_car[1]-=car_point.diry*2*speed;
+			gothicTrans_car[2]-=car_point.dirz*2*speed;
 
 			car_point.x=gothicTrans_car[0];
 			car_point.y=gothicTrans_car[1];
@@ -161,4 +170,9 @@ void CAR::speedDownNatural()
 		if(speed<0)
 			speed=0;
 	}
+}
+void CAR::addYuanbao(double x,double z)//添加元宝
+{
+	AABB tmp=AABB(Point_AABB(x,2,z,2,2,2,0,0,-1));
+	yuanbao.push_back(tmp);
 }

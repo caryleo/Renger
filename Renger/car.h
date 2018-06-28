@@ -13,8 +13,13 @@ public:
 	double speed;//速度
 
 	vector<AABB>wall;
+	vector<AABB>yuanbao;
+	int yuanbaoFlag[100];
 
-	CAR(){};
+	CAR()
+	{
+		memset(yuanbaoFlag,0,sizeof(yuanbaoFlag));
+	};
 	void setGothicTrans_car(double x,double y,double z,double fx,double fy,double fz,double a,double b,double c,double d)
 	{
 		gothicTrans_car[0]=x;gothicTrans_car[1]=y;gothicTrans_car[2]=z;
@@ -30,4 +35,5 @@ public:
 	void speedDown();//减速
 	void speedDownNatural();//汽车的自然减速
 	void addWall(double m_Xmin,double m_Ymin,double m_Zmin,double m_Xmax,double m_Ymax,double m_Zmax);//添加墙壁
+	void addYuanbao(double x,double z);//添加元宝
 };

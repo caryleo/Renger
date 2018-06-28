@@ -42,11 +42,10 @@ double GetVolume();//得到AABB包围盒的体积
 void DrawAABBBoundingBox();//绘制AABB包围盒
 void Translatef(double x,double y,double z);//改变包围盒的位置
 
-//--未写
+
 double dirx,diry,dirz;//如果是墙壁的话，墙壁的摆放方向
 void wallInit();//如果是墙壁，调用这个初始化墙壁的值,
 
-private:
 	double Xmin;//X的最小值
 	double Xmax;//X的最大值
 	double Ymin;//Y的最小值
