@@ -82,6 +82,7 @@ void CMyOpenGL::PostInit(void)
 	pCar->addYuanbao(-300,-250);
 	pCar->addYuanbao(-200,50);
 	pCar->addYuanbao(-200,400);
+
 }
 
 
@@ -259,6 +260,14 @@ void CMyOpenGL::InDraw(void)
 		0, 0, 1 ,0
 	};
 	m_loader_shu.DrawModel(gothicTrans_shu);
+
+	float gothicTrans_Lupai[10]={
+		0,-5 , -50, //表示在世界矩阵的位置  
+		0.08, 0.08, 0.8 ,      //表示xyz放大倍数  
+		0 , 0 , 1 , 0  //表示旋转  
+	};
+	m_loader_lupai.DrawModel(gothicTrans_Lupai);
+
     glPopMatrix();
 
 	glPushMatrix();
@@ -307,12 +316,6 @@ void CMyOpenGL::InDraw(void)
 	sp.Format("当前速度：%.2lf m/s", pCar->speed);
 	pFont->Font2D(sp, CVector966(-0.9f, 0.7f, 0), 24, RGB(255, 255, 255), 0|8 , 0);
 	glPopMatrix();
-	//glPushMatrix();
-	//glLoadIdentity();
-	//CString sss;
-	//sss.Format("Hello World");
-	//pFont->Font3DEnglish(sss);
-	//glPopMatrix();
 
 }
 
