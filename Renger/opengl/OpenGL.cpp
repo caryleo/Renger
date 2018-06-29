@@ -85,8 +85,8 @@ bool COpenGL::Init(HWND hWnd)	//初始化OpenGL环境
 	PerspectiveParam[3]=10000;
 
 	pModal = new CModal966;
-	pCar=new CAR();
-	
+	pCar = new CAR;
+	pScene = new CScene(this);
 	pCamera = new CCamera966(this);
 	pControl = new CControl966(this);
 	pFont = new CFont966(this->pCamera, this->m_hmyWnd);

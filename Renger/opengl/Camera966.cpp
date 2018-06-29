@@ -75,7 +75,7 @@ void CCamera966::SetGameMode(int game)
 {
 	if (iGameMode == 0 || iGameMode == 1)
 	{
-		if (game == 0 || game == 1)
+		if (game == 0)
 		{
 			AfxMessageBox("游戏已经开始！");
 		}
@@ -161,6 +161,7 @@ void CCamera966::Init(COpenGL* pGL)
 	fViewDis = -10;
 	pOpenGL = pGL;
 	pModal = pGL->pModal;
+	//
 	iGameMode = 0;
 }
 

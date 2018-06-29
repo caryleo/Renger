@@ -200,7 +200,7 @@ void CMyOpenGL::drawHulan()
 void CMyOpenGL::InDraw(void)
 {
 	glPushMatrix();
-	scene.Render();
+	pScene->Render();
 	glPopMatrix();
 	DrawAxes(1000);
 
@@ -257,7 +257,7 @@ void CMyOpenGL::InDraw(void)
 	pCar->car_box.DrawAABBBoundingBox();//画出车的包围盒
 	glPushMatrix();
 	CString tmp;
-	tmp.Format("李东的车");
+	tmp.Format("李东的小保时捷");
 	CVector966 tmpPos(float(pCar->car_point.x), float(pCar->car_point.y), float(pCar->car_point.z));
 	CString pos;
 	pos.Format("当前车位置：（%.2lf，%.2lf，%.2lf）", pCar->car_point.x, pCar->car_point.y, pCar->car_point.z);

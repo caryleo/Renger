@@ -20,6 +20,5 @@ public:
 	virtual void InDraw(void);
 	virtual bool OnKey(unsigned char nChar, bool bDown);
 	virtual void Update();
-	CScene scene;
 };
 

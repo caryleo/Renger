@@ -37,10 +37,10 @@ public:
 //
 //////////////////////////////////////////////////////////////////////////
 /** 天空盒类 */
-class CSkyBox : public COpenGL
+class CSkyBox
 {
 public:
-	CSkyBox(void);
+	CSkyBox(COpenGL *pGL);
 	~CSkyBox(void);
 	/** 初始化 */
 	bool init();
@@ -56,6 +56,7 @@ private:
 	float       height;         /**< 高度 */
 	float       yRot;           /**< 绕Y轴旋转 */
 	CVector966 m_Position;
+	COpenGL *pOpenGL;
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -202,13 +203,15 @@ private:
 class CScene
 {
 public:
-	CScene()  {IsInit=false;};
+	CScene(COpenGL *pGL)  {IsInit=false; pOpenGL = pGL; m_SkyBox = new CSkyBox(pOpenGL);};
 	~CScene() {};
 	void Render();/**< 场景渲染 */
 	void init();
+	friend class CSkyBox;
 
-	CSkyBox m_SkyBox;
-	CTerrain m_Terrain;
-	CSnow m_Snow;
+	CSkyBox *m_SkyBox;
+	CTerrain *m_Terrain;
+	CSnow *m_Snow;
+	COpenGL *pOpenGL;
 	bool IsInit;
 };

@@ -16,14 +16,15 @@
 #include "Matrix966.h"
 #include "Euler966.h"
 #include "car.h"
+#include "Scene.h"
 #include "Quaternion966.h"
 
 
 #include <afxver_.h>
 #include "CFont966.h"
-#include "opengl/aabb.h"
-#include "opengl/car.h"
-#include "opengl/CLoad3DS.h"
+#include "aabb.h"
+#include "car.h"
+#include "CLoad3DS.h"
 
 
 class AFX_CLASS_EXPORT COpenGL  
@@ -44,6 +45,7 @@ public:
 	friend class CControl966;
 	friend class CCamera966;
 	friend class CFont966;
+	friend class CScene;
 protected:
 	HDC hDC;
 	HWND m_hmyWnd;			//绘制窗口句柄,一般是View的句柄
@@ -56,6 +58,7 @@ protected:
 	CModal966 *pModal;
 	CFont966 *pFont;
 	CAR *pCar;//汽车
+	CScene *pScene;
 	float fps;
 };
 

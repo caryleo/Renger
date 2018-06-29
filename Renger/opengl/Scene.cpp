@@ -134,7 +134,7 @@ void CBMPLoader::FreeImage()
 //
 //////////////////////////////////////////////////////////////////////////
 
-CSkyBox::CSkyBox():length(750.0f),width(550.0f),height(400.0f),yRot(0.01f)
+CSkyBox::CSkyBox(COpenGL *pGL):length(750.0f),width(550.0f),height(400.0f),yRot(0.01f),pOpenGL(pGL)
 {	
 }
 
@@ -207,7 +207,6 @@ void CSkyBox::render()
 	glTexCoord2f(0.0f, 0.0f); glVertex3f( -width, -height, -length);
 
 	glEnd();
-
 
 
 	/** 绘制前面 */
@@ -438,7 +437,6 @@ bool CTerrain::loadRawFile(const char* fileName)
 		MessageBox(NULL, "打开高度图文件失败！", "错误", MB_OK);
 		exit(0);
 	}
-
 	/** 读取高度图文件 */
 	fread( m_pHeightMap, 1, m_nWidth*m_nWidth, pFile );
 
@@ -835,10 +833,10 @@ void CScene::Render()
 
 	gluLookAt(500,220,400,502,220, 400,  0, 1, 0);
 	/** 绘制天空 */
-	m_SkyBox.render();
+	m_SkyBox->render();
 
 	/** 渲染地形 */
-	m_Terrain.render();
+	m_Terrain->render();
 
 	//glTranslatef(500.0f,213.0f,400.0f);
 	/** 渲染雪花 */
@@ -889,21 +887,21 @@ void CScene::init()
 	glEnable(GL_BLEND);				     /**< 启用混和 */
 
 	/** 初始化雪花实例 */	
-	if(!m_Snow.Init(30000))
+	if(!m_Snow->Init(30000))
 	{
 		MessageBox(NULL,"雪花系统初始化失败!","错误",MB_OK);
 		exit(-1);
 	}
 
 	/** 初始化天空 */
-	if(!m_SkyBox.init())
+	if(!m_SkyBox->init())
 	{
 		MessageBox(NULL,"初始化天空失败!","错误",MB_OK);
 		exit(0);
 	}
 
 	/** 初始化地形 */	
-	if(!m_Terrain.init())
+	if(!m_Terrain->init())
 	{
 		MessageBox(NULL,"初始化地形失败!","错误",MB_OK);
 		exit(0);
