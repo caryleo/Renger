@@ -29,7 +29,7 @@ void CModelLoader::Init(int type)
 	switch (type)
 	{
 	case 1:
-		gothicLoader->Import3DS(&gothicModel, "Data/3ds/model.3DS");
+		gothicLoader->Import3DS(&gothicModel, "Data/3ds/tree1.3DS");
 		break;
 	case 2:
 		gothicLoader->Import3DS(&gothicModel, "Data/3ds/qiche33.3DS");

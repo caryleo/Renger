@@ -14,6 +14,7 @@ CModelLoader m_loader_fangwu;
 CModelLoader m_loader_fangwu2;
 CModelLoader m_loader_luren;
 CModelLoader m_loader_lupai4;
+CModelLoader m_loader_shu;
 struct Hulan
 {
 	double x,z,rotate;
@@ -44,6 +45,7 @@ void CMyOpenGL::PostInit(void)
 	m_loader_hulan.Init(10);//护栏
 	m_loader_fangwu.Init(9);//房屋
 	m_loader_fangwu2.Init(8);//房屋2
+	m_loader_shu.Init(1);//树
 	pCar->init(Point_AABB(0,0,500,4,4,8,0,0,-1),0);//初始化汽车类
 	pCar->setGothicTrans_car(
 		0, 0 , 400,   
@@ -251,6 +253,12 @@ void CMyOpenGL::InDraw(void)
 	};
 	m_loader_luren.DrawModel(gothicTransLuren);
 
+	float gothicTrans_shu[10]={
+		-120, 0, 200,
+		0.2, 0.2, 0.2,
+		0, 0, 1 ,0
+	};
+	m_loader_shu.DrawModel(gothicTrans_shu);
     glPopMatrix();
 
 	glPushMatrix();
