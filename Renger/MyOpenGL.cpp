@@ -201,8 +201,6 @@ void CMyOpenGL::drawHulan()
 
 void CMyOpenGL::InDraw(void)
 {
-	//gluLookAt(0,300,400,0,-1, 0,  0, 0, -1);
-
 	glPushMatrix();
 	scene.Render();
 	glPopMatrix();
@@ -264,7 +262,7 @@ void CMyOpenGL::InDraw(void)
 	tmp.Format("李东的车");
 	CVector966 tmpPos(float(pCar->car_point.x), float(pCar->car_point.y), float(pCar->car_point.z));
 	CString pos;
-	pos.Format("%.2lf %.2lf %.2lf", pCar->car_point.x, pCar->car_point.y, pCar->car_point.z);
+	pos.Format("当前车位置：（%.2lf，%.2lf，%.2lf）", pCar->car_point.x, pCar->car_point.y, pCar->car_point.z);
 	pFont->Font2D(pos, CVector966(-0.9, 0.8, 0), 24, RGB(255, 255, 255), 0|8 , 0);
 	//CVector966 tmpPos(0, 0, 0);
 	pFont->Font2D(tmp, tmpPos, 50, RGB(255,255,255), DT_CENTER | DT_VCENTER, 1);
@@ -298,9 +296,10 @@ void CMyOpenGL::InDraw(void)
 	//drawHulan();//画护栏
 	CString str;
 	str.Format("fps: %.2f 帧每秒", fps);
-	//pFont->Font2DBmp(str, -0.9, 0.9);
-	
-	pFont->Font2D(str, CVector966(-0.9, 0.9, 0), 24, RGB(255, 255, 255), 0|8 , 0);
+	pFont->Font2D(str, CVector966(-0.9f, 0.9f, 0), 24, RGB(255, 255, 255), 0|8 , 0);
+	CString sp;
+	sp.Format("当前速度：%.2lf m/s", pCar->speed);
+	pFont->Font2D(sp, CVector966(-0.9f, 0.7f, 0), 24, RGB(255, 255, 255), 0|8 , 0);
 	glPopMatrix();
 
 }

@@ -463,7 +463,7 @@ BOOL CFont966::Create3DFont()
 	}
 	
 	caFont3D.Add(Font3D);
-	hFont3DChn = MakeFont("等线", 1);	//构造一个中文字体。
+	hFont3DChn = MakeFont("微软雅黑", 1);	//构造一个中文字体。
 	return TRUE;
 }
 
@@ -498,7 +498,7 @@ double CFont966::Create2DFont(char* lpszText, float x, float y, float z, int isi
 	}
 	if(!font)//没找到
 	{
-		font = MakeFont("等线", isize);
+		font = MakeFont("微软雅黑", isize);
 		FontList2D font2D;
 		font2D.font = font;
 		font2D.size = isize;

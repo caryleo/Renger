@@ -161,6 +161,7 @@ void CCamera966::Init(COpenGL* pGL)
 	fViewDis = -10;
 	pOpenGL = pGL;
 	pModal = pGL->pModal;
+	iGameMode = 0;
 }
 
 

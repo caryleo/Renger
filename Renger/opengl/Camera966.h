@@ -30,11 +30,14 @@ public:
 	void ShowGameView();
 	void Rotate(int dir, double ang);
 	void Move(int dir, float len);
+	void GameRotate(int dir, float ang);
 
 	CVector966 cvMovVec;//平移向量
 	CEuler966 ceRotEul;//旋转欧拉角
 	CMatrix966 cmEyeMat;//视图矩阵
 	CMatrix966 cmIEyeMat;//视图矩阵的逆矩阵
+	CVector966 cvGameVec;//游戏视角方向向量
+	CEuler966 ceGameEul;//游戏视角调整值
 
 private:
 	float fViewDis;//跟踪视角视距
