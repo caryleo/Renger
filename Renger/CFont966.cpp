@@ -76,7 +76,8 @@ void CFont966::Font2D(CString lpszText, CVector966 pos, int size, int color, int
 	glPushAttrib(GL_ENABLE_BIT | GL_POLYGON_BIT);
 	glDisable(GL_LIGHTING);
 	glDisable(GL_TEXTURE_2D);
-
+	float w = 0;
+	CVector966 ans = pos;
 	if (type == 0)
 	{
 		pos[2] = -100;//
@@ -84,29 +85,42 @@ void CFont966::Font2D(CString lpszText, CVector966 pos, int size, int color, int
 	else
 	{
 		CMatrix966 tmpProj;
+		
 		glGetFloatv(GL_PROJECTION_MATRIX, tmpProj);
 		if (type == 1)
 		{
 			CMatrix966 tmpView = pCamera->cmEyeMat;
 			CMatrix966 tmp = tmpProj * tmpView;
-			CVector966 ans = tmp.MulPosition(pos);
+			
+			ans = tmp.MulPosition(pos, w);
 		}
 		else
 		{
 			CMatrix966 tmpMV;
 			glGetFloatv(GL_MODELVIEW_MATRIX, tmpMV);
 			CMatrix966 tmp = tmpProj * tmpMV;
-			CVector966 ans = tmp.MulPosition(pos);
+			ans = tmp.MulPosition(pos, w);
 		}
+		if (fabs(w) > 1e-6)
+		{
+			for (int i = 0; i < 3; i++)
+			{
+				ans[i] /= w;
+			}
+		}
+	}
+	if (w < 0 && type != 0)
+	{
+		return;
 	}
 	int tag = 0;
 	while ((tag = lpszText.Find("\n", 0)) >= 0)
 	{
-		double height = Create2DFont(lpszText.Left(tag).GetBuffer(0), pos[0], pos[1], pos[2], size, color, format);
+		double height = Create2DFont(lpszText.Left(tag).GetBuffer(0), ans[0], ans[1], ans[2], size, color, format);
 		lpszText = lpszText.Right(lpszText.GetLength() - tag - 1);
 		pos[1] -= 1.5 * height;
 	}
-	Create2DFont(lpszText.GetBuffer(0), pos[0], pos[1], pos[2], size, color, format);
+	Create2DFont(lpszText.GetBuffer(0), ans[0], ans[1], ans[2], size, color, format);
 
 	glPopAttrib();
 }
@@ -498,8 +512,8 @@ double CFont966::Create2DFont(char* lpszText, float x, float y, float z, int isi
 	UCHAR* pBmpBits=CreateTextBmp(hdc, font, lpszText, sizeStr, sizeImage);
 	RECT rect;
     GetClientRect(hWnd,&rect);
-	float xoff = -(format & 3) * sizeStr.cx / float(rect.right) / 2;		
-	float yoff = -(2 - (format >> 2 & 3)) * sizeStr.cy / float(rect.bottom) / 2;
+	float xoff = -(format & 3) * sizeStr.cx / float(rect.right);		
+	float yoff = -(2 - (format >> 2 & 3)) * sizeStr.cy / float(rect.bottom);
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 	int a = LOBYTE((color)>>24);
 	if(a == 0 || a == 255)

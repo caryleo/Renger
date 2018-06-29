@@ -130,8 +130,6 @@ void CCamera966::Init(COpenGL* pGL)
 	cmIEyeMat = cmEyeMat.GetInverse();
 	//Ä¬ÈÏÊÓ¾àÎª-10
 	fViewDis = -10;
-	iCtrlMode = 0;
-	iViewMode = 0;
 	pOpenGL = pGL;
 	pModal = pGL->pModal;
 }
@@ -213,6 +211,8 @@ void CCamera966::ShowView()
 			glTranslatef(-cvMovVec.x, -cvMovVec.y, -cvMovVec.z);
 		}
 	}
+	glGetFloatv(GL_MODELVIEW_MATRIX, cmEyeMat);
+	cmIEyeMat = cmEyeMat.GetInverse();
 }
 
 /**

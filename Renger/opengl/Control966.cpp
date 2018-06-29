@@ -14,7 +14,7 @@ CControl966::CControl966(COpenGL* pGL)
 	pOpenGL = pGL;
 	pCamera = pGL->pCamera;
 	pModal = pGL->pModal;
-	pCar = pGL->car;
+	pCar = pGL->pCar;
 	//所有按键初始状态下都没有被按下
 	for (int i = 0; i < KS_ALL; i++)
 	{

@@ -80,8 +80,22 @@ CVector966 CMatrix966::MulPosition(CVector966& p)	//矩阵乘以空间位置得到一个位置
 	{
 		vec[i] = (*this)[i] * p.x + (*this)[4 + i] * p.y + (*this)[8 + i] * p.z + (*this)[12 + i];
 	}
+	float w = (*this)[3] * p.x + (*this)[7] * p.y + (*this)[11] * p.z + (*this)[15];
+	
 	return vec;
 }
+
+CVector966 CMatrix966::MulPosition(CVector966& p, float& w)
+{
+	CVector966 vec;
+	for (int i = 0; i < 3; i++)
+	{
+		vec[i] = (*this)[i] * p.x + (*this)[4 + i] * p.y + (*this)[8 + i] * p.z + (*this)[12 + i];
+	}
+	w = (*this)[3] * p.x + (*this)[7] * p.y + (*this)[11] * p.z + (*this)[15];
+	return vec;
+}
+
 CVector966 CMatrix966::MulVector(CVector966& p)
 {
 	CVector966 vec;

@@ -52,7 +52,7 @@ protected:
 	CCamera966 *pCamera;
 	CModal966 *pModal;
 	CFont966 *pFont;
-	CAR *car;//Æû³µ
+	CAR *pCar;//Æû³µ
 	float fps;
 };
 

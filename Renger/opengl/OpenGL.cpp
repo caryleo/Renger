@@ -24,14 +24,14 @@ COpenGL::COpenGL()
 	m_hmyWnd = 0;
 	pCamera=NULL;
 	pControl=NULL;
-	car=NULL;
+	pCar=NULL;
 }
 
 COpenGL::~COpenGL()
 {
 	delete pCamera;
 	delete pControl;
-	delete car;
+	delete pCar;
 }
 
 bool COpenGL::Init(HWND hWnd)	//初始化OpenGL环境
@@ -85,7 +85,7 @@ bool COpenGL::Init(HWND hWnd)	//初始化OpenGL环境
 	PerspectiveParam[3]=10000;
 
 	pModal = new CModal966;
-	car=new CAR();
+	pCar=new CAR();
 	
 	pCamera = new CCamera966(this);
 	pControl = new CControl966(this);

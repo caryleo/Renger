@@ -22,15 +22,6 @@ struct Hulan
 }hulan[100];
 int hulanCnt=0;
 
-CVector966 tracePointPos[POINTNUM];//姓名轨迹点
-CVector966 refCircle[CIRCLENUM];//参考圆轨迹点
-CVector966 allPointPos[POINTNUM*CIRCLENUM];//计算轨迹点位置结果
-int iCurIndex;//运动小人当前参考轨迹点下标
-GLfloat (*vert)[3] = 0, (*norm)[3] = 0;
-int nVert=0;
-GLuint texture1[1]={0};
-GLuint texture2[1]={0};
-
 CMyOpenGL::CMyOpenGL(void)
 {
 } 
@@ -55,44 +46,42 @@ void CMyOpenGL::PostInit(void)
 	m_loader_hulan.Init(10);//护栏
 	m_loader_fangwu.Init(9);//房屋
 	m_loader_fangwu2.Init(8);//房屋2
-	car->init(Point_AABB(0,0,500,4,4,8,0,0,-1),0);//初始化汽车类
-	car->setGothicTrans_car(
+	pCar->init(Point_AABB(0,0,500,4,4,8,0,0,-1),0);//初始化汽车类
+	pCar->setGothicTrans_car(
 		0, 0 , 400,   
 		0.00003 , 0.00003 , 0.00003 ,      
 		0 , 0 , 0 , 0);
 
+	pCar->addWall(50,-20,450,50,380,350);
+	pCar->addWall(50,-20,350,450,380,350);
+	pCar->addWall(450,-20,350,450,380,-200);
+	pCar->addWall(450,-20,-200,250,380,-200);
+	pCar->addWall(250,-20,-200,250,380,-450);
+	pCar->addWall(250,-20,-450,-350,380,-450);
+	pCar->addWall(-350,-20,-450,-350,380,100);
+	pCar->addWall(-350,-20,100,-250,380,100);
+	pCar->addWall(-250,-20,100,-250,380,450);
+	pCar->addWall(-250,-20,450,50,380,450);
 
-	car->addWall(50,-20,450,50,380,350);
-	car->addWall(50,-20,350,450,380,350);
-	car->addWall(450,-20,350,450,380,-200);
-	car->addWall(450,-20,-200,250,380,-200);
-	car->addWall(250,-20,-200,250,380,-450);
-	car->addWall(250,-20,-450,-350,380,-450);
-	car->addWall(-350,-20,-450,-350,380,100);
-	car->addWall(-350,-20,100,-250,380,100);
-	car->addWall(-250,-20,100,-250,380,450);
-	car->addWall(-250,-20,450,50,380,450);
+	pCar->addWall(-50,-20,350,-50,380,250);
+	pCar->addWall(-50,-20,250,350,380,250);
+	pCar->addWall(350,-20,250,350,380,-100);
+	pCar->addWall(350,-20,-100,150,380,-100);
+	pCar->addWall(150,-20,-100,150,380,-350);
+	pCar->addWall(150,-20,-350,-250,380,-350);
+	pCar->addWall(-250,-20,-350,-250,380,0);
+	pCar->addWall(-250,-20,0,-150,380,0);
+	pCar->addWall(-150,-20,0,-150,380,350);
+	pCar->addWall(-150,-20,350,-50,380,350);
 
-	car->addWall(-50,-20,350,-50,380,250);
-	car->addWall(-50,-20,250,350,380,250);
-	car->addWall(350,-20,250,350,380,-100);
-	car->addWall(350,-20,-100,150,380,-100);
-	car->addWall(150,-20,-100,150,380,-350);
-	car->addWall(150,-20,-350,-250,380,-350);
-	car->addWall(-250,-20,-350,-250,380,0);
-	car->addWall(-250,-20,0,-150,380,0);
-	car->addWall(-150,-20,0,-150,380,350);
-	car->addWall(-150,-20,350,-50,380,350);
-
-
-	car->addYuanbao(0,300);
-	car->addYuanbao(150,300);
-	car->addYuanbao(400,300);
-	car->addYuanbao(400,50);
-	car->addYuanbao(300,-150);
-	car->addYuanbao(-300,-250);
-	car->addYuanbao(-200,50);
-	car->addYuanbao(-200,400);
+	pCar->addYuanbao(0,300);
+	pCar->addYuanbao(150,300);
+	pCar->addYuanbao(400,300);
+	pCar->addYuanbao(400,50);
+	pCar->addYuanbao(300,-150);
+	pCar->addYuanbao(-300,-250);
+	pCar->addYuanbao(-200,50);
+	pCar->addYuanbao(-200,400);
 }
 
 
@@ -210,19 +199,15 @@ void CMyOpenGL::drawHulan()
 	}
 }
 
-
-
-
-
-
-
 void CMyOpenGL::InDraw(void)
 {
-	gluLookAt(0,300,400,0,-1, 0,  0, 0, -1);
+	//gluLookAt(0,300,400,0,-1, 0,  0, 0, -1);
+
 	glPushMatrix();
 	scene.Render();
 	glPopMatrix();
 	DrawAxes(1000);
+
 	glPushMatrix();
 	float gothicTrans_fangwu[10] = { 
 		100,-10, 200 , //表示在世界矩阵的位置  
@@ -271,25 +256,36 @@ void CMyOpenGL::InDraw(void)
 	m_loader_luren.DrawModel(gothicTransLuren);
 
     glPopMatrix();
-	glPushMatrix();
-	car->car_box.DrawAABBBoundingBox();//画出车的包围盒
-	m_loader_car.DrawModel(car->gothicTrans_car);
 
-	for (int i=0;i<car->wall.size();i++)
+	glPushMatrix();
+	pCar->car_box.DrawAABBBoundingBox();//画出车的包围盒
+	glPushMatrix();
+	CString tmp;
+	tmp.Format("李东的车");
+	CVector966 tmpPos(float(pCar->car_point.x), float(pCar->car_point.y), float(pCar->car_point.z));
+	CString pos;
+	pos.Format("%.2lf %.2lf %.2lf", pCar->car_point.x, pCar->car_point.y, pCar->car_point.z);
+	pFont->Font2D(pos, CVector966(-0.9, 0.8, 0), 24, RGB(255, 255, 255), 0|8 , 0);
+	//CVector966 tmpPos(0, 0, 0);
+	pFont->Font2D(tmp, tmpPos, 50, RGB(255,255,255), DT_CENTER | DT_VCENTER, 1);
+	m_loader_car.DrawModel(pCar->gothicTrans_car);
+	glPopMatrix();
+
+	for (int i=0;i<pCar->wall.size();i++)
 	{
-		car->wall[i].DrawAABBBoundingBox();
+		pCar->wall[i].DrawAABBBoundingBox();
 	}
 
 	/*画元宝*/
 	
 	float gothicTrans_yuanbao[10];
-	for (int i=0;i<car->yuanbao.size();i++)
+	for (int i=0;i<pCar->yuanbao.size();i++)
 	{
-		if(car->yuanbaoFlag[i]!=1)
+		if(pCar->yuanbaoFlag[i]!=1)
 		{
-			car->yuanbao[i].DrawAABBBoundingBox();
+			pCar->yuanbao[i].DrawAABBBoundingBox();
 			changeGothicTrans(gothicTrans_yuanbao,
-				(car->yuanbao[i].Xmax+car->yuanbao[i].Xmin)/2,0 ,(car->yuanbao[i].Zmax+car->yuanbao[i].Zmin)/2, 
+				(pCar->yuanbao[i].Xmax+pCar->yuanbao[i].Xmin)/2,0 ,(pCar->yuanbao[i].Zmax+pCar->yuanbao[i].Zmin)/2, 
 				0.2,0.2, 0.2 ,      //表示xyz放大倍数  
 				0 , 0 , 1 , 0  //表示旋转  
 				);
@@ -299,7 +295,7 @@ void CMyOpenGL::InDraw(void)
 	
 	/********************************************/
 
-	drawHulan();//画护栏
+	//drawHulan();//画护栏
 	CString str;
 	str.Format("fps: %.2f 帧每秒", fps);
 	//pFont->Font2DBmp(str, -0.9, 0.9);
@@ -307,7 +303,6 @@ void CMyOpenGL::InDraw(void)
 	pFont->Font2D(str, CVector966(-0.9, 0.9, 0), 24, RGB(255, 255, 255), 0|8 , 0);
 	glPopMatrix();
 
-	
 }
 
 
@@ -321,7 +316,7 @@ bool CMyOpenGL::OnKey(unsigned char nChar, bool bDown)
 */
 void CMyOpenGL::Update()
 {
-	car->update();
+	pCar->update();
 }
 
 /**

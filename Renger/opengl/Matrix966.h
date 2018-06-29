@@ -23,6 +23,7 @@ public:
 	CMatrix966 operator*(CMatrix966& m);		//矩阵的相乘
 
 	CVector966 MulPosition(CVector966& p);		//矩阵乘以空间位置得到一个位置，w默认为1，结果不除w，与*不同。
+	CVector966 MulPosition(CVector966& p, float &w);
 	CVector966 MulVector(CVector966& p);		//矩阵乘以空间一个向量，w为0	
 
 	void SetRotate(float seta, CVector966 axis);//0表示x轴旋转，1表示y轴,2表示z轴
