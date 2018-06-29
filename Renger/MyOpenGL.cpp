@@ -210,64 +210,7 @@ void CMyOpenGL::drawHulan()
 	}
 }
 
-/**
-* \brief 初始化
-*/
-void CMyOpenGL::PostInit(void)
-{
-	
-	m_loader_lupai.Init(3);//路牌
-	m_loader_car.Init(2);//汽车
-	m_loader_lupai4.Init(4);//路牌4
-	m_loader_luren.Init(5);//路人
-	m_loader_yuaubao.Init(11);//元宝
-	m_loader_hulan.Init(10);//护栏
-	m_loader_fangwu.Init(9);//房屋
-	m_loader_fangwu2.Init(8);//房屋2
-	car->init(Point_AABB(0,0,500,4,4,8,0,0,-1),0);//初始化汽车类
-	car->setGothicTrans_car(
-		0, 0 , 400,   
-		0.00003 , 0.00003 , 0.00003 ,      
-		0 , 0 , 0 , 0);
 
-	if (!glIsList((GLuint)1))
-	{
-		glNewList(1,GL_COMPILE);
-		drawHulan();//画护栏
-		glEndList();
-	}
-	car->addWall(50,-20,450,50,380,350);
-	car->addWall(50,-20,350,450,380,350);
-	car->addWall(450,-20,350,450,380,-200);
-	car->addWall(450,-20,-200,250,380,-200);
-	car->addWall(250,-20,-200,250,380,-450);
-	car->addWall(250,-20,-450,-350,380,-450);
-	car->addWall(-350,-20,-450,-350,380,100);
-	car->addWall(-350,-20,100,-250,380,100);
-	car->addWall(-250,-20,100,-250,380,450);
-	car->addWall(-250,-20,450,50,380,450);
-
-	car->addWall(-50,-20,350,-50,380,250);
-	car->addWall(-50,-20,250,350,380,250);
-	car->addWall(350,-20,250,350,380,-100);
-	car->addWall(350,-20,-100,150,380,-100);
-	car->addWall(150,-20,-100,150,380,-350);
-	car->addWall(150,-20,-350,-250,380,-350);
-	car->addWall(-250,-20,-350,-250,380,0);
-	car->addWall(-250,-20,0,-150,380,0);
-	car->addWall(-150,-20,0,-150,380,350);
-	car->addWall(-150,-20,350,-50,380,350);
-
-
-	car->addYuanbao(0,300);
-	car->addYuanbao(150,300);
-	car->addYuanbao(400,300);
-	car->addYuanbao(400,50);
-	car->addYuanbao(300,-150);
-	car->addYuanbao(-300,-250);
-	car->addYuanbao(-200,50);
-	car->addYuanbao(-200,400);
-}
 
 
 
@@ -356,7 +299,7 @@ void CMyOpenGL::InDraw(void)
 	
 	/********************************************/
 
-	//drawHulan();//画护栏
+	drawHulan();//画护栏
 	CString str;
 	str.Format("fps: %.2f 帧每秒", fps);
 	//pFont->Font2DBmp(str, -0.9, 0.9);
