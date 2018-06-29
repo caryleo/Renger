@@ -37,7 +37,7 @@ public:
 //
 //////////////////////////////////////////////////////////////////////////
 /** Ìì¿ÕºÐÀà */
-class CSkyBox
+class CSkyBox 
 {
 public:
 	CSkyBox(COpenGL *pGL);

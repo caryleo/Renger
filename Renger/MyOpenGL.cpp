@@ -203,7 +203,7 @@ void CMyOpenGL::InDraw(void)
 	pScene->Render();
 	glPopMatrix();
 	DrawAxes(1000);
-
+	
 	glPushMatrix();
 	float gothicTrans_fangwu[10] = { 
 		100,-10, 200 , //表示在世界矩阵的位置  
@@ -299,6 +299,12 @@ void CMyOpenGL::InDraw(void)
 	sp.Format("当前速度：%.2lf m/s", pCar->speed);
 	pFont->Font2D(sp, CVector966(-0.9f, 0.7f, 0), 24, RGB(255, 255, 255), 0|8 , 0);
 	glPopMatrix();
+	//glPushMatrix();
+	//glLoadIdentity();
+	//CString sss;
+	//sss.Format("Hello World");
+	//pFont->Font3DEnglish(sss);
+	//glPopMatrix();
 
 }
 

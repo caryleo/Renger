@@ -191,8 +191,9 @@ void CSkyBox::render()
 
 	/** 开始绘制 */
 	glPushMatrix();
-	glTranslatef(500,50,400);
-	//glTranslatef(pControl->pCamera->cvMovVec.x,pControl->pCamera->cvMovVec.y,pControl->pCamera->cvMovVec.z);
+	glRotatef(90, 0, -1, 0);
+	glTranslatef(pOpenGL->pCar->car_point.x+400,pOpenGL->pCar->car_point.y,pOpenGL->pCar->car_point.z-500);
+	//glTranslatef(0,0,400);
 	glRotatef(yRot,0.0f,1.0f,0.0f);
 
 	/** 绘制背面 */

@@ -46,6 +46,7 @@ public:
 	friend class CCamera966;
 	friend class CFont966;
 	friend class CScene;
+	CAR *pCar;//汽车
 protected:
 	HDC hDC;
 	HWND m_hmyWnd;			//绘制窗口句柄,一般是View的句柄
@@ -57,7 +58,7 @@ protected:
 	CCamera966 *pCamera;
 	CModal966 *pModal;
 	CFont966 *pFont;
-	CAR *pCar;//汽车
+
 	CScene *pScene;
 	float fps;
 };
