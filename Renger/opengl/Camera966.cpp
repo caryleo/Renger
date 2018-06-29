@@ -68,6 +68,36 @@ void CCamera966::SetCtrlMode(int mode)
 }
 
 /**
+ * \brief 设置游戏模式
+ * \param game 模式参数，0为开始，1为游戏中，2为结束
+ */
+void CCamera966::SetGameMode(int game)
+{
+	if (iGameMode == 0 || iGameMode == 1)
+	{
+		if (game == 0 || game == 1)
+		{
+			AfxMessageBox("游戏已经开始！");
+		}
+		else
+		{
+			iGameMode = game;
+		}
+	}
+	else
+	{
+		if (game == 1 || game == 2)
+		{
+			AfxMessageBox("现在还没开始游戏哦！");
+		}
+		else
+		{
+			iGameMode = game;
+		}
+	}
+}
+
+/**
  * \brief 设置插值状态
  * \param state 插值状态
  */
@@ -110,7 +140,6 @@ void CCamera966::ChkSlerp()
 CQuaternion966 CCamera966::GetSlerpQua()
 {
 	return cqResults[iSlerpCount++];
-
 }
 
 
@@ -213,6 +242,26 @@ void CCamera966::ShowView()
 	}
 	glGetFloatv(GL_MODELVIEW_MATRIX, cmEyeMat);
 	cmIEyeMat = cmEyeMat.GetInverse();
+}
+
+void CCamera966::ShowGameView()
+{
+	if (iGameMode == 0)
+	{
+		//开始界面视角	
+	}
+	else if (iGameMode == 1)
+	{
+		//游戏视角
+
+		glGetFloatv(GL_MODELVIEW_MATRIX, cmEyeMat);
+		cmIEyeMat = cmEyeMat.GetInverse();
+	}
+	else
+	{
+		//结束界面视角
+	}
+	
 }
 
 /**

@@ -168,7 +168,9 @@ void CRengerView::OnInitialUpdate()
 	CView::OnInitialUpdate();
 	CView::OnInitialUpdate();
 	if(!m_gl.Init(this->GetSafeHwnd()))
-		AfxMessageBox("error!");
+	{
+		AfxMessageBox("º”‘ÿ¥ÌŒÛ");
+	}
 	CRect rect;
 	GetClientRect(rect);
 	m_gl.OnSize(rect.Width(), rect.Height());

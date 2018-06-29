@@ -18,6 +18,7 @@ public:
 
 	void SetViewMode(int view);
 	void SetCtrlMode(int mode);
+	void SetGameMode(int game);
 	void SetSlerp(bool state);
 	bool GetSlerp() const;
 	void CalSlerp(float angle);
@@ -26,6 +27,7 @@ public:
 	
 	void Init(COpenGL* pGL);
 	void ShowView();
+	void ShowGameView();
 	void Rotate(int dir, double ang);
 	void Move(int dir, float len);
 
@@ -38,6 +40,7 @@ private:
 	float fViewDis;//跟踪视角视距
 	int iViewMode;//视角模式，0为上帝视角，1为跟踪视角，2为同步视角
 	int iCtrlMode;//实现模式，0为欧拉角，1为子坐标系
+	int iGameMode;//游戏模式，0为开始，1为游戏中，2为结束
 	bool bIsSlerp;//插值状态量
 	int iSlerpNum;//插值量
 	float fSlerpTs[360];//插值系数
