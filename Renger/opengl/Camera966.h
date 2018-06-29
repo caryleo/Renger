@@ -31,6 +31,7 @@ public:
 	void Rotate(int dir, double ang);
 	void Move(int dir, float len);
 	void GameRotate(int dir, float ang);
+	void ChangeZoomWeight(int len);
 
 	CVector966 cvMovVec;//平移向量
 	CEuler966 ceRotEul;//旋转欧拉角
@@ -38,6 +39,8 @@ public:
 	CMatrix966 cmIEyeMat;//视图矩阵的逆矩阵
 	CVector966 cvGameVec;//游戏视角方向向量
 	CEuler966 ceGameEul;//游戏视角调整值
+	int iWeight;//缩放权重
+	bool isGameMouseAvail;//锁游戏视角
 
 private:
 	float fViewDis;//跟踪视角视距

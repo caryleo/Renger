@@ -80,6 +80,8 @@ void CMyOpenGL::PostInit(void)
 	pCar->addYuanbao(-300,-250);
 	pCar->addYuanbao(-200,50);
 	pCar->addYuanbao(-200,400);
+
+	pCamera->SetGameMode(1);
 }
 
 
@@ -258,12 +260,14 @@ void CMyOpenGL::InDraw(void)
 	glPushMatrix();
 	CString tmp;
 	tmp.Format("李东的小保时捷");
-	CVector966 tmpPos(float(pCar->car_point.x), float(pCar->car_point.y), float(pCar->car_point.z));
+	CVector966 tmpPos(float(pCar->car_point.x), float(pCar->car_point.y) + 2, float(pCar->car_point.z));
 	CString pos;
 	pos.Format("当前车位置：（%.2lf，%.2lf，%.2lf）", pCar->car_point.x, pCar->car_point.y, pCar->car_point.z);
 	pFont->Font2D(pos, CVector966(-0.9, 0.8, 0), 24, RGB(255, 255, 255), 0|8 , 0);
-	//CVector966 tmpPos(0, 0, 0);
-	pFont->Font2D(tmp, tmpPos, 50, RGB(255,255,255), DT_CENTER | DT_VCENTER, 1);
+	CString dir;
+	dir.Format("当前车头朝向：（%.2lf，%.2lf，%.2lf）", pCar->car_point.dirx, pCar->car_point.diry, pCar->car_point.dirz);
+	pFont->Font2D(dir, CVector966(-0.9, 0.6, 0), 24, RGB(255, 255, 255), 0|8 , 0);
+	pFont->Font2D(tmp, tmpPos, 24, RGB(255,255,255), DT_CENTER | DT_BOTTOM, 1);
 	m_loader_car.DrawModel(pCar->gothicTrans_car);
 	glPopMatrix();
 

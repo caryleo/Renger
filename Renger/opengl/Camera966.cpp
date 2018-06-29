@@ -163,6 +163,10 @@ void CCamera966::Init(COpenGL* pGL)
 	pModal = pGL->pModal;
 	//
 	iGameMode = 0;
+	cvGameVec.Set(0, 0, 0);
+	ceGameEul.Set(0, 0, 0);
+	iWeight = 15;
+	isGameMouseAvail = true;
 }
 
 
@@ -255,7 +259,25 @@ void CCamera966::ShowGameView()
 	else if (iGameMode == 1)
 	{
 		//游戏视角
-
+		cvGameVec.Set(float(pOpenGL->pCar->car_point.dirx), float(pOpenGL->pCar->car_point.diry) - 0.37, float(pOpenGL->pCar->car_point.dirz));
+		
+		CEuler966 tmpEul = cvGameVec.ToEuler();
+		tmpEul.h += ceGameEul.h;
+		tmpEul.p += ceGameEul.p;
+		tmpEul.p = tmpEul.p < -89.0 ? -89.0 : (tmpEul.p > 0 ? 0 : tmpEul.p);
+		CVector966 ansVec = tmpEul.ToVector3();
+		CVector966 pos(float(pOpenGL->pCar->car_point.x), float(pOpenGL->pCar->car_point.y), float(pOpenGL->pCar->car_point.z));
+		CVector966 tmp;
+		if (isGameMouseAvail)
+		{
+			tmp = ansVec * iWeight;
+		}
+		else
+		{
+			tmp = cvGameVec * iWeight;
+		}
+		CVector966 viewPos = pos - tmp;
+		gluLookAt(viewPos.x, viewPos.y, viewPos.z, pos.x, pos.y, pos.z, 0, 1, 0);
 		glGetFloatv(GL_MODELVIEW_MATRIX, cmEyeMat);
 		cmIEyeMat = cmEyeMat.GetInverse();
 	}
@@ -423,4 +445,26 @@ void CCamera966::Move(int dir, float len)
 			fViewDis += len;
 		}
 	}
+}
+
+/**
+ * \brief 调整游戏视角
+ * \param dir 方向，0为x，1为y
+ * \param ang 旋转角度
+ */
+void CCamera966::GameRotate(int dir, float ang)
+{
+	if (dir == 0)
+	{
+		ceGameEul.h = ang;
+	}
+	else
+	{
+		ceGameEul.p = ang;
+	}
+}
+
+void CCamera966::ChangeZoomWeight(int len)
+{
+	iWeight += len;
 }

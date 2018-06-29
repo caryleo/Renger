@@ -113,9 +113,12 @@ void COpenGL::OnPaint()//每帧刷新函数
 	InDraw();
 	glPopMatrix();
 	SwapBuffers(hDC);
-	int usetime = GetTickCount()-begintime;
-	if(usetime>1)
-		fps = 1000.0/usetime;
+	int usetime = GetTickCount() - begintime;
+	if(usetime > 1)
+	{
+		fps = 1000.0 / usetime;
+	}
+		
 }
 
 void COpenGL::Update()
@@ -131,29 +134,30 @@ void COpenGL::Update()
 
 void COpenGL::OnSize(int w, int h)	//调整视锥体参数
 {
-	glViewport(0,0,w,h);
+	glViewport(0, 0, w, h);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	m_rect.SetRect(0, 0, w, h);
-	PerspectiveParam[1]=(GLfloat)w / h;
-	gluPerspective(PerspectiveParam[0],PerspectiveParam[1],PerspectiveParam[2],PerspectiveParam[3]);
+	PerspectiveParam[1]=static_cast<GLfloat>(w) / h;
+	gluPerspective(PerspectiveParam[0], PerspectiveParam[1], PerspectiveParam[2], PerspectiveParam[3]);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	::GetWindowRect(m_hmyWnd,m_windowrect);
+	::GetWindowRect(m_hmyWnd, m_windowrect);
 }
 
 bool COpenGL::PreTranslateMessage(unsigned int message, unsigned int wParam, unsigned int lParam)
 {
 	//所有鼠标键盘消息发送到控制类中，由控制类定义对外设的响应，
 	//并由控制类控制对视点的变换
-	pControl->PreTranslateMessage(message,wParam,lParam);
+	pControl->PreTranslateMessage(message, wParam, lParam);
 	return false;
 }
 
 void COpenGL::OnView()
 {
 	//从相机类获得视点参数，此处设置视点信息
-	pCamera->ShowView();
+	//pCamera->ShowView();
+	pCamera->ShowGameView();
 	pControl->KeyProcess();
 }
 
@@ -165,11 +169,11 @@ void COpenGL::InDraw()
 	glutSolidTeapot(2);
 	glPopMatrix();*/
 }
-bool COpenGL::OnKey(unsigned int nChar,bool bDown)
+bool COpenGL::OnKey(unsigned int nChar, bool bDown)
 {
 	return false;
 }
-bool COpenGL::OnMouse(int button,CPoint pt)
+bool COpenGL::OnMouse(int button, CPoint pt)
 {
 	return false;
 }

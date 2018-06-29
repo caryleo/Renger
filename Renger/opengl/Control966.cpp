@@ -102,7 +102,6 @@ bool CControl966::PreTranslateMessage(unsigned message, unsigned wParam, unsigne
 	}
 	if (message == WM_MOUSEMOVE)
 	{
-		//std::cout << "HA!" << std::endl;
 		if (!bIsMouseAvail)
 		{
 			return true;
@@ -110,11 +109,10 @@ bool CControl966::PreTranslateMessage(unsigned message, unsigned wParam, unsigne
 		//鼠标移动时，调整旋转视角
 		MouseControl(WM_MOUSEMOVE, point);
 		//将鼠标位置进行更新
-		cpMousePos = point;
+		//cpMousePos = point;
 	}
 	if (message == WM_MOUSEWHEEL)
 	{
-		//std::cout << "NA!" << std::endl;
 		if (!bIsMouseAvail)
 		{
 			return true;
@@ -123,7 +121,7 @@ bool CControl966::PreTranslateMessage(unsigned message, unsigned wParam, unsigne
 		ScreenToClient(pOpenGL->m_hmyWnd, &point);
 		short len = HIWORD(wParam);
 		MouseControl(WM_MOUSEWHEEL, point, len);
-		cpMousePos = point;
+		//cpMousePos = point;
 	}
 	if (message == WM_MOUSEHOVER)
 	{
@@ -218,6 +216,8 @@ void CControl966::KeyControl()
 	{
 		int tmp = pModal->iTraceMode;
 		pModal->iTraceMode = 1 - tmp;
+		bool tmpb = pCamera->isGameMouseAvail;
+		pCamera->isGameMouseAvail = 1 - tmpb;
 	}
 
 	//移动速度修改：平移、旋转
@@ -275,21 +275,25 @@ void CControl966::MouseControl(unsigned message, CPoint point, int delta)
 		{
 			return;
 		}
-		//std::cout << dis.x << " " << dis.y << std::endl;
-		//std::cout << point.x << " " << point.y << std::endl;
-		int lenx = pOpenGL->m_windowrect.right;
-		int leny = pOpenGL->m_windowrect.bottom;
-		double movx = dis.x * 1.0 / (lenx * 1.0 / 180);
+		int lenx = pOpenGL->m_windowrect.right - pOpenGL->m_windowrect.left;
+		int leny = pOpenGL->m_windowrect.bottom - pOpenGL->m_windowrect.top;
+		
+		/*double movx = dis.x * 1.0 / (lenx * 1.0 / 180);
 		double movy = dis.y * 1.0 / (leny * 1.0 / 360);
-		//std::cout << movx << " " << movy << std::endl;
 		pCamera->Rotate(1, -movx);
-		pCamera->Rotate(0, -movy);
+		pCamera->Rotate(0, -movy);*/
+		float angx = dis.x * 1.0f / (lenx * 1.0f / 360);
+		float angy = dis.y * 1.0f / (leny * 1.0f / 180);
+		//std::cout << point.x << " " << point.y << " | " << dis.x << " " << dis.y << " | " << angx << " " << angy << " | " << lenx << " " << leny << std::endl;
+		pCamera->GameRotate(0, angx);
+		pCamera->GameRotate(1, angy);
 	}
 	else if (message == WM_MOUSEWHEEL)
 	{
 		isRet = true;
-		//std::cout << delta << std::endl;
-		pCamera->Move(2, -delta * 0.01);
+
+		//pCamera->Move(2, -delta * 0.01);
+		pCamera->ChangeZoomWeight(delta * 0.01);
 	}
 	if (isRet)
 	{
@@ -464,43 +468,47 @@ bool CControl966::SetKeyStatus(unsigned nInput, bool bState)
 	case '6':
 		bKeyState[KS_C_ROBOT] = bState;
 		break;
-	case 'Q':
-		bKeyState[KS_M_BACK] = bState;
-		break;
-	case 'E':
-		bKeyState[KS_M_FRONT] = bState;
-		break;
+	//case 'Q':
+	//	bKeyState[KS_M_BACK] = bState;
+	//	break;
+	//case 'E':
+	//	bKeyState[KS_M_FRONT] = bState;
+	//	break;
 	case 'A':
-		bKeyState[KS_M_LEFT] = bState;
+		//bKeyState[KS_M_LEFT] = bState;
+		bKeyState[KS_LEFT] = bState;
 		break;
 	case 'D':
-		bKeyState[KS_M_RIGHT] = bState;
+		//bKeyState[KS_M_RIGHT] = bState;
+		bKeyState[KS_RIGHT] = bState;
 		break;
 	case 'W':
-		bKeyState[KS_M_UP] = bState;
+		//bKeyState[KS_M_UP] = bState;
+		bKeyState[KS_UP] = bState;
 		break;
 	case 'S':
-		bKeyState[KS_M_DOWN] = bState;
+		//bKeyState[KS_M_DOWN] = bState;
+		bKeyState[KS_DOWN] = bState;
 		break;
-	case 'U':
-		bKeyState[KS_R_FRONT] = bState;
-		break;
-	case 'O':
-		bKeyState[KS_R_BACK] = bState;
-		break;
-	case 'J':
-		bKeyState[KS_R_LEFT] = bState;
-		break;
-	case 'L':
-		bKeyState[KS_R_RIGHT] = bState;
-		break;
-	case 'I':
-		bKeyState[KS_R_UP] = bState;
-		break;
-	case 'K':
-		bKeyState[KS_R_DOWN] = bState;
-		break;
-	case 'C':
+	//case 'U':
+	//	bKeyState[KS_R_FRONT] = bState;
+	//	break;
+	//case 'O':
+	//	bKeyState[KS_R_BACK] = bState;
+	//	break;
+	//case 'J':
+	//	bKeyState[KS_R_LEFT] = bState;
+	//	break;
+	//case 'L':
+	//	bKeyState[KS_R_RIGHT] = bState;
+	//	break;
+	//case 'I':
+	//	bKeyState[KS_R_UP] = bState;
+	//	break;
+	//case 'K':
+	//	bKeyState[KS_R_DOWN] = bState;
+	//	break;
+	/*case 'C':
 		bKeyState[KS_LEFT] = bState;
 		break;
 	case 'B':
@@ -511,7 +519,7 @@ bool CControl966::SetKeyStatus(unsigned nInput, bool bState)
 		break;
 	case 'V':
 		bKeyState[KS_DOWN] = bState;
-		break;
+		break;*/
 	case '-':
 	case '_':
 	case 189:

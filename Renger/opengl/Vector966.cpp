@@ -245,6 +245,17 @@ CEuler966 CVector966::ToEuler()
 			ans.p = -angleP;
 		}
 	}
+	else
+	{
+		if (y > 0)
+		{
+			ans.p = angleP;
+		}
+		else
+		{
+			ans.p = -angleP;
+		}
+	}
 	return ans;
 }
 
