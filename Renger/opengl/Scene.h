@@ -197,13 +197,36 @@ private:
 
 //////////////////////////////////////////////////////////////////////////
 //
+// CProtechny
+//
+//////////////////////////////////////////////////////////////////////////
+/** 喷泉类 */
+class CProtechny : public CParticle
+{
+
+public:
+	CProtechny()  {};
+	~CProtechny() {};
+
+	bool		Init(int num );  /**< 初始化过程 */
+	void		Render();        /**< 渲染过程 */
+	void		Update();        /**< 更新过程 */
+
+private:
+	CBMPLoader  m_texture;       /**< 粒子的纹理 */
+
+}; 
+
+//////////////////////////////////////////////////////////////////////////
+//
 // CScene
 //
 //////////////////////////////////////////////////////////////////////////
 class CScene
 {
 public:
-	CScene(COpenGL *pGL)  {IsInit=false; pOpenGL = pGL; m_SkyBox = new CSkyBox(pOpenGL); m_Terrain = new CTerrain; m_Snow = new CSnow;};
+	CScene(COpenGL *pGL)  {IsInit=false; pOpenGL = pGL; m_SkyBox = new CSkyBox(pOpenGL); m_Terrain = new CTerrain; m_Snow = new CSnow;
+	m_Protechny=new CProtechny;};
 	~CScene() {};
 	void Render();/**< 场景渲染 */
 	void init();
@@ -213,5 +236,7 @@ public:
 	CTerrain *m_Terrain;
 	CSnow *m_Snow;
 	COpenGL *pOpenGL;
+	CProtechny *m_Protechny;
 	bool IsInit;
+
 };
