@@ -191,7 +191,6 @@ void CSkyBox::render()
 
 	/** ¿ªÊ¼»æÖÆ */
 	glPushMatrix();
-	
 	glTranslatef(500,50,400);
 	//glTranslatef(pControl->pCamera->cvMovVec.x,pControl->pCamera->cvMovVec.y,pControl->pCamera->cvMovVec.z);
 	glRotatef(yRot,0.0f,1.0f,0.0f);
@@ -827,7 +826,7 @@ void CScene::Render()
 {
 	if (IsInit==false)
 	{
-		CScene::init();
+		init();
 	}
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	
 

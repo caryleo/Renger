@@ -203,7 +203,7 @@ private:
 class CScene
 {
 public:
-	CScene(COpenGL *pGL)  {IsInit=false; pOpenGL = pGL; m_SkyBox = new CSkyBox(pOpenGL);};
+	CScene(COpenGL *pGL)  {IsInit=false; pOpenGL = pGL; m_SkyBox = new CSkyBox(pOpenGL); m_Terrain = new CTerrain; m_Snow = new CSnow;};
 	~CScene() {};
 	void Render();/**< ³¡¾°äÖÈ¾ */
 	void init();
