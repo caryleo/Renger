@@ -5,7 +5,6 @@
 #include "CLoad3DS.h"
 #include <cmath>
 #include <iostream>
-#include "ModelLoader.h"
 #define POINTNUM 200
 #define CIRCLENUM 20
 #define PI 3.1415926
@@ -31,7 +30,6 @@ GLfloat (*vert)[3] = 0, (*norm)[3] = 0;
 int nVert=0;
 GLuint texture1[1]={0};
 GLuint texture2[1]={0};
-CModelLoader m_loader;
 
 CMyOpenGL::CMyOpenGL(void)
 {
@@ -42,72 +40,21 @@ CMyOpenGL::~CMyOpenGL(void)
 {
 }
 
-
-/**
-* \brief 初始化
-*/
-void CMyOpenGL::PostInit(void)
-{
-	
-	m_loader_lupai.Init(3);//路牌
-	m_loader_car.Init(2);//汽车
-	m_loader_lupai4.Init(4);//路牌4
-	m_loader_luren.Init(5);//路人
-	m_loader_yuaubao.Init(11);//元宝
-	m_loader_hulan.Init(10);//护栏
-	m_loader_fangwu.Init(9);//房屋
-	m_loader_fangwu2.Init(8);//房屋2
-	car->init(Point_AABB(0,0,500,4,4,8,0,0,-1),0);//初始化汽车类
-	car->setGothicTrans_car(
-		0, 0 , 400,   
-		0.00003 , 0.00003 , 0.00003 ,      
-		0 , 0 , 0 , 0);
-
-
-	car->addWall(50,-20,450,50,380,350);
-	car->addWall(50,-20,350,450,380,350);
-	car->addWall(450,-20,350,450,380,-200);
-	car->addWall(450,-20,-200,250,380,-200);
-	car->addWall(250,-20,-200,250,380,-450);
-	car->addWall(250,-20,-450,-350,380,-450);
-	car->addWall(-350,-20,-450,-350,380,100);
-	car->addWall(-350,-20,100,-250,380,100);
-	car->addWall(-250,-20,100,-250,380,450);
-	car->addWall(-250,-20,450,50,380,450);
-
-	car->addWall(-50,-20,350,-50,380,250);
-	car->addWall(-50,-20,250,350,380,250);
-	car->addWall(350,-20,250,350,380,-100);
-	car->addWall(350,-20,-100,150,380,-100);
-	car->addWall(150,-20,-100,150,380,-350);
-	car->addWall(150,-20,-350,-250,380,-350);
-	car->addWall(-250,-20,-350,-250,380,0);
-	car->addWall(-250,-20,0,-150,380,0);
-	car->addWall(-150,-20,0,-150,380,350);
-	car->addWall(-150,-20,350,-50,380,350);
-
-
-	car->addYuanbao(0,300);
-	car->addYuanbao(150,300);
-	car->addYuanbao(400,300);
-	car->addYuanbao(400,50);
-	car->addYuanbao(300,-150);
-	car->addYuanbao(-300,-250);
-	car->addYuanbao(-200,50);
-	car->addYuanbao(-200,400);
-}
-
-
 /**
 * \brief 绘制主控
 */
-void changeGothicTrans(float trans[],double x,double y,double z,double a,double b,double c,double r,double _x,double _y,double _z)
+void CMyOpenGL::changeGothicTrans(float trans[],double x,double y,double z,double a,double b,double c,double r,double _x,double _y,double _z)
 {
 	trans[0]=x;trans[1]=y;trans[2]=z;
 	trans[3]=a;trans[4]=b;trans[5]=c;
 	trans[6]=r;trans[7]=_x;trans[8]=_y;trans[9]=_z;
 }
+<<<<<<< HEAD
+void CMyOpenGL::hulanInit()
+=======
+
 void hulanInit()
+>>>>>>> Scene
 {
 	hulanCnt=0;
 	hulan[hulanCnt].rotate=90;hulan[hulanCnt].x=50;hulan[hulanCnt++].z=400;
@@ -178,14 +125,14 @@ void hulanInit()
 	hulan[hulanCnt].rotate=0;hulan[hulanCnt].x=0;hulan[hulanCnt++].z=-350;
 	hulan[hulanCnt].rotate=0;hulan[hulanCnt].x=-100;hulan[hulanCnt++].z=-350;
 	hulan[hulanCnt].rotate=0;hulan[hulanCnt].x=-200;hulan[hulanCnt++].z=-350;
-	
+
 
 	hulan[hulanCnt].rotate=90;hulan[hulanCnt].x=-250;hulan[hulanCnt++].z=-300;
 	hulan[hulanCnt].rotate=90;hulan[hulanCnt].x=-250;hulan[hulanCnt++].z=-200;
 	hulan[hulanCnt].rotate=90;hulan[hulanCnt].x=-250;hulan[hulanCnt++].z=-100;
 	hulan[hulanCnt].rotate=90;hulan[hulanCnt].x=-250;hulan[hulanCnt++].z=-100;
 	hulan[hulanCnt].rotate=90;hulan[hulanCnt].x=-250;hulan[hulanCnt++].z=-50;
-	
+
 
 	hulan[hulanCnt].rotate=0;hulan[hulanCnt].x=-200;hulan[hulanCnt++].z=0;
 
@@ -195,30 +142,98 @@ void hulanInit()
 	hulan[hulanCnt].rotate=90;hulan[hulanCnt].x=-150;hulan[hulanCnt++].z=300;
 
 	hulan[hulanCnt].rotate=0;hulan[hulanCnt].x=-100;hulan[hulanCnt++].z=350;
-	
+
 }
+<<<<<<< HEAD
+void CMyOpenGL::drawHulan()
+=======
+
 void drawHulan()
+>>>>>>> Scene
 {
 	hulanInit();
 	float gothicTrans_hulan[10];
 	for(int i=0;i<hulanCnt;i++)
 	{
 		changeGothicTrans(gothicTrans_hulan,
-		hulan[i].x,-20, hulan[i].z , //表示在世界矩阵的位置  
-		0.18, 0.18, 0.18 ,      //表示xyz放大倍数  
-		hulan[i].rotate, 0 , 1 , 0  //表示旋转  
-		);
+			hulan[i].x,-20, hulan[i].z , //表示在世界矩阵的位置  
+			0.18, 0.18, 0.18 ,      //表示xyz放大倍数  
+			hulan[i].rotate, 0 , 1 , 0  //表示旋转  
+			);
 		m_loader_hulan.DrawModel(gothicTrans_hulan);
 	}
 }
+
+/**
+* \brief 初始化
+*/
+void CMyOpenGL::PostInit(void)
+{
+	
+	m_loader_lupai.Init(3);//路牌
+	m_loader_car.Init(2);//汽车
+	m_loader_lupai4.Init(4);//路牌4
+	m_loader_luren.Init(5);//路人
+	m_loader_yuaubao.Init(11);//元宝
+	m_loader_hulan.Init(10);//护栏
+	m_loader_fangwu.Init(9);//房屋
+	m_loader_fangwu2.Init(8);//房屋2
+	car->init(Point_AABB(0,0,500,4,4,8,0,0,-1),0);//初始化汽车类
+	car->setGothicTrans_car(
+		0, 0 , 400,   
+		0.00003 , 0.00003 , 0.00003 ,      
+		0 , 0 , 0 , 0);
+
+	if (!glIsList((GLuint)1))
+	{
+		glNewList(1,GL_COMPILE);
+		drawHulan();//画护栏
+		glEndList();
+	}
+	car->addWall(50,-20,450,50,380,350);
+	car->addWall(50,-20,350,450,380,350);
+	car->addWall(450,-20,350,450,380,-200);
+	car->addWall(450,-20,-200,250,380,-200);
+	car->addWall(250,-20,-200,250,380,-450);
+	car->addWall(250,-20,-450,-350,380,-450);
+	car->addWall(-350,-20,-450,-350,380,100);
+	car->addWall(-350,-20,100,-250,380,100);
+	car->addWall(-250,-20,100,-250,380,450);
+	car->addWall(-250,-20,450,50,380,450);
+
+	car->addWall(-50,-20,350,-50,380,250);
+	car->addWall(-50,-20,250,350,380,250);
+	car->addWall(350,-20,250,350,380,-100);
+	car->addWall(350,-20,-100,150,380,-100);
+	car->addWall(150,-20,-100,150,380,-350);
+	car->addWall(150,-20,-350,-250,380,-350);
+	car->addWall(-250,-20,-350,-250,380,0);
+	car->addWall(-250,-20,0,-150,380,0);
+	car->addWall(-150,-20,0,-150,380,350);
+	car->addWall(-150,-20,350,-50,380,350);
+
+
+	car->addYuanbao(0,300);
+	car->addYuanbao(150,300);
+	car->addYuanbao(400,300);
+	car->addYuanbao(400,50);
+	car->addYuanbao(300,-150);
+	car->addYuanbao(-300,-250);
+	car->addYuanbao(-200,50);
+	car->addYuanbao(-200,400);
+}
+
+
+
+
+
 void CMyOpenGL::InDraw(void)
 {
 	gluLookAt(0,300,400,0,-1, 0,  0, 0, -1);
 	glPushMatrix();
 	scene.Render();
 	glPopMatrix();
-
-
+	DrawAxes(1000);
 	glPushMatrix();
 	float gothicTrans_fangwu[10] = { 
 		100,-10, 200 , //表示在世界矩阵的位置  
@@ -250,7 +265,6 @@ void CMyOpenGL::InDraw(void)
 		90 , 0 , 1 , 0  //表示旋转  
 		);
 
-
 	m_loader_fangwu2.DrawModel(gothicTrans_fangwu);
 
 	float gothicTransLupai4[10] = { 
@@ -267,10 +281,7 @@ void CMyOpenGL::InDraw(void)
 	};
 	m_loader_luren.DrawModel(gothicTransLuren);
 
-
-
     glPopMatrix();
-
 	glPushMatrix();
 	car->car_box.DrawAABBBoundingBox();//画出车的包围盒
 	m_loader_car.DrawModel(car->gothicTrans_car);
@@ -280,59 +291,7 @@ void CMyOpenGL::InDraw(void)
 		car->wall[i].DrawAABBBoundingBox();
 	}
 
-<<<<<<< HEAD
-	glEnable(GL_LIGHTING);
-	//0号光源-太阳光
-	GLfloat light0Ambient[] = {0.2, 0.2, 0.2, 1.0};
-	GLfloat light0Diffuse[] = {1.0, 1.0, 1.0, 1.0};
-	GLfloat light0Specular[] = {0.5, 0.5, 0.5, 1.0};
-	glLightfv(GL_LIGHT0, GL_AMBIENT, light0Ambient);
-	glLightfv(GL_LIGHT0, GL_DIFFUSE, light0Diffuse);
-	glLightfv(GL_LIGHT0, GL_SPECULAR, light0Specular);
-	glEnable(GL_LIGHT0);
-
-	//1号光源-聚光灯
-	GLfloat light1Diffuse[] = {0.5, 0.5, 0.5, 1.0};
-	GLfloat light1Specular[] = {0.5, 0.5, 0.5, 1.0};
-	GLfloat light1SpotCutoff = 45.0;
-	GLfloat light1SpotExponent = 2.0;
-	glLightfv(GL_LIGHT1, GL_DIFFUSE, light1Diffuse);
-    glLightfv(GL_LIGHT1, GL_SPECULAR, light1Specular);
-	glLightf(GL_LIGHT1, GL_SPOT_CUTOFF, light1SpotCutoff);
-	glLightf(GL_LIGHT1, GL_SPOT_EXPONENT, light1SpotExponent);
-	glEnable(GL_LIGHT1);
-
-
-	//指定顶点颜色为材质颜色
-	glEnable(GL_COLOR_MATERIAL);
-	glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
-
-	pModal->cvModCurPos = tracePointPos[0];
-	pModal->cvModCurDir = tracePointPos[1] - tracePointPos[0];
-	pModal->cvModPrevDir = pModal->cvModCurDir;
-	pModal->cvModCurDir.Normalize();
-	glEnable(GL_DEPTH_TEST);
-	glPushMatrix();
-	glLoadIdentity();
-	glTranslatef(0, 0, -25);
-	glMultMatrixf(pCamera->cmEyeMat);
-	glGetFloatv(GL_MODELVIEW_MATRIX, pCamera->cmEyeMat);
-	glPopMatrix();
-	GetTexture();
-	pCamera->cvMovVec.z = 25;
-	pCamera->ShowView();
-	m_loader.Init(1);
-}
-
-
-/**
-* \brief 绘制主控
-*/
-void CMyOpenGL::InDraw(void)
-{
-=======
 	/*画元宝*/
->>>>>>> 20493ba0d226ddcc625a539c249fd81aa0e3c86f
 	
 	float gothicTrans_yuanbao[10];
 	for (int i=0;i<car->yuanbao.size();i++)
@@ -351,8 +310,20 @@ void CMyOpenGL::InDraw(void)
 	
 	/********************************************/
 
+<<<<<<< HEAD
 	drawHulan();//画护栏
+	CString str;
+	str.Format("fps: %.2f 帧每秒", fps);
+	//pFont->Font2DBmp(str, -0.9, 0.9);
+	
+	pFont->Font2D(str, CVector966(-0.9, 0.9, 0), 24, RGB(255, 255, 255), 0|8 , 0);
+=======
+	//drawHulan();//画护栏
+	glCallList(1);
+>>>>>>> Scene
 	glPopMatrix();
+
+	
 }
 
 
@@ -372,269 +343,24 @@ void CMyOpenGL::Update()
 /**
  * \brief 绘制坐标轴
  */
-void CMyOpenGL::DrawAxes()
+void CMyOpenGL::DrawAxes(int size)
 {
-
-}
-
-/**
- * \brief 画一个球
- * \param radius 半径
- * \param lon 经向分割
- * \param lat 纬向分割
- */
-void CMyOpenGL::DrawBall(GLfloat radius,int lon,int lat)
-{
-
-}
-
-/**
- * \brief 计算法向量
- * \param v1 第一个点
- * \param v2 第二个点
- * \param v3 第三个点
- * \param normal 法向量
- */
-void CMyOpenGL::CalculateNormal(GLfloat v1[],GLfloat v2[],GLfloat v3[],GLfloat normal[])
-{
-
-}
-
-/**
- * \brief 法向量规范化
- * \param v 法向量
- */
-void CMyOpenGL::Normalize(GLfloat *v)
-{
-
-}
-
-bool CMyOpenGL::GetTexture()
-{
-	return true;
-}
-
-void CMyOpenGL::DrawBox(float size)
-{
-
-}
-
-/**
-* \brief 绘制小机器人
-*/
-void CMyOpenGL::DrawRobot()
-{
-<<<<<<< HEAD
-	/*glPushAttrib(GL_ENABLE_BIT | GL_POLYGON_BIT);
-	glFrontFace(GL_CCW);
-	static int type = 0, curFrame = 0;
-	curFrame++;
-	if(curFrame % 10 == 0)
-	{
-		type = (type + 1) % 8;
-	}
-	const float size=1;
+	glPushAttrib(GL_ENABLE_BIT);
+	glDisable(GL_LIGHTING);
+	glDisable(GL_TEXTURE_2D);
 	glPushMatrix();
-	glTranslatef(0, size * 1.2, 0);
-
-	//头
-	glPushMatrix();
-	glColor3f(0.4, 1, 0);
-	//glutSolidSphere(size * 0.3, 100, 100);
-	DrawBall(size * 0.3, 100, 100);
-	//DrawBox(size * 0.3);
+	glBegin(GL_LINES);
+	glColor3f(1, 0, 0);
+	glVertex3f(0, 0, 0);
+	glVertex3f(size, 0, 0);
+	glColor3f(0, 1, 0);
+	glVertex3f(0, 0, 0);
+	glVertex3f(0, size, 0);
+	glColor3f(0, 0, 1);
+	glVertex3f(0, 0, 0);
+	glVertex3f(0, 0, size);
+	glEnd();
 	glPopMatrix();
-
-	//身子    
-	glColor3f(0.2, 0.2, 0);
-	glPushMatrix();
-	glTranslatef(0, -size * 0.3, 0);
-	glRotatef(90, 1, 0, 0);
-	glutSolidCone(size * 0.7, size * 1.5, 100, 100);
-	glPopMatrix();
-
-	//胳膊
-	glColor3f(0.4, 0.1, 0);
-	glPushMatrix();
-	glTranslatef(-size * 0.5, -size * 0.7, 0);
-	glRotatef(-8, 0, 0, 1);
-	if(type == 0)
-	{
-		glRotatef(-40, 1, 0, 0);
-	}
-	else if(type == 1)
-	{
-		glRotatef(-20, 1, 0, 0);
-	}
-	else if (type == 2)
-	{
-		glRotatef(0, 1, 0, 0);
-	}
-	else if(type == 3)
-	{
-		glRotatef(20, 1, 0, 0);
-	}
-	else if (type == 4)
-	{
-		glRotatef(40, 1, 0, 0);
-	}
-	else if (type == 5)
-	{
-		glRotatef(20, 1, 0, 0);
-	}
-	else if (type == 6)
-	{
-		glRotatef(0, 1, 0, 0);
-	}
-	else
-	{
-		glRotatef(-20, 1, 0, 0);
-	}
-	glTranslatef(0, -size * 0.5, 0);
-	glScalef(0.2, 1, 0.2);
-	glutSolidCube(size);
-	glPopMatrix();
-
-	//胳膊
-	glColor3f(0.4, 0.1 ,0);
-	glPushMatrix();
-	glTranslatef(size * 0.5, -size * 0.7, 0);
-	glRotatef(8, 0, 0, 1);
-	if(type == 0)
-	{
-		glRotatef(40, 1, 0, 0);
-	}
-	else if(type == 1)
-	{
-		glRotatef(20, 1, 0, 0);
-	}
-	else if (type == 2)
-	{
-		glRotatef(0, 1, 0, 0);
-	}
-	else if(type == 3)
-	{
-		glRotatef(-20, 1, 0, 0);
-	}
-	else if (type == 4)
-	{
-		glRotatef(-40, 1, 0, 0);
-	}
-	else if (type == 5)
-	{
-		glRotatef(-20, 1, 0, 0);
-	}
-	else if (type == 6)
-	{
-		glRotatef(0, 1, 0, 0);
-	}
-	else
-	{
-		glRotatef(20, 1, 0, 0);
-	}
-	glTranslatef(0, -size * 0.5, 0);
-	glScalef(0.2, 1, 0.2);
-	glutSolidCube(size);
-	glPopMatrix();
-
-	//腿
-	glColor3f(1, 0, 1);
-	glPushMatrix();
-	glTranslatef(-size * 0.2, -size * 1.5, 0);
-	if(type == 0)
-	{
-		glRotatef(10, 1, 0, 0);
-	}
-	else if(type == 1)
-	{
-		glRotatef(5, 1, 0, 0);
-	}
-	else if (type == 2)
-	{
-		glRotatef(0, 1, 0, 0);
-	}
-	else if(type == 3)
-	{
-		glRotatef(-5, 1, 0, 0);
-	}
-	else if (type == 4)
-	{
-		glRotatef(-10, 1, 0, 0);
-	}
-	else if (type == 5)
-	{
-		glRotatef(-5, 1, 0, 0);
-	}
-	else if (type == 6)
-	{
-		glRotatef(0, 1, 0, 0);
-	}
-	else
-	{
-		glRotatef(5, 1, 0, 0);
-	}
-	glTranslatef(0, -size * 0.5, 0);
-	glScalef(0.2, 1, 0.2);
-	glutSolidCube(size);
-	glPopMatrix();
-
-	//腿
-	glColor3f(1, 0, 1);
-	glPushMatrix();
-	glTranslatef(size * 0.2, -size * 1.5, 0);
-	if(type == 0)
-	{
-		glRotatef(-10, 1, 0, 0);
-	}
-	else if(type == 1)
-	{
-		glRotatef(-5, 1, 0, 0);
-	}
-	else if (type == 2)
-	{
-		glRotatef(0, 1, 0, 0);
-	}
-	else if(type == 3)
-	{
-		glRotatef(5, 1, 0, 0);
-	}
-	else if (type == 4)
-	{
-		glRotatef(10, 1, 0, 0);
-	}
-	else if (type == 5)
-	{
-		glRotatef(5, 1, 0, 0);
-	}
-	else if (type == 6)
-	{
-		glRotatef(0, 1, 0, 0);
-	}
-	else
-	{
-		glRotatef(-5, 1, 0, 0);
-	}
-	glTranslatef(0, -size * 0.5, 0);
-	glScalef(0.2, 1, 0.2);
-	glutSolidCube(size);
-	glPopMatrix();
-	glPopMatrix();
-	glPopAttrib();*/
-	float gothicTrans[10] = {   
-    0, 0 , 0 ,     //表示在世界矩阵的位置  
-    1 , 1 , 1 ,      //表示xyz放大倍数  
-    180 , 0 , 1 , 0  //表示旋转  
-	};
-	m_loader.DrawModel(gothicTrans);
-=======
-
->>>>>>> 20493ba0d226ddcc625a539c249fd81aa0e3c86f
+	glPopAttrib();
 }
 
-/**
-* \brief 绘制小飞船
-*/
-void CMyOpenGL::DrawUfo()
-{
-
-}
