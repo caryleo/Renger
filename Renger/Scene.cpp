@@ -868,7 +868,7 @@ void CScene::Render()
 	//};
 	//m_loader.DrawModel(gothicTrans2);
 
-	glFlush();
+	//glFlush();
 }
 
 void CScene::init()

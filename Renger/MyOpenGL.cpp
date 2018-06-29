@@ -293,9 +293,14 @@ void CMyOpenGL::InDraw(void)
 	/********************************************/
 
 	drawHulan();//»­»¤À¸
+	CString str;
+	str.Format("fps: %.2f Ö¡Ã¿Ãë", fps);
+	//pFont->Font2DBmp(str, -0.9, 0.9);
+	
+	pFont->Font2D(str, CVector966(-0.9, 0.9, 0), 24, RGB(255, 255, 255), 0|8 , 0);
 	glPopMatrix();
-	char TextOut[20];
-	sprintf(TextOut, "fps: %.2f ", fps);
+
+	
 }
 
 

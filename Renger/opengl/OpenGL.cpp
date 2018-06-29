@@ -86,9 +86,11 @@ bool COpenGL::Init(HWND hWnd)	//初始化OpenGL环境
 
 	pModal = new CModal966;
 	car=new CAR();
+	
 	pCamera = new CCamera966(this);
 	pControl = new CControl966(this);
-	
+	pFont = new CFont966(this->pCamera, this->m_hmyWnd);
+
 	pControl->cpMousePos.x = m_rect.right / 2;
 	pControl->cpMousePos.y = m_rect.bottom / 2;
 	PostInit();

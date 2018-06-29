@@ -79,7 +79,7 @@ void CFont966::Font2D(CString lpszText, CVector966 pos, int size, int color, int
 
 	if (type == 0)
 	{
-		pos[2] = -100;
+		pos[2] = -100;//
 	}
 	else
 	{
@@ -162,7 +162,10 @@ void CFont966::Font2DBmp(CString str, double x, double y, int type, int color)
 		default:break;
 		}
 	}
-
+	glMatrixMode(GL_PROJECTION);
+	glPopMatrix();
+	glMatrixMode(GL_MODELVIEW);
+	glPopMatrix();
 	glPopAttrib();
 }
 
@@ -215,9 +218,9 @@ void CFont966::Font3DEnglish(CString str, CVector966 pos, double size, int forma
 		glPopMatrix();
 		len = mat[12];
 	}
-	double fs = size*1.674;
-	double my = 1.674*0.640625;
-	double mx = 1.674*len;
+	double fs = size;
+	double my = 0.640625;
+	double mx = len;
 
 	glPushMatrix();
 	glTranslated(pos.x, pos.y, pos.z);
