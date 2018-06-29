@@ -84,9 +84,6 @@
     <ClInclude Include="opengl\Matrix966.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="opengl\Modal966.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="opengl\OpenGL.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -96,22 +93,22 @@
     <ClInclude Include="opengl\Vector966.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="CLoad3DS.h">
+    <ClInclude Include="opengl\aabb.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="ModelLoader.h">
+    <ClInclude Include="opengl\car.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Scene.h">
+    <ClInclude Include="opengl\CFont966.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="aabb.h">
+    <ClInclude Include="opengl\CLoad3DS.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="car.h">
+    <ClInclude Include="opengl\ModelLoader.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="CFont966.h">
+    <ClInclude Include="opengl\Scene.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
@@ -158,22 +155,22 @@
     <ClCompile Include="opengl\Vector966.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="CLoad3DS.cpp">
+    <ClCompile Include="opengl\aabb.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="ModelLoader.cpp">
+    <ClCompile Include="opengl\car.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Scene.cpp">
+    <ClCompile Include="opengl\CFont966.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="aabb.cpp">
+    <ClCompile Include="opengl\CLoad3DS.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="car.cpp">
+    <ClCompile Include="opengl\ModelLoader.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="CFont966.cpp">
+    <ClCompile Include="opengl\Scene.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

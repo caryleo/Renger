@@ -20,7 +20,10 @@
 
 
 #include <afxver_.h>
-#include "../CFont966.h"
+#include "CFont966.h"
+#include "opengl/aabb.h"
+#include "opengl/car.h"
+#include "opengl/CLoad3DS.h"
 
 
 class AFX_CLASS_EXPORT COpenGL  

@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "Scene.h"
-#include "opengl\OpenGL.h"
 #include <afxver_.h>
 
 

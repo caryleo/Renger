@@ -1,8 +1,6 @@
 #include "StdAfx.h"
 #include "MyOpenGL.h"
-#include "aabb.h"
-#include "car.h"
-#include "CLoad3DS.h"
+
 #include <cmath>
 #include <iostream>
 #define POINTNUM 200
