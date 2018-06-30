@@ -23,7 +23,6 @@ struct Hulan
 	double x,z,rotate;
 }hulan[100];
 int hulanCnt=0;
-
 CMyOpenGL::CMyOpenGL(void)
 {
 } 
@@ -204,7 +203,6 @@ void CMyOpenGL::drawHulan()
 		m_loader_hulan.DrawModel(gothicTrans_hulan);
 	}
 }
-
 void CMyOpenGL::InDraw(void)
 {
 	//gluLookAt(0,400,500,0,-100,0,0,0,-1);
@@ -287,15 +285,15 @@ void CMyOpenGL::InDraw(void)
 	CString Score;
 	Score.Format("当前分数： %d",pCar->score);
 	pFont->Font2D(Score, CVector966(-0.9, 0.4, 0), 24, RGB(255, 255, 255), 0|8 , 0);
-	double durationTime = (double)difftime(pCar->now, pCar->start);
+	
 	CString nowTime;
-	nowTime.Format("当前时间: %.2f s",durationTime);
+	nowTime.Format("当前时间: %.2f s",(double)(pCar->now-pCar->start)/CLOCKS_PER_SEC);
 	pFont->Font2D(nowTime, CVector966(-0.9, 0.2, 0), 24, RGB(255, 255, 255), 0|8 , 0);
 	if(pCar->endFlag==1)
 	{
 		CString isEnd,_time;
 		isEnd.Format("游戏结束");
-		_time.Format("用时: %.2f s",pCar->Time-pCar->start);
+		_time.Format("用时: %.2f s",(double)(pCar->end-pCar->start)/CLOCKS_PER_SEC);
 		pFont->Font2D(_time, CVector966(-0.9, -0.2, 0), 24, RGB(255, 255, 255), 0|8 , 0);
 		pFont->Font2D(isEnd, CVector966(-0.9, 0, 0), 24, RGB(255, 255, 255), 0|8 , 0);
 	}
@@ -341,8 +339,6 @@ void CMyOpenGL::InDraw(void)
 	glPopMatrix();
 	
 }
-
-
 bool CMyOpenGL::OnKey(unsigned char nChar, bool bDown)
 {
 	return false;

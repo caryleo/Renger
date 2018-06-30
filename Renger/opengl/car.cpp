@@ -47,11 +47,11 @@ void CAR::turnLeft(double deg)//右转
 void CAR::update()//更新汽车运动状态
 {
 	//更新时间
-	now=time(NULL);
+	now=clock();
 	//终点线检测
 	if(car_box.IsOrNotInterection(endLine))
 	{
-		Time = time(NULL);
+		end = clock();
 		endFlag=1;
 	}
 	//元宝碰撞检测
@@ -190,7 +190,7 @@ void CAR::speedDownNatural()
 		return ;
 	else if(speed<0)
 	{
-		speed+=0.2;
+		speed+=0.4;
 		if(speed>0)
 			speed=0;
 	}
@@ -210,12 +210,11 @@ void CAR::newGame()
 {
 		memset(yuanbaoFlag,0,sizeof(yuanbaoFlag));
 		score=0;
-		Time=0;
 		endLine=AABB(-50,0,350,-50,500,450);
 		setGothicTrans_car(
 		0, 0 , 400,   
 		0.00003 , 0.00003 , 0.00003 ,      
 		0 , 0 , 0 , 0);
 		endFlag=0;
-		start=time(NULL);
+		start=clock();
 }

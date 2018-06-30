@@ -1,5 +1,6 @@
 #pragma once
 #include "aabb.h"
+#include <time.h>
 #include <vector>
 using namespace std;
 
@@ -12,7 +13,7 @@ public:
 	double speed;//速度
 	int endFlag;//结束标识
 	int score;//分数
-	double Time,start,now;//时间
+	clock_t end,start,now;//时间
 	
 	vector<AABB>wall;
 	vector<AABB>yuanbao;
@@ -22,8 +23,7 @@ public:
 	{
 		memset(yuanbaoFlag,0,sizeof(yuanbaoFlag));
 		score=0;
-		Time=0;
-		start=time(NULL);
+		start=clock();
 		endLine=AABB(-50,0,350,-50,500,450);
 		endFlag=0;
 	};
