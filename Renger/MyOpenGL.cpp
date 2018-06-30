@@ -20,6 +20,8 @@ CModelLoader m_loader_shu;
 CModelLoader m_loader_jiantou;
 GLuint texLine;//终点线
 GLuint texRoad;//公路材质
+
+
 struct Hulan
 {
 	double x, z, rotate;
@@ -43,7 +45,14 @@ CMyOpenGL::~CMyOpenGL(void)
 void CMyOpenGL::PostInit(void)
 {
 	texRoad = load_texture("Data/road.bmp");
-	texLine=load_texture("Data/endline.bmp");
+	texLine = load_texture("Data/endline.bmp");
+	Launcher = load_texture("Data/carr.bmp");
+	START = load_texture("Data/003.bmp");
+	STARTDOWN = load_texture("Data/004.bmp");
+	END = load_texture("Data/001.bmp");
+	ENDDOWN = load_texture("Data/002.bmp");
+	RESTART = load_texture("Data/005.bmp");
+	RESTARTDOWN = load_texture("Data/006.bmp");
 	m_loader_lupai.Init(3);//路牌
 	m_loader_car.Init(2);//汽车
 	m_loader_lupai4.Init(4);//路牌4
@@ -91,7 +100,7 @@ void CMyOpenGL::PostInit(void)
 	pCar->addYuanbao(-200,50);
 	pCar->addYuanbao(-200,400);
 
-	pCamera->SetGameMode(1);
+	pCamera->SetGameMode(0);
 
 	/** 用户自定义的初始化过程 */
 	///定义光源GL_LIGHT0
@@ -391,28 +400,45 @@ void CMyOpenGL::InDraw(void)
 		glPushAttrib(GL_ENABLE_BIT | GL_POLYGON_BIT);
 		glDisable(GL_LIGHTING);
 		glDisable(GL_TEXTURE_2D);
-		glMatrixMode(GL_PROJECTION);
-		glPushMatrix();
-		glLoadIdentity();
-		glOrtho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f);
-		glMatrixMode(GL_MODELVIEW);
-		glPushMatrix();
-		glLoadIdentity();
-		glClearColor(255, 255, 255, 0);
-		RECT rect;
-		GetClientRect(m_hWnd, &rect);
-		int cenx = (rect.right - rect.left) / 2;
-		int ceny = (rect.bottom - rect.top) / 2;
-		csb.Set(cenx, ceny - 100, 500, 100);
-		csb.render(rect);
-		CString startStr;
-		startStr.Format("RENGER");
-		pFont->Font2D(startStr, CVector966(0, 0.3, 0), 96, RGB(200, 100, 44), DT_CENTER | DT_BOTTOM, 0);
-
-		glMatrixMode(GL_PROJECTION);
-		glPopMatrix();
-		glMatrixMode(GL_MODELVIEW);
-		glPopMatrix();
+		{
+			glMatrixMode(GL_PROJECTION);
+			glPushMatrix();
+			glLoadIdentity();
+			glOrtho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f);
+			glMatrixMode(GL_MODELVIEW);
+			glPushMatrix();
+			glLoadIdentity();
+			glClearColor(255, 255, 255, 0);
+			glPushAttrib(GL_ENABLE_BIT | GL_POLYGON_BIT);
+			glEnable(GL_TEXTURE_2D);
+			glBindTexture(GL_TEXTURE_2D, Launcher);
+			glColor3b(1, 1, 1);
+			glBegin(GL_QUADS);
+			glTexCoord2f(0.0, 1.0);
+			glVertex2d(-1.0, 1.0);
+			glTexCoord2f(0.0, 0.0);
+			glVertex2d(-1.0, -1.0);
+			glTexCoord2f(1.0, 0.0);
+			glVertex2d(1.0, -1.0);
+			glTexCoord2f(1.0, 1.0);
+			glVertex2d(1.0, 1.0);
+			glEnd();
+			glDisable(GL_TEXTURE_2D);
+			glPopAttrib();
+			RECT rect;
+			GetClientRect(m_hWnd, &rect);
+			int cenx = (rect.right - rect.left) / 2;
+			int ceny = (rect.bottom - rect.top) / 2;
+			csb->Set(cenx, ceny - 100, 512, 128);
+			csb->render(rect);
+			CString startStr;
+			startStr.Format("RENGER");
+			pFont->Font2D(startStr, CVector966(0, 0.3, 0), 96, RGB(200, 100, 44), DT_CENTER | DT_BOTTOM, 0);
+			glMatrixMode(GL_PROJECTION);
+			glPopMatrix();
+			glMatrixMode(GL_MODELVIEW);
+			glPopMatrix();
+		}
 		glPopAttrib();
 	}
 	else if (pCamera->iGameMode == 1)
@@ -572,43 +598,63 @@ void CMyOpenGL::InDraw(void)
 		pFont->Font2D(sp, CVector966(-0.9f, 0.6f, 0), 24, RGB(255, 255, 255), 0 | 8, 0);
 		glPopMatrix();
 	}
-	else
+	else if (pCamera->iGameMode == 2)
 	{
 		glPushAttrib(GL_ENABLE_BIT | GL_POLYGON_BIT);
 		glDisable(GL_LIGHTING);
 		glDisable(GL_TEXTURE_2D);
-		glMatrixMode(GL_PROJECTION);
-		glPushMatrix();
-		glLoadIdentity();
-		glOrtho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f);
-		glMatrixMode(GL_MODELVIEW);
-		glPushMatrix();
-		glLoadIdentity();
-		glClearColor(255, 255, 255, 0);
-
-		RECT rect;
-		GetClientRect(m_hWnd, &rect);
-		int cenx = (rect.right - rect.left) / 2;
-		int ceny = (rect.bottom - rect.top) / 2;
-		ceb.Set(cenx, ceny - 100, 500, 100);
-		ceb.render(rect);
-		crb.Set(cenx, ceny - 250, 500, 100);
-		crb.render(rect);
-		CString endStr;
-		endStr.Format("游戏结束");
-		pFont->Font2D(endStr, CVector966(0, 0.4, 0), 96, RGB(55, 205, 84), DT_CENTER | DT_BOTTOM, 0);
-		CString scoreStr;
-		scoreStr.Format("得分：%d", pCar->score);
-		pFont->Font2D(scoreStr, CVector966(0, 0.3, 0), 24, RGB(0, 255, 0), DT_CENTER | DT_BOTTOM, 0);
-		CString timeStr;
-		timeStr.Format("用时：%.2f s", static_cast<double>(pCar->end - pCar->start) / CLOCKS_PER_SEC);
-		pFont->Font2D(timeStr, CVector966(0, 0.2, 0), 24, RGB(0, 255, 0), DT_CENTER | DT_BOTTOM, 0);
-		glMatrixMode(GL_PROJECTION);
-		glPopMatrix();
-		glMatrixMode(GL_MODELVIEW);
-		glPopMatrix();
+		{
+			glMatrixMode(GL_PROJECTION);
+			glPushMatrix();
+			glLoadIdentity();
+			glOrtho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f);
+			glMatrixMode(GL_MODELVIEW);
+			glPushMatrix();
+			glLoadIdentity();
+			glClearColor(255, 255, 255, 0);
+			glPushAttrib(GL_ENABLE_BIT | GL_POLYGON_BIT);
+			glEnable(GL_TEXTURE_2D);
+			glBindTexture(GL_TEXTURE_2D, Launcher);
+			glColor3b(1, 1, 1);
+			glBegin(GL_QUADS);
+			glTexCoord2f(0.0, 1.0);
+			glVertex2d(-1.0, 1.0);
+			glTexCoord2f(0.0, 0.0);
+			glVertex2d(-1.0, -1.0);
+			glTexCoord2f(1.0, 0.0);
+			glVertex2d(1.0, -1.0);
+			glTexCoord2f(1.0, 1.0);
+			glVertex2d(1.0, 1.0);
+			glEnd();
+			glDisable(GL_TEXTURE_2D);
+			glPopAttrib();
+			RECT rect;
+			GetClientRect(m_hWnd, &rect);
+			int cenx = (rect.right - rect.left) / 2;
+			int ceny = (rect.bottom - rect.top) / 2;
+			int e = glGetError();
+			ceb->Set(cenx, ceny - 100, 512, 128);
+			ceb->render(rect);
+			crb->Set(cenx, ceny - 250, 512, 128);
+			crb->render(rect);
+			int f = glGetError();
+			CString endStr;
+			endStr.Format("游戏结束");
+			pFont->Font2D(endStr, CVector966(0, 0.4, 0), 96, RGB(55, 205, 84), DT_CENTER | DT_BOTTOM, 0);
+			CString scoreStr;
+			scoreStr.Format("得分：%d", pCar->score);
+			pFont->Font2D(scoreStr, CVector966(0, 0.3, 0), 24, RGB(0, 255, 0), DT_CENTER | DT_BOTTOM, 0);
+			CString timeStr;
+			timeStr.Format("用时：%.2f s", static_cast<double>(pCar->end - pCar->start) / CLOCKS_PER_SEC);
+			pFont->Font2D(timeStr, CVector966(0, 0.2, 0), 24, RGB(0, 255, 0), DT_CENTER | DT_BOTTOM, 0);
+			glMatrixMode(GL_PROJECTION);
+			glPopMatrix();
+			glMatrixMode(GL_MODELVIEW);
+			glPopMatrix();
+		}
 		glPopAttrib();
 	}
+
 }
 
 bool CMyOpenGL::OnKey(unsigned char nChar, bool bDown)
@@ -622,6 +668,10 @@ bool CMyOpenGL::OnKey(unsigned char nChar, bool bDown)
 void CMyOpenGL::Update()
 {
 	pCar->update();
+	if (pCar->endFlag == 1)
+	{
+		pCamera->SetGameMode(2);
+	}
 }
 
 /**
