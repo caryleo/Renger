@@ -205,138 +205,185 @@ void CMyOpenGL::drawHulan()
 }
 void CMyOpenGL::InDraw(void)
 {
-	
-	glPushMatrix();
-	pScene->Render();
-	glPopMatrix();
-	DrawAxes(1000);
-	
-	glPushMatrix();
-	float gothicTrans_fangwu[10] = { 
-		100,-10, 200 , //表示在世界矩阵的位置  
-		0.2, 0.2, 0.2 ,      //表示xyz放大倍数  
-		180 , 0 , 1 , 0  //表示旋转  
-	};
-	m_loader_fangwu.DrawModel(gothicTrans_fangwu);
-	changeGothicTrans(gothicTrans_fangwu,
-		150,-10, 400 , //表示在世界矩阵的位置  
-		0.2, 0.2, 0.2 ,      //表示xyz放大倍数  
-		90 , 0 , 1 , 0  //表示旋转  
-		);
-	m_loader_fangwu2.DrawModel(gothicTrans_fangwu);
-	changeGothicTrans(gothicTrans_fangwu,
-		-300,-10, 250 , //表示在世界矩阵的位置  
-		0.2, 0.2, 0.2 ,      //表示xyz放大倍数  
-		-90 , 0 , 1 , 0  //表示旋转  
-		);
-	m_loader_fangwu.DrawModel(gothicTrans_fangwu);
-	changeGothicTrans(gothicTrans_fangwu,
-		-150,-10, -250 , //表示在世界矩阵的位置  
-		0.2, 0.2, 0.2 ,      //表示xyz放大倍数  
-		0 , 0 , 1 , 0  //表示旋转  
-		);
-	m_loader_fangwu.DrawModel(gothicTrans_fangwu);
-	changeGothicTrans(gothicTrans_fangwu,
-		100,-10, -250 , //表示在世界矩阵的位置  
-		0.2, 0.2, 0.2 ,      //表示xyz放大倍数  
-		90 , 0 , 1 , 0  //表示旋转  
-		);
-
-	m_loader_fangwu2.DrawModel(gothicTrans_fangwu);
-
-	float gothicTransLupai4[10] = { 
-		450,0 , -50, //表示在世界矩阵的位置  
-		0.2, 0.1, 0.1 ,      //表示xyz放大倍数  
-		0 , 0 , 1 , 0  //表示旋转  
-	};
-	m_loader_lupai4.DrawModel(gothicTransLupai4);
-
-	float gothicTransLuren[10] = { 
-		-100,0 , 200, //表示在世界矩阵的位置  
-		0.2, 0.2, 0.2 ,      //表示xyz放大倍数  
-		0 , 0 , 1 , 0  //表示旋转  
-	};
-	m_loader_luren.DrawModel(gothicTransLuren);
-
-	float gothicTrans_shu[10]={
-		-120, 0, 200,
-		0.2, 0.2, 0.2,
-		0, 0, 1 ,0
-	};
-	m_loader_shu.DrawModel(gothicTrans_shu);
-
-	float gothicTrans_Lupai[10]={
-		0,-5 , -50, //表示在世界矩阵的位置  
-		0.08, 0.08, 0.8 ,      //表示xyz放大倍数  
-		0 , 0 , 1 , 0  //表示旋转  
-	};
-	m_loader_lupai.DrawModel(gothicTrans_Lupai);
-    glPopMatrix();
-	
-
-	glPushMatrix();
-	pCar->car_box.DrawAABBBoundingBox();//画出车的包围盒
-
-	glPushMatrix();
-	CString tmp;
-	tmp.Format("李东的小保时捷");
-	CVector966 tmpPos(float(pCar->car_point.x), float(pCar->car_point.y) + 2, float(pCar->car_point.z));
-	CString Score;
-	Score.Format("当前分数： %d",pCar->score);
-	pFont->Font2D(Score, CVector966(-0.9, 0.4, 0), 24, RGB(255, 255, 255), 0|8 , 0);
-	
-	CString nowTime;
-	nowTime.Format("当前时间: %.2f s",(double)(pCar->now-pCar->start)/CLOCKS_PER_SEC);
-	pFont->Font2D(nowTime, CVector966(-0.9, 0.2, 0), 24, RGB(255, 255, 255), 0|8 , 0);
-	if(pCar->endFlag==1)
+	if (pCamera->iGameMode == 0)
 	{
-		CString isEnd,_time;
-		isEnd.Format("游戏结束");
-		_time.Format("用时: %.2f s",(double)(pCar->end-pCar->start)/CLOCKS_PER_SEC);
-		pFont->Font2D(_time, CVector966(-0.9, -0.2, 0), 24, RGB(255, 255, 255), 0|8 , 0);
-		pFont->Font2D(isEnd, CVector966(-0.9, 0, 0), 24, RGB(255, 255, 255), 0|8 , 0);
+		glPushAttrib(GL_ENABLE_BIT | GL_POLYGON_BIT);
+		glDisable(GL_LIGHTING);
+		glDisable(GL_TEXTURE_2D);
+		glMatrixMode(GL_PROJECTION);
+		glPushMatrix();
+		glLoadIdentity();
+		glOrtho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f);
+		glMatrixMode(GL_MODELVIEW);
+		glPushMatrix();
+		glLoadIdentity();
+		glClearColor(255, 255, 255, 0);
+		CString startStr;
+		startStr.Format("这里是开始界面");
+		pFont->Font2D(startStr, CVector966(0, 0, 0), 48, RGB(255, 0, 0), DT_CENTER | DT_BOTTOM, 0);
+
+		glMatrixMode(GL_PROJECTION);
+		glPopMatrix();
+		glMatrixMode(GL_MODELVIEW);
+		glPopMatrix();
+		glPopAttrib();
 	}
-	CString pos;
-	pos.Format("当前车位置：（%.2lf，%.2lf，%.2lf）", pCar->car_point.x, pCar->car_point.y, pCar->car_point.z);
-	pFont->Font2D(pos, CVector966(-0.9, 0.8, 0), 24, RGB(255, 255, 255), 0|8 , 0);
-	CString dir;
-	dir.Format("当前车头朝向：（%.2lf，%.2lf，%.2lf）", pCar->car_point.dirx, pCar->car_point.diry, pCar->car_point.dirz);
-	pFont->Font2D(dir, CVector966(-0.9, 0.6, 0), 24, RGB(255, 255, 255), 0|8 , 0);
-	pFont->Font2D(tmp, tmpPos, 24, RGB(255,255,255), DT_CENTER | DT_BOTTOM, 1);
-	m_loader_car.DrawModel(pCar->gothicTrans_car);
-	glPopMatrix();
-
-	for (int i=0;i<pCar->wall.size();i++)
+	else if(pCamera->iGameMode == 1)
 	{
-		pCar->wall[i].DrawAABBBoundingBox();
-	}
+		glPushMatrix();
+		pScene->Render();
+		glPopMatrix();
+		//DrawAxes(1000);
+		
+		glPushMatrix();
+		float gothicTrans_fangwu[10] = { 
+			100,-10, 200 , //表示在世界矩阵的位置  
+			0.2, 0.2, 0.2 ,      //表示xyz放大倍数  
+			180 , 0 , 1 , 0  //表示旋转  
+		};
+		m_loader_fangwu.DrawModel(gothicTrans_fangwu);
+		changeGothicTrans(gothicTrans_fangwu,
+			150,-10, 400 , //表示在世界矩阵的位置  
+			0.2, 0.2, 0.2 ,      //表示xyz放大倍数  
+			90 , 0 , 1 , 0  //表示旋转  
+			);
+		m_loader_fangwu2.DrawModel(gothicTrans_fangwu);
+		changeGothicTrans(gothicTrans_fangwu,
+			-300,-10, 250 , //表示在世界矩阵的位置  
+			0.2, 0.2, 0.2 ,      //表示xyz放大倍数  
+			-90 , 0 , 1 , 0  //表示旋转  
+			);
+		m_loader_fangwu.DrawModel(gothicTrans_fangwu);
+		changeGothicTrans(gothicTrans_fangwu,
+			-150,-10, -250 , //表示在世界矩阵的位置  
+			0.2, 0.2, 0.2 ,      //表示xyz放大倍数  
+			0 , 0 , 1 , 0  //表示旋转  
+			);
+		m_loader_fangwu.DrawModel(gothicTrans_fangwu);
+		changeGothicTrans(gothicTrans_fangwu,
+			100,-10, -250 , //表示在世界矩阵的位置  
+			0.2, 0.2, 0.2 ,      //表示xyz放大倍数  
+			90 , 0 , 1 , 0  //表示旋转  
+			);
 
-	//画元宝
-	float gothicTrans_yuanbao[10];
-	for (int i=0;i<pCar->yuanbao.size();i++)
-	{
-		if(pCar->yuanbaoFlag[i]!=1)
+		m_loader_fangwu2.DrawModel(gothicTrans_fangwu);
+
+		float gothicTransLupai4[10] = { 
+			450,0 , -50, //表示在世界矩阵的位置  
+			0.2, 0.1, 0.1 ,      //表示xyz放大倍数  
+			0 , 0 , 1 , 0  //表示旋转  
+		};
+		m_loader_lupai4.DrawModel(gothicTransLupai4);
+
+		float gothicTransLuren[10] = { 
+			-100,0 , 200, //表示在世界矩阵的位置  
+			0.2, 0.2, 0.2 ,      //表示xyz放大倍数  
+			0 , 0 , 1 , 0  //表示旋转  
+		};
+		m_loader_luren.DrawModel(gothicTransLuren);
+
+		float gothicTrans_shu[10]={
+			-120, 0, 200,
+			0.2, 0.2, 0.2,
+			0, 0, 1 ,0
+		};
+		m_loader_shu.DrawModel(gothicTrans_shu);
+
+		float gothicTrans_Lupai[10]={
+			0,-5 , -50, //表示在世界矩阵的位置  
+			0.08, 0.08, 0.8 ,      //表示xyz放大倍数  
+			0 , 0 , 1 , 0  //表示旋转  
+		};
+		m_loader_lupai.DrawModel(gothicTrans_Lupai);
+	    glPopMatrix();
+		
+
+		glPushMatrix();
+		//pCar->car_box.DrawAABBBoundingBox();//画出车的包围盒
+
+		glPushMatrix();
+		CString tmp;
+		tmp.Format("李东的小保时捷");
+		CVector966 tmpPos(float(pCar->car_point.x), float(pCar->car_point.y) + 2, float(pCar->car_point.z));
+		CString Score;
+		Score.Format("当前分数：%d",pCar->score);
+		pFont->Font2D(Score, CVector966(-0.9, 0.8, 0), 24, RGB(255, 255, 255), 0|8 , 0);
+		
+		CString nowTime;
+		nowTime.Format("当前时间：%.2f s",(double)(pCar->now-pCar->start)/CLOCKS_PER_SEC);
+		pFont->Font2D(nowTime, CVector966(-0.9, 0.7, 0), 24, RGB(255, 255, 255), 0|8 , 0);
+		if(pCar->endFlag==1)
 		{
-			pCar->yuanbao[i].DrawAABBBoundingBox();
-			changeGothicTrans(gothicTrans_yuanbao,
-				(pCar->yuanbao[i].Xmax+pCar->yuanbao[i].Xmin)/2,0 ,(pCar->yuanbao[i].Zmax+pCar->yuanbao[i].Zmin)/2, 
-				0.2,0.2, 0.2 ,      //表示xyz放大倍数  
-				0 , 0 , 1 , 0  //表示旋转  
-				);
-			m_loader_yuaubao.DrawModel(gothicTrans_yuanbao);
+			CString isEnd,_time;
+			isEnd.Format("游戏结束");
+			_time.Format("用时：%.2f s",(double)(pCar->end-pCar->start)/CLOCKS_PER_SEC);
+			pFont->Font2D(_time, CVector966(-0.9, 0.4, 0), 24, RGB(255, 255, 255), 0|8 , 0);
+			pFont->Font2D(isEnd, CVector966(-0.9, 0.5, 0), 24, RGB(255, 255, 255), 0|8 , 0);
 		}
+		/*CString pos;
+		pos.Format("当前车位置：（%.2lf，%.2lf，%.2lf）", pCar->car_point.x, pCar->car_point.y, pCar->car_point.z);
+		pFont->Font2D(pos, CVector966(-0.9, 0.8, 0), 24, RGB(255, 255, 255), 0|8 , 0);*/
+		/*CString dir;
+		dir.Format("当前车头朝向：（%.2lf，%.2lf，%.2lf）", pCar->car_point.dirx, pCar->car_point.diry, pCar->car_point.dirz);
+		pFont->Font2D(dir, CVector966(-0.9, 0.6, 0), 24, RGB(255, 255, 255), 0|8 , 0);*/
+		pFont->Font2D(tmp, tmpPos, 24, RGB(255,255,255), DT_CENTER | DT_BOTTOM, 1);
+		m_loader_car.DrawModel(pCar->gothicTrans_car);
+		glPopMatrix();
+
+		for (int i=0;i<pCar->wall.size();i++)
+		{
+			//pCar->wall[i].DrawAABBBoundingBox();
+		}
+
+		//画元宝
+		float gothicTrans_yuanbao[10];
+		for (int i=0;i<pCar->yuanbao.size();i++)
+		{
+			if(pCar->yuanbaoFlag[i]!=1)
+			{
+				//pCar->yuanbao[i].DrawAABBBoundingBox();
+				changeGothicTrans(gothicTrans_yuanbao,
+					(pCar->yuanbao[i].Xmax+pCar->yuanbao[i].Xmin)/2,0 ,(pCar->yuanbao[i].Zmax+pCar->yuanbao[i].Zmin)/2, 
+					0.2,0.2, 0.2 ,      //表示xyz放大倍数  
+					0 , 0 , 1 , 0  //表示旋转  
+					);
+				m_loader_yuaubao.DrawModel(gothicTrans_yuanbao);
+			}
+		}
+		drawArrow();
+		drawHulan();//画护栏
+		drawAllRoad();
+		CString str;
+		str.Format("fps：%.2f 帧每秒", fps);
+		pFont->Font2D(str, CVector966(-0.9f, 0.9f, 0), 24, RGB(255, 255, 255), 0|8 , 0);
+		CString sp;
+		sp.Format("当前速度：%.2lf m/s", pCar->speed);
+		pFont->Font2D(sp, CVector966(-0.9f, 0.6f, 0), 24, RGB(255, 255, 255), 0|8 , 0);
+		glPopMatrix();
 	}
-	drawArrow();
-	drawHulan();//画护栏
-	drawAllRoad();
-	CString str;
-	str.Format("fps: %.2f 帧每秒", fps);
-	pFont->Font2D(str, CVector966(-0.9f, 0.9f, 0), 24, RGB(255, 255, 255), 0|8 , 0);
-	CString sp;
-	sp.Format("当前速度：%.2lf m/s", pCar->speed);
-	pFont->Font2D(sp, CVector966(-0.9f, 0.7f, 0), 24, RGB(255, 255, 255), 0|8 , 0);
-	glPopMatrix();
-	
+	else
+	{
+		glPushAttrib(GL_ENABLE_BIT | GL_POLYGON_BIT);
+		glDisable(GL_LIGHTING);
+		glDisable(GL_TEXTURE_2D);
+		glMatrixMode(GL_PROJECTION);
+		glPushMatrix();
+		glLoadIdentity();
+		glOrtho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f);
+		glMatrixMode(GL_MODELVIEW);
+		glPushMatrix();
+		glLoadIdentity();
+		glClearColor(255, 255, 255, 0);
+		CString startStr;
+		startStr.Format("这里是结束界面");
+		pFont->Font2D(startStr, CVector966(0, 0, 0), 48, RGB(0, 255, 0), DT_CENTER | DT_BOTTOM, 0);
+
+		glMatrixMode(GL_PROJECTION);
+		glPopMatrix();
+		glMatrixMode(GL_MODELVIEW);
+		glPopMatrix();
+		glPopAttrib();
+	}
 }
 bool CMyOpenGL::OnKey(unsigned char nChar, bool bDown)
 {

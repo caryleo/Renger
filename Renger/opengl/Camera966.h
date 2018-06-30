@@ -41,12 +41,12 @@ public:
 	CEuler966 ceGameEul;//游戏视角调整值
 	int iWeight;//缩放权重
 	bool isGameMouseAvail;//锁游戏视角
+	int iGameMode;//游戏模式，0为开始，1为游戏中，2为结束
 
 private:
 	float fViewDis;//跟踪视角视距
 	int iViewMode;//视角模式，0为上帝视角，1为跟踪视角，2为同步视角
 	int iCtrlMode;//实现模式，0为欧拉角，1为子坐标系
-	int iGameMode;//游戏模式，0为开始，1为游戏中，2为结束
 	bool bIsSlerp;//插值状态量
 	int iSlerpNum;//插值量
 	float fSlerpTs[360];//插值系数

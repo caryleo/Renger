@@ -250,6 +250,9 @@ void CCamera966::ShowView()
 	cmIEyeMat = cmEyeMat.GetInverse();
 }
 
+/**
+ * \brief 调整游戏视角
+ */
 void CCamera966::ShowGameView()
 {
 	if (iGameMode == 0)
