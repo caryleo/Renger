@@ -17,6 +17,7 @@ CModelLoader m_loader_luren;
 CModelLoader m_loader_lupai4;
 CModelLoader m_loader_shu;
 CModelLoader m_loader_jiantou;
+GLuint texLine;//终点线
 GLuint texRoad;//公路材质
 struct Hulan
 {
@@ -39,6 +40,7 @@ CMyOpenGL::~CMyOpenGL(void)
 void CMyOpenGL::PostInit(void)
 {
 	texRoad = load_texture("Data/road.bmp");
+	texLine=load_texture("Data/endline.bmp");
 	m_loader_lupai.Init(3);//路牌
 	m_loader_car.Init(2);//汽车
 	m_loader_lupai4.Init(4);//路牌4
@@ -400,9 +402,17 @@ void CMyOpenGL::InDraw(void)
 		drawArrow();
 		drawHulan();//画护栏
 		glPushMatrix();
-		//glDisable(GL_LIGHT1);
 		drawAllRoad();
-		//glEnable(GL_LIGHT1);
+		glEnable(GL_TEXTURE_2D);
+		glBindTexture(GL_TEXTURE_2D, texLine);
+		// 画终点线
+		glBegin(GL_QUADS);    
+		glTexCoord2f(0.0f, 1); glVertex3f(-70,  -1.9, 350);  // 纹理和四边形的左上  
+		glTexCoord2f(0.0f, 0.0f); glVertex3f(-70,  -1.9,  450);  // 纹理和四边形的左下  
+		glTexCoord2f(1, 0.0f); glVertex3f( -50,  -1.9,  450);  // 纹理和四边形的右下  
+		glTexCoord2f(1, 1); glVertex3f( -50,  -1.9, 350);  // 纹理和四边形的右上  
+		glEnd();  
+		glDisable(GL_TEXTURE_2D);
 		glPopMatrix();
 		CString str;
 		str.Format("fps：%.2f 帧每秒", fps);
