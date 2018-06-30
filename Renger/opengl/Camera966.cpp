@@ -73,28 +73,7 @@ void CCamera966::SetCtrlMode(int mode)
  */
 void CCamera966::SetGameMode(int game)
 {
-	if (iGameMode == 0 || iGameMode == 1)
-	{
-		if (game == 0)
-		{
-			//AfxMessageBox("游戏已经开始！");
-		}
-		else
-		{
-			iGameMode = game;
-		}
-	}
-	else
-	{
-		if (game == 2)
-		{
-			//AfxMessageBox("现在还没开始游戏哦！");
-		}
-		else
-		{
-			iGameMode = game;
-		}
-	}
+	iGameMode = game;
 }
 
 /**

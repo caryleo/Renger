@@ -443,6 +443,9 @@ void CMyOpenGL::InDraw(void)
 	}
 	else if (pCamera->iGameMode == 1)
 	{
+		glPushAttrib(GL_ENABLE_BIT | GL_POLYGON_BIT | GL_TEXTURE_BIT);
+		glEnable(GL_LIGHT0);  /**< 启用0号光源 */   
+		glEnable(GL_LIGHT3);  /**< 启用0号光源 */
 		glPushMatrix();
 		glEnable(GL_COLOR_MATERIAL);
 		glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
@@ -597,6 +600,7 @@ void CMyOpenGL::InDraw(void)
 		sp.Format("当前速度：%.2lf m/s", pCar->speed);
 		pFont->Font2D(sp, CVector966(-0.9f, 0.6f, 0), 24, RGB(255, 255, 255), 0 | 8, 0);
 		glPopMatrix();
+		glPopAttrib();
 	}
 	else if (pCamera->iGameMode == 2)
 	{

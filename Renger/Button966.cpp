@@ -188,7 +188,7 @@ void CEndButton966::render(RECT rect)
 	{
 		glBindTexture(GL_TEXTURE_2D, pOpenGL->END);
 	}
-	glColor3b(1, 1, 1);
+	glColor3b(255, 255, 255);
 	glBegin(GL_QUADS);
 	glTexCoord2f(0.0, 1.0);
     glVertex2d(fLeft, fTop);
@@ -280,7 +280,7 @@ void CRestartButton966::render(RECT rect)
 	{
 		glBindTexture(GL_TEXTURE_2D, pOpenGL->RESTART);
 	}
-	glColor3b(1, 1, 1);
+	glColor3b(255, 255, 255);
 	glBegin(GL_QUADS);
 	glTexCoord2f(0.0, 1.0);
     glVertex2d(fLeft, fTop);
