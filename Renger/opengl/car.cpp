@@ -2,9 +2,9 @@
 #include <math.h>
 #include "car.h"
 #include "aabb.h"
-#include "windows.h"
-#include "mmsystem.h"
-#pragma comment(lib,"winmm.lib")
+#include<windows.h>
+#include "mmsystem.h"//导入声音头文件 
+#pragma comment(lib,"winmm.lib")//导入声音头文件库 
 #define PI 3.1415926
 const double eps=1e-6;
 void CAR::turn(double deg)
@@ -62,6 +62,7 @@ void CAR::update()//更新汽车运动状态
 		{
 			score+=10;
 			yuanbaoFlag[i]=1;
+			//PlaySound(TEXT("Data/ding.wav"), NULL, SND_FILENAME | SND_ASYNC );
 		}
 	}
 
