@@ -50,12 +50,17 @@ void CAR::turnLeft(double deg) //右转
 
 void CAR::update() //更新汽车运动状态
 {
+	if(endFlag==1)
+		return ;
 	//更新时间
 	now = clock();
 	//终点线检测
 	if (car_box.IsOrNotInterection(endLine))
 	{
-		end = clock();
+		if(endFlag==0)
+		{
+			end = clock();
+		}
 		endFlag = 1;
 	}
 	//元宝碰撞检测
