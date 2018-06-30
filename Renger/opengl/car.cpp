@@ -208,6 +208,7 @@ void CAR::addYuanbao(double x,double z)//添加元宝
 }
 void CAR::newGame()
 {
+		init(Point_AABB(0,0,400,4,4,8,0,0,-1),0);//初始化汽车类
 		memset(yuanbaoFlag,0,sizeof(yuanbaoFlag));
 		score=0;
 		endLine=AABB(-50,0,350,-50,500,450);
@@ -217,4 +218,5 @@ void CAR::newGame()
 		0 , 0 , 0 , 0);
 		endFlag=0;
 		start=clock();
+		
 }

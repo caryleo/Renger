@@ -49,7 +49,7 @@ void CMyOpenGL::PostInit(void)
 	m_loader_fangwu2.Init(8);//房屋2
 	m_loader_shu.Init(1);//树
 	m_loader_jiantou.Init(12);//箭头
-	pCar->init(Point_AABB(0,0,500,4,4,8,0,0,-1),0);//初始化汽车类
+	pCar->init(Point_AABB(0,0,400,4,4,8,0,0,-1),0);//初始化汽车类
 	pCar->setGothicTrans_car(
 		0, 0 , 400,   
 		0.00003 , 0.00003 , 0.00003 ,      
