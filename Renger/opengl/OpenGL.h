@@ -47,7 +47,17 @@ public:
 	friend class CCamera966;
 	friend class CFont966;
 	friend class CScene;
+	friend class CStartButton966;
+	friend class CEndButton966;
+	friend class CRestartButton966;
 	CAR *pCar;//汽车
+	GLuint Launcher;
+	GLuint START;
+	GLuint STARTDOWN;
+	GLuint ENDDOWN;
+	GLuint RESTARTDOWN;
+	GLuint END;
+	GLuint RESTART;
 protected:
 	HDC hDC;
 	HWND m_hmyWnd;			//绘制窗口句柄,一般是View的句柄
@@ -59,9 +69,9 @@ protected:
 	CCamera966 *pCamera;
 	CModal966 *pModal;
 	CFont966 *pFont;
-	CStartButton966 csb;
-	CEndButton966 ceb;
-	CRestartButton966 crb;
+	CStartButton966 *csb;
+	CEndButton966 *ceb;
+	CRestartButton966 *crb;
 	CScene *pScene;
 	float fps;
 };

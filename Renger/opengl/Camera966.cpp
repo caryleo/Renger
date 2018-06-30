@@ -86,7 +86,7 @@ void CCamera966::SetGameMode(int game)
 	}
 	else
 	{
-		if (game == 1 || game == 2)
+		if (game == 2)
 		{
 			//AfxMessageBox("现在还没开始游戏哦！");
 		}

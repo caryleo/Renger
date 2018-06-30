@@ -308,12 +308,13 @@ void CControl966::MouseControl(unsigned message, CPoint point, int delta)
 		GetClientRect(pOpenGL->m_hWnd, &rect);
 		if (pCamera->iGameMode == 0)
 		{
-			pOpenGL->csb.OnUp(point.x, point.y, rect);
+			pOpenGL->csb->OnUp(point.x, point.y, rect);
 		}
 		else if (pCamera->iGameMode == 2)
 		{
-			pOpenGL->ceb.OnUp(point.x, point.y, rect);
-			pOpenGL->crb.OnUp(point.x, point.y, rect);
+			
+			pOpenGL->crb->OnUp(point.x, point.y, rect);
+			pOpenGL->ceb->OnUp(point.x, point.y, rect);
 		}
 	}
 	else if (message == WM_LBUTTONDOWN)
@@ -323,12 +324,12 @@ void CControl966::MouseControl(unsigned message, CPoint point, int delta)
 		GetClientRect(pOpenGL->m_hWnd, &rect);
 		if (pCamera->iGameMode == 0)
 		{
-			pOpenGL->csb.OnPress(point.x, point.y, rect);
+			pOpenGL->csb->OnPress(point.x, point.y, rect);
 		}
 		else if (pCamera->iGameMode == 2)
 		{
-			pOpenGL->ceb.OnPress(point.x, point.y, rect);
-			pOpenGL->crb.OnPress(point.x, point.y, rect);
+			pOpenGL->ceb->OnPress(point.x, point.y, rect);
+			pOpenGL->crb->OnPress(point.x, point.y, rect);
 		}
 	}
 	if (isRet)
