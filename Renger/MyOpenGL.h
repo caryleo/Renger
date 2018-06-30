@@ -20,6 +20,7 @@ public:
 	GLuint load_texture(const char* file_name);
 	void drawRoad(double x,double z);
 	void drawAllRoad();
+	void drawArrow();
 	virtual void PostInit(void);
 	virtual void InDraw(void);
 	virtual bool OnKey(unsigned char nChar, bool bDown);

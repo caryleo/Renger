@@ -46,15 +46,18 @@ void CAR::turnLeft(double deg)//右转
 }
 void CAR::update()//更新汽车运动状态
 {
+	//更新时间
+	now=clock();
 	//终点线检测
 	if(car_box.IsOrNotInterection(endLine))
 	{
-		Time = time(NULL);
+		end = clock();
+		endFlag=1;
 	}
 	//元宝碰撞检测
 	for(int i=0;i<yuanbao.size();i++)
 	{
-		if(yuanbaoFlag[i]) continue;//防止多次判断碰撞盒
+		if(yuanbaoFlag[i]) continue;
 		if(car_box.IsOrNotInterection(yuanbao[i]))
 		{
 			score+=10;
@@ -73,7 +76,7 @@ void CAR::update()//更新汽车运动状态
 	}
 	if(tmpIndex!=-1)
 	{
-		
+		score-=1;
 		double a=wall[tmpIndex].dirx*car_point.dirx+wall[tmpIndex].dirz*car_point.dirz;
 		double b=wall[tmpIndex].dirx*wall[tmpIndex].dirx+wall[tmpIndex].dirz*wall[tmpIndex].dirz+car_point.dirx*car_point.dirx+car_point.dirz*car_point.dirz;
 		double seta=acos(a/sqrt(b));
@@ -161,16 +164,24 @@ void CAR::addWall(double m_Xmin,double m_Ymin,double m_Zmin,double m_Xmax,double
 void CAR::speedUp()//加速，这里为匀速加减速度
 {
 	PlaySound(TEXT("Data/car.wav"), NULL, SND_FILENAME | SND_ASYNC|SND_LOOP|SND_NOSTOP );
-	if(fabs(speed-5)>eps)
+	if(speed<5)
 	{
 		speed+=0.5;
+	}
+	else 
+	{
+		speed=5;
 	}
 }
 void CAR::speedDown()//减速
 {
-	if(fabs(speed+3)>eps)
+	if(speed>-3)
 	{
 		speed-=0.5;
+	}
+	else
+	{
+		speed=-3;
 	}
 }
 void CAR::speedDownNatural()
@@ -179,13 +190,13 @@ void CAR::speedDownNatural()
 		return ;
 	else if(speed<0)
 	{
-		speed+=2;
+		speed+=0.4;
 		if(speed>0)
 			speed=0;
 	}
 	else if(speed>0)
 	{
-		speed-=2;
+		speed-=0.3;
 		if(speed<0)
 			speed=0;
 	}
@@ -194,4 +205,16 @@ void CAR::addYuanbao(double x,double z)//添加元宝
 {
 	AABB tmp=AABB(Point_AABB(x,2,z,2,2,2,0,0,-1));
 	yuanbao.push_back(tmp);
+}
+void CAR::newGame()
+{
+		memset(yuanbaoFlag,0,sizeof(yuanbaoFlag));
+		score=0;
+		endLine=AABB(-50,0,350,-50,500,450);
+		setGothicTrans_car(
+		0, 0 , 400,   
+		0.00003 , 0.00003 , 0.00003 ,      
+		0 , 0 , 0 , 0);
+		endFlag=0;
+		start=clock();
 }

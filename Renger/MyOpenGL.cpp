@@ -16,14 +16,13 @@ CModelLoader m_loader_fangwu2;
 CModelLoader m_loader_luren;
 CModelLoader m_loader_lupai4;
 CModelLoader m_loader_shu;
+CModelLoader m_loader_jiantou;
 GLuint texRoad;//公路材质
-double start,stop;//开始时间，结束时间
 struct Hulan
 {
 	double x,z,rotate;
 }hulan[100];
 int hulanCnt=0;
-
 CMyOpenGL::CMyOpenGL(void)
 {
 } 
@@ -39,7 +38,6 @@ CMyOpenGL::~CMyOpenGL(void)
 */
 void CMyOpenGL::PostInit(void)
 {
-	start=time(NULL);
 	texRoad = load_texture("Data/road.bmp");
 	m_loader_lupai.Init(3);//路牌
 	m_loader_car.Init(2);//汽车
@@ -50,6 +48,7 @@ void CMyOpenGL::PostInit(void)
 	m_loader_fangwu.Init(9);//房屋
 	m_loader_fangwu2.Init(8);//房屋2
 	m_loader_shu.Init(1);//树
+	m_loader_jiantou.Init(12);//箭头
 	pCar->init(Point_AABB(0,0,500,4,4,8,0,0,-1),0);//初始化汽车类
 	pCar->setGothicTrans_car(
 		0, 0 , 400,   
@@ -198,13 +197,12 @@ void CMyOpenGL::drawHulan()
 	{
 		changeGothicTrans(gothicTrans_hulan,
 			hulan[i].x,-20, hulan[i].z , //表示在世界矩阵的位置  
-			0.18, 0.18, 0.18 ,      //表示xyz放大倍数  
-			hulan[i].rotate, 0 , 1 , 0  //表示旋转  
+			1, 2.2, 1,      //表示xyz放大倍数  
+			90-hulan[i].rotate, 0 , 1 , 0  //表示旋转  
 			);
 		m_loader_hulan.DrawModel(gothicTrans_hulan);
 	}
 }
-
 void CMyOpenGL::InDraw(void)
 {
 	
@@ -273,11 +271,12 @@ void CMyOpenGL::InDraw(void)
 		0 , 0 , 1 , 0  //表示旋转  
 	};
 	m_loader_lupai.DrawModel(gothicTrans_Lupai);
-
     glPopMatrix();
+	
 
 	glPushMatrix();
 	pCar->car_box.DrawAABBBoundingBox();//画出车的包围盒
+
 	glPushMatrix();
 	CString tmp;
 	tmp.Format("李东的小保时捷");
@@ -285,11 +284,18 @@ void CMyOpenGL::InDraw(void)
 	CString Score;
 	Score.Format("当前分数： %d",pCar->score);
 	pFont->Font2D(Score, CVector966(-0.9, 0.4, 0), 24, RGB(255, 255, 255), 0|8 , 0);
-	stop=time(NULL);
-	double durationTime = (double)difftime(stop, start);
+	
 	CString nowTime;
-	nowTime.Format("当前时间: %.2f s",durationTime);
+	nowTime.Format("当前时间: %.2f s",(double)(pCar->now-pCar->start)/CLOCKS_PER_SEC);
 	pFont->Font2D(nowTime, CVector966(-0.9, 0.2, 0), 24, RGB(255, 255, 255), 0|8 , 0);
+	if(pCar->endFlag==1)
+	{
+		CString isEnd,_time;
+		isEnd.Format("游戏结束");
+		_time.Format("用时: %.2f s",(double)(pCar->end-pCar->start)/CLOCKS_PER_SEC);
+		pFont->Font2D(_time, CVector966(-0.9, -0.2, 0), 24, RGB(255, 255, 255), 0|8 , 0);
+		pFont->Font2D(isEnd, CVector966(-0.9, 0, 0), 24, RGB(255, 255, 255), 0|8 , 0);
+	}
 	CString pos;
 	pos.Format("当前车位置：（%.2lf，%.2lf，%.2lf）", pCar->car_point.x, pCar->car_point.y, pCar->car_point.z);
 	pFont->Font2D(pos, CVector966(-0.9, 0.8, 0), 24, RGB(255, 255, 255), 0|8 , 0);
@@ -320,8 +326,8 @@ void CMyOpenGL::InDraw(void)
 			m_loader_yuaubao.DrawModel(gothicTrans_yuanbao);
 		}
 	}
-	
-	//drawHulan();//画护栏
+	drawArrow();
+	drawHulan();//画护栏
 	drawAllRoad();
 	CString str;
 	str.Format("fps: %.2f 帧每秒", fps);
@@ -332,8 +338,6 @@ void CMyOpenGL::InDraw(void)
 	glPopMatrix();
 	
 }
-
-
 bool CMyOpenGL::OnKey(unsigned char nChar, bool bDown)
 {
 	return false;
@@ -512,6 +516,37 @@ void CMyOpenGL::drawAllRoad()
 	int tmpcnt=0;
 	xx[tmpcnt]=-50;zz[tmpcnt++]=450;
 	xx[tmpcnt]=-50;zz[tmpcnt++]=350;
+	xx[tmpcnt]=50;zz[tmpcnt++]=350;
+	xx[tmpcnt]=150;zz[tmpcnt++]=350;
+	xx[tmpcnt]=250;zz[tmpcnt++]=350;
+	xx[tmpcnt]=350;zz[tmpcnt++]=350;
+	xx[tmpcnt]=350;zz[tmpcnt++]=250;
+	xx[tmpcnt]=350;zz[tmpcnt++]=150;
+	xx[tmpcnt]=350;zz[tmpcnt++]=50;
+	xx[tmpcnt]=350;zz[tmpcnt++]=-50;
+	xx[tmpcnt]=350;zz[tmpcnt++]=-150;
+	xx[tmpcnt]=250;zz[tmpcnt++]=-100;
+	xx[tmpcnt]=150;zz[tmpcnt++]=-100;
+	xx[tmpcnt]=150;zz[tmpcnt++]=-200;
+	xx[tmpcnt]=150;zz[tmpcnt++]=-300;
+	xx[tmpcnt]=150;zz[tmpcnt++]=-400;
+	xx[tmpcnt]=50;zz[tmpcnt++]=-350;
+	xx[tmpcnt]=-50;zz[tmpcnt++]=-350;
+	xx[tmpcnt]=-150;zz[tmpcnt++]=-350;
+	xx[tmpcnt]=-250;zz[tmpcnt++]=-350;
+	xx[tmpcnt]=-350;zz[tmpcnt++]=-350;
+	xx[tmpcnt]=-350;zz[tmpcnt++]=-250;
+	xx[tmpcnt]=-350;zz[tmpcnt++]=-150;
+	xx[tmpcnt]=-350;zz[tmpcnt++]=-50;
+	xx[tmpcnt]=-350;zz[tmpcnt++]=50;
+	xx[tmpcnt]=-350;zz[tmpcnt++]=100;
+	xx[tmpcnt]=-250;zz[tmpcnt++]=100;
+	xx[tmpcnt]=-250;zz[tmpcnt++]=100;
+	xx[tmpcnt]=-250;zz[tmpcnt++]=200;
+	xx[tmpcnt]=-250;zz[tmpcnt++]=300;
+	xx[tmpcnt]=-250;zz[tmpcnt++]=400;
+	xx[tmpcnt]=-250;zz[tmpcnt++]=450;
+	xx[tmpcnt]=-150;zz[tmpcnt++]=450;
 	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, texRoad);
 	for(int i=0;i<tmpcnt;i++)
@@ -519,4 +554,44 @@ void CMyOpenGL::drawAllRoad()
 		drawRoad(xx[i],zz[i]);
 	}
 	glDisable(GL_TEXTURE_2D);
+}
+void  CMyOpenGL::drawArrow()
+{
+	double tmprotate=0;
+	double cx=pCar->car_point.x,cz=pCar->car_point.z;
+	if(cx>=-250&&cx<=-50&&cz>=350&&cz<=450)
+	{
+		tmprotate=270;
+	}
+	else if(cx>=-50&&cx<=350&&cz>=250&&cz<=350)
+	{
+		tmprotate=270;
+	}
+	else if(cx>=250&&cx<=450&&cz>=-200&&cz<=-100)
+	{
+		tmprotate=90;
+	}
+	else if(cx>=-250&&cx<=250&&cz>=-450&&cz<=-350)
+	{
+		tmprotate=90;
+	}
+	else if(cx>=-350&&cx<=-250&&cz>=-450&&cz<=0)
+	{
+		tmprotate=180;
+	}
+	else if(cx>=-350&&cx<=-250&&cz>=0&&cz<=100)
+	{
+		tmprotate=270;
+	}
+	else if(cx>=-250&&cx<=-150&&cz>=0&&cz<=350)
+	{
+		tmprotate=180;
+	}
+
+	float gothicTrans_arrow[10] = { 
+		cx+1,4, cz , //表示在世界矩阵的位置  
+		0.2, 0.2, 0.2 ,      //表示xyz放大倍数  
+		tmprotate , 0 , 1 , 0  //表示旋转  
+	};
+	m_loader_jiantou.DrawModel(gothicTrans_arrow);
 }

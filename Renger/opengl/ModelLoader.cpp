@@ -56,10 +56,13 @@ void CModelLoader::Init(int type)
 		gothicLoader->Import3DS(&gothicModel, "Data/3ds/Church.3DS");//房屋教堂
 		break;
 	case 10:
-		gothicLoader->Import3DS(&gothicModel, "Data/3ds/hulan6.3DS");//护栏
+		gothicLoader->Import3DS(&gothicModel, "Data/3ds/hulan_01.3DS");//护栏
 		break;
 	case 11:
 		gothicLoader->Import3DS(&gothicModel, "Data/3ds/yuanbao.3DS");//元宝
+		break;
+	case 12:
+		gothicLoader->Import3DS(&gothicModel, "Data/3ds/jiantou.3DS");//箭头
 		break;
 	default:break;
 	}
