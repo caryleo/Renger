@@ -8,13 +8,12 @@ class CAR
 public:
 	Point_AABB car_point;//用来确定aabb包围盒的画法
 	float gothicTrans_car[10];//记录汽车模型导入的时候的各项参数
-
 	AABB car_box;//包围盒
 	double speed;//速度
-
+	int endFlag;//结束标识
 	int score;//分数
-	double Time;//时间
-
+	double Time,start,now;//时间
+	
 	vector<AABB>wall;
 	vector<AABB>yuanbao;
 	int yuanbaoFlag[100];
@@ -24,8 +23,11 @@ public:
 		memset(yuanbaoFlag,0,sizeof(yuanbaoFlag));
 		score=0;
 		Time=0;
+		start=time(NULL);
 		endLine=AABB(-50,0,350,-50,500,450);
+		endFlag=0;
 	};
+	void newGame();
 	void setGothicTrans_car(double x,double y,double z,double fx,double fy,double fz,double a,double b,double c,double d)
 	{
 		gothicTrans_car[0]=x;gothicTrans_car[1]=y;gothicTrans_car[2]=z;
