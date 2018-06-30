@@ -90,6 +90,36 @@ void CMyOpenGL::PostInit(void)
 	pCar->addYuanbao(-200, 400);
 
 	pCamera->SetGameMode(1);
+
+	/** 用户自定义的初始化过程 */
+	///定义光源GL_LIGHT0
+	GLfloat ambient[] = { 0.0, 0.0, 0.0, 1.0 }; /**< 环境光 */
+	GLfloat diffuse[] = { 1.0, 1.0, 1.0, 1.0 }; /**< 漫射光 */
+	GLfloat specular[] = { 1.0, 1.0, 1.0, 1.0 };/**< 镜面光 */
+	GLfloat position[] = { 250.0, 80.0, 250.0, 0.0 };/**< 光源位置 */
+    GLfloat position4[] = { 300.0, 100.0, -100.0, 0.0 };/**< 光源位置 */
+
+
+	///设置光源属性
+	glLightfv(GL_LIGHT0, GL_AMBIENT, ambient);
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse);
+	glLightfv(GL_LIGHT0, GL_POSITION, position);
+
+	///设置光源属性
+	glLightfv(GL_LIGHT3, GL_AMBIENT, ambient);
+	glLightfv(GL_LIGHT3, GL_DIFFUSE, diffuse);
+	glLightfv(GL_LIGHT3, GL_POSITION, position4);
+
+	///初始化
+	glClearColor(0.0f, 0.2f, 0.2f, 0.0f);						
+	glClearDepth(1.0f);	
+	glDepthFunc(GL_LEQUAL);	
+	glEnable(GL_DEPTH_TEST);
+	glShadeModel(GL_SMOOTH);
+
+	glEnable(GL_LIGHTING); /**< 启用光源 */
+	glEnable(GL_LIGHT0);  /**< 启用0号光源 */   
+	glEnable(GL_LIGHT3);  /**< 启用0号光源 */ 
 }
 
 
@@ -348,6 +378,12 @@ void CMyOpenGL::drawHulan()
 
 void CMyOpenGL::InDraw(void)
 {
+	/** 用户自定义的绘制过程 */
+	///定义材质属性值
+	GLfloat no_mat[] = { 0.0, 0.0, 0.0, 1.0 }; /** < 无材质颜色 */
+	GLfloat mat_ambient[] = { 0.7, 0.7, 0.7, 1.0 }; /** < 环境颜色 */
+	GLfloat mat_diffuse[] = { 0.2, 0.5, 0.8, 1.0 };/** < 散射颜色 */
+	GLfloat no_shininess[] = { 0.0 };              /** < 镜面反射指数为0 */
 	if (pCamera->iGameMode == 0)
 	{
 		glPushAttrib(GL_ENABLE_BIT | GL_POLYGON_BIT);
@@ -380,11 +416,15 @@ void CMyOpenGL::InDraw(void)
 	else if (pCamera->iGameMode == 1)
 	{
 		glPushMatrix();
+		glEnable(GL_COLOR_MATERIAL);
+		glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
 		pScene->Render();
 		glPopMatrix();
 		//DrawAxes(1000);
 
 		glPushMatrix();
+		glEnable(GL_COLOR_MATERIAL);
+		glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
 		float gothicTrans_fangwu[10] = {
 			100, -10, 200, //表示在世界矩阵的位置  
 			0.2, 0.2, 0.2, //表示xyz放大倍数  
@@ -476,6 +516,13 @@ void CMyOpenGL::InDraw(void)
 		dir.Format("当前车头朝向：（%.2lf，%.2lf，%.2lf）", pCar->car_point.dirx, pCar->car_point.diry, pCar->car_point.dirz);
 		pFont->Font2D(dir, CVector966(-0.9, 0.6, 0), 24, RGB(255, 255, 255), 0|8 , 0);*/
 		pFont->Font2D(tmp, tmpPos, 24, RGB(255,255,255), DT_CENTER | DT_BOTTOM, 1);
+		
+		glMaterialfv(GL_FRONT, GL_AMBIENT,mat_ambient);
+		glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
+		glMaterialfv(GL_FRONT, GL_SPECULAR, no_mat);
+		glMaterialfv(GL_FRONT, GL_SHININESS, no_shininess);
+		glMaterialfv(GL_FRONT, GL_EMISSION, no_mat);
+
 		m_loader_car.DrawModel(pCar->gothicTrans_car);
 		glPopMatrix();
 
@@ -502,7 +549,11 @@ void CMyOpenGL::InDraw(void)
 		}
 		drawArrow();
 		drawHulan(); //画护栏
+		glPushMatrix();
+		//glDisable(GL_LIGHT1);
 		drawAllRoad();
+		//glEnable(GL_LIGHT1);
+		glPopMatrix();
 		CString str;
 		str.Format("fps：%.2f 帧每秒", fps);
 		pFont->Font2D(str, CVector966(-0.9f, 0.9f, 0), 24, RGB(255, 255, 255), 0 | 8, 0);

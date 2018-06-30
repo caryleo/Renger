@@ -268,7 +268,7 @@ void CSkyBox::render()
 
 	glDisable(GL_TEXTURE_2D);
 
-	yRot += 0.05f;
+	yRot += 0.1f;
 	if(yRot > 360.0f)
 		yRot = 0.0f;
 }
