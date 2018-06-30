@@ -76,7 +76,7 @@ void CAR::update()//更新汽车运动状态
 	}
 	if(tmpIndex!=-1)
 	{
-		
+		score-=1;
 		double a=wall[tmpIndex].dirx*car_point.dirx+wall[tmpIndex].dirz*car_point.dirz;
 		double b=wall[tmpIndex].dirx*wall[tmpIndex].dirx+wall[tmpIndex].dirz*wall[tmpIndex].dirz+car_point.dirx*car_point.dirx+car_point.dirz*car_point.dirz;
 		double seta=acos(a/sqrt(b));
@@ -164,16 +164,24 @@ void CAR::addWall(double m_Xmin,double m_Ymin,double m_Zmin,double m_Xmax,double
 void CAR::speedUp()//加速，这里为匀速加减速度
 {
 	PlaySound(TEXT("Data/car.wav"), NULL, SND_FILENAME | SND_ASYNC|SND_LOOP|SND_NOSTOP );
-	if(fabs(speed-5)>eps)
+	if(speed<5)
 	{
 		speed+=0.5;
+	}
+	else 
+	{
+		speed=5;
 	}
 }
 void CAR::speedDown()//减速
 {
-	if(fabs(speed+3)>eps)
+	if(speed>-3)
 	{
 		speed-=0.5;
+	}
+	else
+	{
+		speed=-3;
 	}
 }
 void CAR::speedDownNatural()
@@ -188,7 +196,7 @@ void CAR::speedDownNatural()
 	}
 	else if(speed>0)
 	{
-		speed-=0.2;
+		speed-=0.3;
 		if(speed<0)
 			speed=0;
 	}
