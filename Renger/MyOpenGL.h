@@ -15,7 +15,11 @@ public:
 	void DrawAxes(int size);
 	void changeGothicTrans(float trans[],double x,double y,double z,double a,double b,double c,double r,double _x,double _y,double _z);
 	void drawHulan();
-	void hulanInit();
+	void hulanInit(); 
+	int power_of_two(int n);
+	GLuint load_texture(const char* file_name);
+	void drawRoad(double x,double z);
+	void drawAllRoad();
 	virtual void PostInit(void);
 	virtual void InDraw(void);
 	virtual bool OnKey(unsigned char nChar, bool bDown);

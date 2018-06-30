@@ -258,6 +258,7 @@ void CCamera966::ShowGameView()
 	}
 	else if (iGameMode == 1)
 	{
+		
 		//сно╥йс╫г
 		cvGameVec.Set(float(pOpenGL->pCar->car_point.dirx), float(pOpenGL->pCar->car_point.diry) - 0.37, float(pOpenGL->pCar->car_point.dirz));
 		
@@ -280,6 +281,7 @@ void CCamera966::ShowGameView()
 		gluLookAt(viewPos.x, viewPos.y, viewPos.z, pos.x, pos.y, pos.z, 0, 1, 0);
 		glGetFloatv(GL_MODELVIEW_MATRIX, cmEyeMat);
 		cmIEyeMat = cmEyeMat.GetInverse();
+		
 	}
 	else
 	{
