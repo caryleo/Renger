@@ -18,7 +18,8 @@ CModelLoader m_loader_luren;
 CModelLoader m_loader_lupai4;
 CModelLoader m_loader_shu;
 CModelLoader m_loader_jiantou;
-GLuint texRoad; //公路材质
+GLuint texLine;//终点线
+GLuint texRoad;//公路材质
 struct Hulan
 {
 	double x, z, rotate;
@@ -42,52 +43,53 @@ CMyOpenGL::~CMyOpenGL(void)
 void CMyOpenGL::PostInit(void)
 {
 	texRoad = load_texture("Data/road.bmp");
-	m_loader_lupai.Init(3); //路牌
-	m_loader_car.Init(2); //汽车
-	m_loader_lupai4.Init(4); //路牌4
-	m_loader_luren.Init(5); //路人
-	m_loader_yuaubao.Init(11); //元宝
-	m_loader_hulan.Init(10); //护栏
-	m_loader_fangwu.Init(9); //房屋
-	m_loader_fangwu2.Init(8); //房屋2
-	m_loader_shu.Init(1); //树
-	m_loader_jiantou.Init(12); //箭头
-	pCar->init(Point_AABB(0, 0, 400, 4, 4, 8, 0, 0, -1), 0); //初始化汽车类
+	texLine=load_texture("Data/endline.bmp");
+	m_loader_lupai.Init(3);//路牌
+	m_loader_car.Init(2);//汽车
+	m_loader_lupai4.Init(4);//路牌4
+	m_loader_luren.Init(5);//路人
+	m_loader_yuaubao.Init(11);//元宝
+	m_loader_hulan.Init(10);//护栏
+	m_loader_fangwu.Init(9);//房屋
+	m_loader_fangwu2.Init(8);//房屋2
+	m_loader_shu.Init(1);//树
+	m_loader_jiantou.Init(12);//箭头
+	pCar->init(Point_AABB(0,0,400,4,4,8,0,0,-1),0);//初始化汽车类
 	pCar->setGothicTrans_car(
-		0, 0, 400,
-		0.00003, 0.00003, 0.00003,
-		0, 0, 0, 0);
+		0, 0 , 400,   
+		0.00003 , 0.00003 , 0.00003 ,      
+		0 , 0 , 0 , 0);
 
-	pCar->addWall(50, -20, 450, 50, 380, 350);
-	pCar->addWall(50, -20, 350, 450, 380, 350);
-	pCar->addWall(450, -20, 350, 450, 380, -200);
-	pCar->addWall(450, -20, -200, 250, 380, -200);
-	pCar->addWall(250, -20, -200, 250, 380, -450);
-	pCar->addWall(250, -20, -450, -350, 380, -450);
-	pCar->addWall(-350, -20, -450, -350, 380, 100);
-	pCar->addWall(-350, -20, 100, -250, 380, 100);
-	pCar->addWall(-250, -20, 100, -250, 380, 450);
-	pCar->addWall(-250, -20, 450, 50, 380, 450);
+	pCar->addWall(50,-20,450,50,380,350);
+	pCar->addWall(50,-20,350,450,380,350);
+	pCar->addWall(450,-20,350,450,380,-200);
+	pCar->addWall(450,-20,-200,250,380,-200);
+	pCar->addWall(250,-20,-200,250,380,-450);
+	pCar->addWall(250,-20,-450,-350,380,-450);
+	pCar->addWall(-350,-20,-450,-350,380,100);
+	pCar->addWall(-350,-20,100,-250,380,100);
+	pCar->addWall(-250,-20,100,-250,380,450);
+	pCar->addWall(-250,-20,450,50,380,450);
 
-	pCar->addWall(-50, -20, 350, -50, 380, 250);
-	pCar->addWall(-50, -20, 250, 350, 380, 250);
-	pCar->addWall(350, -20, 250, 350, 380, -100);
-	pCar->addWall(350, -20, -100, 150, 380, -100);
-	pCar->addWall(150, -20, -100, 150, 380, -350);
-	pCar->addWall(150, -20, -350, -250, 380, -350);
-	pCar->addWall(-250, -20, -350, -250, 380, 0);
-	pCar->addWall(-250, -20, 0, -150, 380, 0);
-	pCar->addWall(-150, -20, 0, -150, 380, 350);
-	pCar->addWall(-150, -20, 350, -50, 380, 350);
+	pCar->addWall(-50,-20,350,-50,380,250);
+	pCar->addWall(-50,-20,250,350,380,250);
+	pCar->addWall(350,-20,250,350,380,-100);
+	pCar->addWall(350,-20,-100,150,380,-100);
+	pCar->addWall(150,-20,-100,150,380,-350);
+	pCar->addWall(150,-20,-350,-250,380,-350);
+	pCar->addWall(-250,-20,-350,-250,380,0);
+	pCar->addWall(-250,-20,0,-150,380,0);
+	pCar->addWall(-150,-20,0,-150,380,350);
+	pCar->addWall(-150,-20,350,-50,380,350);
 
-	pCar->addYuanbao(0, 300);
-	pCar->addYuanbao(150, 300);
-	pCar->addYuanbao(400, 300);
-	pCar->addYuanbao(400, 50);
-	pCar->addYuanbao(300, -150);
-	pCar->addYuanbao(-300, -250);
-	pCar->addYuanbao(-200, 50);
-	pCar->addYuanbao(-200, 400);
+	pCar->addYuanbao(0,300);
+	pCar->addYuanbao(150,300);
+	pCar->addYuanbao(400,300);
+	pCar->addYuanbao(400,50);
+	pCar->addYuanbao(300,-150);
+	pCar->addYuanbao(-300,-250);
+	pCar->addYuanbao(-200,50);
+	pCar->addYuanbao(-200,400);
 
 	pCamera->SetGameMode(1);
 
@@ -548,11 +550,19 @@ void CMyOpenGL::InDraw(void)
 			}
 		}
 		drawArrow();
-		drawHulan(); //画护栏
+		drawHulan();//画护栏
 		glPushMatrix();
-		//glDisable(GL_LIGHT1);
 		drawAllRoad();
-		//glEnable(GL_LIGHT1);
+		glEnable(GL_TEXTURE_2D);
+		glBindTexture(GL_TEXTURE_2D, texLine);
+		// 画终点线
+		glBegin(GL_QUADS);    
+		glTexCoord2f(0.0f, 1); glVertex3f(-70,  -1.9, 350);  // 纹理和四边形的左上  
+		glTexCoord2f(0.0f, 0.0f); glVertex3f(-70,  -1.9,  450);  // 纹理和四边形的左下  
+		glTexCoord2f(1, 0.0f); glVertex3f( -50,  -1.9,  450);  // 纹理和四边形的右下  
+		glTexCoord2f(1, 1); glVertex3f( -50,  -1.9, 350);  // 纹理和四边形的右上  
+		glEnd();  
+		glDisable(GL_TEXTURE_2D);
 		glPopMatrix();
 		CString str;
 		str.Format("fps：%.2f 帧每秒", fps);
