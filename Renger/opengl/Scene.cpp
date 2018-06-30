@@ -857,8 +857,8 @@ bool CProtechny::Init(int num)
 			m_pList[i].dec = 0.05 * (rand()%50);
 
 			/** 初始化粒子的颜色 */
-			m_pList[i].color[0] = 255.0f;
-			m_pList[i].color[1] = 255.0f;
+			m_pList[i].color[0] = 0.0f;
+			m_pList[i].color[1] = 144.0f;
 			m_pList[i].color[2] = 255.0f;
 
 		}
@@ -978,11 +978,13 @@ void CScene::Render()
 	glPushMatrix();
 	glTranslatef(250.0f,220.0f,500.0f);
 	/** 渲染雪花 */
+	glScalef(10.0f,10.0f,10.0f);
 	m_Snow->Render();
 	glPopMatrix();
 
 	glPushMatrix();
 	glTranslatef(140.0f,215.0f,460.0f);
+	glScalef(10.0f,10.0f,10.0f);
 	m_Protechny->Render();
 	glPopMatrix();
 
@@ -991,7 +993,6 @@ void CScene::Render()
 
 void CScene::init()
 {
-
 	glClearColor(0.0f,0.0f,0.0f,0.0f);
 	glClearDepth(1.0f);
 	glEnable(GL_DEPTH_TEST);
