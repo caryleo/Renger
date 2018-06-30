@@ -207,7 +207,6 @@ void CMyOpenGL::drawHulan()
 
 void CMyOpenGL::InDraw(void)
 {
-	gluLookAt(0,400,500,0,-100,0,0,0,-1);
 	
 	glPushMatrix();
 	pScene->Render();

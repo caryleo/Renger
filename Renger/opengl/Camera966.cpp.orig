@@ -252,6 +252,7 @@ void CCamera966::ShowView()
 
 void CCamera966::ShowGameView()
 {
+<<<<<<< HEAD
 	if (iGameMode == 0)
 	{
 		//开始界面视角	
@@ -259,9 +260,17 @@ void CCamera966::ShowGameView()
 	else if (iGameMode == 1)
 	{
 		
+=======
+	//if (iGameMode == 0)
+	//{
+	//	//开始界面视角	
+	//}
+	//else if (iGameMode == 1)
+	//{
+>>>>>>> dag
 		//游戏视角
+		//glLoadMatrixf(cmEyeMat);
 		cvGameVec.Set(float(pOpenGL->pCar->car_point.dirx), float(pOpenGL->pCar->car_point.diry) - 0.37, float(pOpenGL->pCar->car_point.dirz));
-		
 		CEuler966 tmpEul = cvGameVec.ToEuler();
 		tmpEul.h += ceGameEul.h;
 		tmpEul.p += ceGameEul.p;
@@ -281,12 +290,20 @@ void CCamera966::ShowGameView()
 		gluLookAt(viewPos.x, viewPos.y, viewPos.z, pos.x, pos.y, pos.z, 0, 1, 0);
 		glGetFloatv(GL_MODELVIEW_MATRIX, cmEyeMat);
 		cmIEyeMat = cmEyeMat.GetInverse();
+<<<<<<< HEAD
 		
 	}
 	else
 	{
 		//结束界面视角
 	}
+=======
+	//}
+	//else
+	//{
+	//	//结束界面视角
+	//}
+>>>>>>> dag
 	
 }
 
@@ -456,13 +473,16 @@ void CCamera966::Move(int dir, float len)
  */
 void CCamera966::GameRotate(int dir, float ang)
 {
-	if (dir == 0)
+	if (iGameMode == 1)
 	{
-		ceGameEul.h = ang;
-	}
-	else
-	{
-		ceGameEul.p = ang;
+		if (dir == 0)
+		{
+			ceGameEul.h = ang;
+		}
+		else
+		{
+			ceGameEul.p = ang;
+		}
 	}
 }
 

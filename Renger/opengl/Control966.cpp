@@ -170,15 +170,18 @@ void CControl966::KeyControl()
 	//显示视角：上帝视角、跟踪视角和同步视角
 	if (bKeyState[KS_T_GOD])
 	{
-		pCamera->SetViewMode(0);
+		//pCamera->SetViewMode(0);
+		pCamera->SetGameMode(0);
 	}
 	if (bKeyState[KS_T_CATCH])
 	{
-		pCamera->SetViewMode(1);
+		//pCamera->SetViewMode(1);
+		pCamera->SetGameMode(1);
 	}
 	if (bKeyState[KS_T_SYNC])
 	{
-		pCamera->SetViewMode(2);
+		//pCamera->SetViewMode(2);
+		pCamera->SetGameMode(2);
 	}
 
 	//实现模式：欧拉角、子坐标系
