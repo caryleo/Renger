@@ -49,16 +49,16 @@ void CMyOpenGL::PostInit(void)
 	texRoad = load_texture("Data/road.bmp");
 <<<<<<< HEAD
 	texLine=load_texture("Data/endline.bmp");
-	m_loader_lupai.Init(3);//路牌
-	m_loader_car.Init(2);//汽车
-	m_loader_lupai4.Init(4);//路牌4
-	m_loader_luren.Init(5);//路人
-	m_loader_yuaubao.Init(11);//元宝
-	m_loader_hulan.Init(10);//护栏
-	m_loader_fangwu.Init(9);//房屋
-	m_loader_fangwu2.Init(8);//房屋2
-	m_loader_shu.Init(1);//树
-	m_loader_jiantou.Init(12);//箭头
+	m_loader_lupai.Init(3); //路牌
+	m_loader_car.Init(2); //汽车
+	m_loader_lupai4.Init(4); //路牌4
+	m_loader_luren.Init(5); //路人
+	m_loader_yuaubao.Init(11); //元宝
+	m_loader_hulan.Init(10); //护栏
+	m_loader_fangwu.Init(9); //房屋
+	m_loader_fangwu2.Init(8); //房屋2
+	m_loader_shu.Init(1); //树
+	m_loader_jiantou.Init(12); //箭头
 	pCar->init(Point_AABB(0,0,400,4,4,8,0,0,-1),0);//初始化汽车类
 =======
 	m_loader_lupai.Init(3); //路牌
@@ -443,12 +443,19 @@ void CMyOpenGL::InDraw(void)
 		//DrawAxes(1000);
 
 		glPushMatrix();
-		glEnable(GL_COLOR_MATERIAL);
-		glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
+<<<<<<< HEAD
 		float gothicTrans_fangwu[10] = {
 			100, -10, 200, //表示在世界矩阵的位置  
 			0.2, 0.2, 0.2, //表示xyz放大倍数  
 			180, 0, 1, 0 //表示旋转  
+=======
+		glEnable(GL_COLOR_MATERIAL);
+		glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
+		float gothicTrans_fangwu[10] = { 
+			100,-10, 200 , //表示在世界矩阵的位置  
+			0.2, 0.2, 0.2 ,      //表示xyz放大倍数  
+			180 , 0 , 1 , 0  //表示旋转  
+>>>>>>> 2cb0b8ccbd69d666533c7fb4dc099bc063f0eef3
 		};
 		m_loader_fangwu.DrawModel(gothicTrans_fangwu);
 		changeGothicTrans(gothicTrans_fangwu,
@@ -568,8 +575,13 @@ void CMyOpenGL::InDraw(void)
 			}
 		}
 		drawArrow();
+<<<<<<< HEAD
 		drawHulan(); //画护栏
 		glPushMatrix();
+		drawHulan();//画护栏
+		glPushMatrix();
+		//glDisable(GL_LIGHT1);
+>>>>>>> 2cb0b8ccbd69d666533c7fb4dc099bc063f0eef3
 		drawAllRoad();
 		glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, texLine);
@@ -626,6 +638,7 @@ void CMyOpenGL::InDraw(void)
 		glMatrixMode(GL_MODELVIEW);
 		glPopMatrix();
 		glPopAttrib();
+	}
 	}
 }
 
