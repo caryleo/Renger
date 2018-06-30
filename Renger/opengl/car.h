@@ -12,13 +12,19 @@ public:
 	AABB car_box;//包围盒
 	double speed;//速度
 
+	int score;//分数
+	double Time;//时间
+
 	vector<AABB>wall;
 	vector<AABB>yuanbao;
 	int yuanbaoFlag[100];
-
+	AABB endLine;//终点线AABB包围盒
 	CAR()
 	{
 		memset(yuanbaoFlag,0,sizeof(yuanbaoFlag));
+		score=0;
+		Time=0;
+		endLine=AABB(-50,0,350,-50,500,450);
 	};
 	void setGothicTrans_car(double x,double y,double z,double fx,double fy,double fz,double a,double b,double c,double d)
 	{

@@ -277,6 +277,9 @@ void CMyOpenGL::InDraw(void)
 	CString tmp;
 	tmp.Format("李东的小保时捷");
 	CVector966 tmpPos(float(pCar->car_point.x), float(pCar->car_point.y) + 2, float(pCar->car_point.z));
+	CString Score;
+	Score.Format("当前分数： %d",pCar->score);
+	pFont->Font2D(Score, CVector966(-0.9, 0.4, 0), 24, RGB(255, 255, 255), 0|8 , 0);
 	CString pos;
 	pos.Format("当前车位置：（%.2lf，%.2lf，%.2lf）", pCar->car_point.x, pCar->car_point.y, pCar->car_point.z);
 	pFont->Font2D(pos, CVector966(-0.9, 0.8, 0), 24, RGB(255, 255, 255), 0|8 , 0);

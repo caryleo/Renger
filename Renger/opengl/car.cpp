@@ -46,11 +46,18 @@ void CAR::turnLeft(double deg)//右转
 }
 void CAR::update()//更新汽车运动状态
 {
+	//终点线检测
+	if(car_box.IsOrNotInterection(endLine))
+	{
+		Time = time(NULL);
+	}
 	//元宝碰撞检测
 	for(int i=0;i<yuanbao.size();i++)
 	{
+		if(yuanbaoFlag[i]) continue;//防止多次判断碰撞盒
 		if(car_box.IsOrNotInterection(yuanbao[i]))
 		{
+			score+=10;
 			yuanbaoFlag[i]=1;
 		}
 	}
