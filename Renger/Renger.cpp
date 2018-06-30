@@ -137,9 +137,9 @@ BOOL CRengerApp::InitInstance()
 	m_pMainWnd->UpdateWindow();
 	// 仅当具有后缀时才调用 DragAcceptFiles
 	//  在 SDI 应用程序中，这应在 ProcessShellCommand 之后发生
-	AllocConsole();  
+	/*AllocConsole();  
 	freopen("CONOUT$","w+t",stdout);  
-	freopen("CONIN$","r+t",stdin);
+	freopen("CONIN$","r+t",stdin);*/
 	return TRUE;
 }
 
@@ -147,9 +147,9 @@ int CRengerApp::ExitInstance()
 {
 	//TODO: 处理可能已添加的附加资源
 	AfxOleTerm(FALSE);
-	fclose(stdout);
+	/*fclose(stdout);
 	fclose(stdin);
-	FreeConsole();
+	FreeConsole();*/
 	return CWinAppEx::ExitInstance();
 }
 

@@ -121,12 +121,12 @@ void CMyOpenGL::PostInit(void)
 	glLightfv(GL_LIGHT3, GL_DIFFUSE, diffuse);
 	glLightfv(GL_LIGHT3, GL_POSITION, position4);
 
-	///初始化
-	glClearColor(0.0f, 0.2f, 0.2f, 0.0f);						
+	/////初始化
+	//glClearColor(0.0f, 0.2f, 0.2f, 0.0f);						
 	glClearDepth(1.0f);	
 	glDepthFunc(GL_LEQUAL);	
 	glEnable(GL_DEPTH_TEST);
-	glShadeModel(GL_SMOOTH);
+	//glShadeModel(GL_SMOOTH);
 
 	glEnable(GL_LIGHTING); /**< 启用光源 */
 	glEnable(GL_LIGHT0);  /**< 启用0号光源 */   
@@ -444,8 +444,6 @@ void CMyOpenGL::InDraw(void)
 	else if (pCamera->iGameMode == 1)
 	{
 		glPushAttrib(GL_ENABLE_BIT | GL_POLYGON_BIT | GL_TEXTURE_BIT);
-		glEnable(GL_LIGHT0);  /**< 启用0号光源 */   
-		glEnable(GL_LIGHT3);  /**< 启用0号光源 */
 		glPushMatrix();
 		glEnable(GL_COLOR_MATERIAL);
 		glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
