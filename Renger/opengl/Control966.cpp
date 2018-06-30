@@ -59,6 +59,8 @@ bool CControl966::PreTranslateMessage(unsigned message, unsigned wParam, unsigne
 		{
 			return true;
 		}
+		std::cout << "×ó¼ü°´ÏÂ" << std::endl;
+		MouseControl(WM_LBUTTONDOWN, point);
 		bMouseLeftDown = true;
 	}
 	if (message == WM_LBUTTONUP)
@@ -67,6 +69,8 @@ bool CControl966::PreTranslateMessage(unsigned message, unsigned wParam, unsigne
 		{
 			return true;
 		}
+		std::cout << "×ó¼üÌ§Æð" << std::endl;
+		MouseControl(WM_LBUTTONUP, point);
 		bMouseLeftDown = false;
 	}
 	if (message == WM_RBUTTONDOWN)
@@ -91,7 +95,6 @@ bool CControl966::PreTranslateMessage(unsigned message, unsigned wParam, unsigne
 		{
 			return true;
 		}
-		
 	}
 	if (message == WM_RBUTTONDBLCLK)
 	{
@@ -297,6 +300,36 @@ void CControl966::MouseControl(unsigned message, CPoint point, int delta)
 
 		//pCamera->Move(2, -delta * 0.01);
 		pCamera->ChangeZoomWeight(delta * 0.01);
+	}
+	else if (message == WM_LBUTTONUP)
+	{
+		isRet = true;
+		RECT rect;
+		GetClientRect(pOpenGL->m_hWnd, &rect);
+		if (pCamera->iGameMode == 0)
+		{
+			pOpenGL->csb.OnUp(point.x, point.y, rect);
+		}
+		else if (pCamera->iGameMode == 2)
+		{
+			pOpenGL->ceb.OnUp(point.x, point.y, rect);
+			pOpenGL->crb.OnUp(point.x, point.y, rect);
+		}
+	}
+	else if (message == WM_LBUTTONDOWN)
+	{
+		isRet = true;
+		RECT rect;
+		GetClientRect(pOpenGL->m_hWnd, &rect);
+		if (pCamera->iGameMode == 0)
+		{
+			pOpenGL->csb.OnPress(point.x, point.y, rect);
+		}
+		else if (pCamera->iGameMode == 2)
+		{
+			pOpenGL->ceb.OnPress(point.x, point.y, rect);
+			pOpenGL->crb.OnPress(point.x, point.y, rect);
+		}
 	}
 	if (isRet)
 	{

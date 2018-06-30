@@ -25,6 +25,7 @@
 #include "aabb.h"
 #include "car.h"
 #include "CLoad3DS.h"
+#include "../Button966.h"
 
 
 class AFX_CLASS_EXPORT COpenGL  
@@ -58,7 +59,9 @@ protected:
 	CCamera966 *pCamera;
 	CModal966 *pModal;
 	CFont966 *pFont;
-
+	CStartButton966 csb;
+	CEndButton966 ceb;
+	CRestartButton966 crb;
 	CScene *pScene;
 	float fps;
 };

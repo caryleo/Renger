@@ -3,6 +3,7 @@
 #include "opengl/OpenGL.h"
 #include "opengl/Scene.h"
 #include <gl/GLAux.h>
+#include "Button966.h"
 #pragma comment(lib, "GLAUX.lib")
 #define POINTNUM 200
 #define CIRCLENUM 20
@@ -25,5 +26,6 @@ public:
 	virtual void InDraw(void);
 	virtual bool OnKey(unsigned char nChar, bool bDown);
 	virtual void Update();
+	
 };
 

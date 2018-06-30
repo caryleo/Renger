@@ -110,6 +110,7 @@
     <None Include="UserImages.bmp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Button966.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="MyOpenGL.h" />
     <ClInclude Include="opengl\aabb.h" />
@@ -133,6 +134,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Button966.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="MyOpenGL.cpp" />
     <ClCompile Include="opengl\aabb.cpp" />
