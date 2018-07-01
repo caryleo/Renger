@@ -639,9 +639,9 @@ void CMyOpenGL::InDraw(void)
 			int cenx = (rect.right - rect.left) / 2;
 			int ceny = (rect.bottom - rect.top) / 2;
 			int e = glGetError();
-			ceb->Set(cenx, ceny - 100, 512, 128);
+			ceb->Set(cenx, ceny - 50, 512, 128);
 			ceb->render(rect);
-			crb->Set(cenx, ceny - 250, 512, 128);
+			crb->Set(cenx, ceny - 200, 512, 128);
 			crb->render(rect);
 			int f = glGetError();
 			CString endStr;
