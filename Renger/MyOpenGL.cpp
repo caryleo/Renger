@@ -451,6 +451,8 @@ void CMyOpenGL::InDraw(void)
 		glPopMatrix();
 		//DrawAxes(1000);
 
+		glPushAttrib(GL_TEXTURE_BIT);
+		glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 		glPushMatrix();
 		glEnable(GL_COLOR_MATERIAL);
 		glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
@@ -514,7 +516,7 @@ void CMyOpenGL::InDraw(void)
 		};
 		m_loader_lupai.DrawModel(gothicTrans_Lupai);
 		glPopMatrix();
-
+		//glPopAttrib();
 
 		glPushMatrix();
 		//pCar->car_box.DrawAABBBoundingBox();//画出车的包围盒
@@ -576,6 +578,7 @@ void CMyOpenGL::InDraw(void)
 				m_loader_yuaubao.DrawModel(gothicTrans_yuanbao);
 			}
 		}
+
 		drawArrow();
 		drawHulan();//画护栏
 		glPushMatrix();
@@ -598,6 +601,7 @@ void CMyOpenGL::InDraw(void)
 		sp.Format("当前速度：%.2lf m/s", pCar->speed);
 		pFont->Font2D(sp, CVector966(-0.9f, 0.6f, 0), 24, RGB(255, 255, 255), 0 | 8, 0);
 		glPopMatrix();
+		glPopAttrib();
 		glPopAttrib();
 	}
 	else if (pCamera->iGameMode == 2)
@@ -656,6 +660,7 @@ void CMyOpenGL::InDraw(void)
 		}
 		glPopAttrib();
 	}
+
 
 }
 
@@ -841,6 +846,8 @@ void CMyOpenGL::drawRoad(double x, double z)
 
 void CMyOpenGL::drawAllRoad()
 {
+	glPushAttrib(GL_TEXTURE_BIT);
+	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 	int xx[100] = {0};
 	int zz[100] = {0};
 	int tmpcnt = 0;
@@ -917,6 +924,7 @@ void CMyOpenGL::drawAllRoad()
 		drawRoad(xx[i], zz[i]);
 	}
 	glDisable(GL_TEXTURE_2D);
+	glPopAttrib();
 }
 
 void CMyOpenGL::drawArrow()
